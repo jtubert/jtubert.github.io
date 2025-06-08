@@ -1,74 +1,9 @@
-<amp-story-page id="desqvratlh" class="desqvratlh ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbxxffkp">
-    <div class="pbxxffk"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="jfcul" class="scrim">
-    <div class="letterbox">
-      <div class="oqfuf pa oqfuf-a">
-        <h5 class="jqunw pa">PANELIST</h5>
-        <h2 class="egjcn pa">Google Marketing live – Representation matters</h2>
-      </div>
-      <h6 class="zrqcq pa zrqcq-a">MAY 2019</h6>
-      <span class="cqnnm pa">
-        Click Here
-        <a
-          href="https://youtu.be/dRQKm4_St90"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://youtu.be/dRQKm4_St90"
-          data-vars-ctalink="https://youtu.be/dRQKm4_St90">
-        </a>
-      </span>
-      <amp-video
-        class="jpbkc pa"
-        layout="responsive"
-        width="820"
-        height="1280"
-        poster=""
-        autoplay
-        id="ksgkcgjwyz"
-        title="video">
-        <source src="assets/17-mvltwcacjx.mp4" type="video/mp4">
-      </amp-video>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".oqfuf-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".zrqcq-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            {
-              "offset": 0,
-              "transform": "translateX(-332px)",
-              "opacity": "1",
-              "visibility": "visible"
-            },
-            {
-              "offset": 1,
-              "transform": "translateX(0)",
-              "opacity": "1",
-              "visibility": "visible"
-            }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="desqvratlh" 
+  category="PANELIST" 
+  title="Google Marketing live – Representation matters" 
+  date="MAY 2019" 
+  link="https://youtu.be/dRQKm4_St90"
+  asset="assets/17-mvltwcacjx.mp4"
+  type="video"
+%}

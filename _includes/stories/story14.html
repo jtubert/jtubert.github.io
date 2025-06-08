@@ -1,74 +1,9 @@
-<amp-story-page id="wrkizlkmnh" class="wrkizlkmnh ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbfuuajp">
-    <div class="pbfuuaj"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="udsfm" class="scrim">
-    <div class="letterbox">
-      <div class="qrmod pa qrmod-a">
-        <h5 class="oslof pa">PANELIST</h5>
-        <h2 class="aipik pa">The Female Quotient: Moving from conversation to action</h2>
-      </div>
-      <h6 class="iwlzn pa iwlzn-a">JUN 2020</h6>
-      <span class="btgzn pa">
-        Click Here
-        <a
-          href="https://www.thefemalequotient.com/past-events/virtual-equality-lounge-moving-from-conversation-to-action/"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://www.thefemalequotient.com/past-events/virtual-equality-lounge-moving-from-conversation-to-action/"
-          data-vars-ctalink="https://www.thefemalequotient.com/past-events/virtual-equality-lounge-moving-from-conversation-to-action/">
-        </a>
-      </span>
-      <amp-video
-        class="cbmed pa"
-        layout="responsive"
-        width="720"
-        height="1280"
-        poster=""
-        autoplay
-        id="gtqwoftiow"
-        title="video">
-        <source src="assets/30-skanfpidhu.mp4" type="video/mp4">
-      </amp-video>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".qrmod-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".iwlzn-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            {
-              "offset": 0,
-              "transform": "translateX(-332px)",
-              "opacity": "1",
-              "visibility": "visible"
-            },
-            {
-              "offset": 1,
-              "transform": "translateX(0)",
-              "opacity": "1",
-              "visibility": "visible"
-            }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="wrkizlkmnh" 
+  category="PANELIST" 
+  title="The Female Quotient: Moving from conversation to action" 
+  date="JUN 2020" 
+  link="https://www.thefemalequotient.com/past-events/virtual-equality-lounge-moving-from-conversation-to-action/"
+  asset="assets/30-skanfpidhu.mp4"
+  type="video"
+%}

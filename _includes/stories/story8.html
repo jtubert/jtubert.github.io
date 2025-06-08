@@ -1,81 +1,9 @@
-<amp-story-page id="yhgzurbwce" class="yhgzurbwce ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbxcalqp">
-    <amp-img
-      width="720"
-      height="1280"
-      layout="responsive"
-      class="pbxcalq"
-      id="yhgzurbwce-bg"
-      src="assets/Steak-umm%20Meataversity%20hed%202022-ms-kidmnyaoxn.jpeg"
-      alt="metaversity">
-    </amp-img>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="jerad" class="scrim">
-    <div class="letterbox">
-      <div class="dweki pa dweki-a">
-        <h5 class="dsbil pa">JUDGE</h5>
-        <h2 class="mmqzo pa">Selected as a AICP's Award Judge</h2>
-      </div>
-      <h6 class="pntzp pa pntzp-a">Feb 2023</h6>
-      <span class="lsgkt pa">
-        Click Here
-        <a
-          href="https://aicpawards.awardcore.com/"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://aicpawards.awardcore.com/"
-          data-vars-ctalink="https://aicpawards.awardcore.com/">
-        </a>
-      </span>
-      <div class="smeaf pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/8-fgelomrzsj.png"
-          alt="roblox">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".dweki-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".pntzp-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            {
-              "offset": 0,
-              "transform": "translateX(-332px)",
-              "opacity": "1",
-              "visibility": "visible"
-            },
-            {
-              "offset": 1,
-              "transform": "translateX(0)",
-              "opacity": "1",
-              "visibility": "visible"
-            }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="yhgzurbwce" 
+  category="JUDGE" 
+  title="Selected as a AICP's Award Judge" 
+  date="Feb 2023" 
+  link="https://aicpawards.awardcore.com/"
+  asset="assets/8-fgelomrzsj.png"
+  type="image"
+%}

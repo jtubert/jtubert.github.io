@@ -1,73 +1,9 @@
-<amp-story-page id="hgcwdyygtc" class="hgcwdyygtc ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbwcebup">
-    <div class="pbwcebu"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="zatos" class="scrim">
-    <div class="letterbox">
-      <div class="ddzwr pa ddzwr-a">
-        <h5 class="osblp pa">PODCAST</h5>
-        <h2 class="xgqxz pa">Exploring Technology for a Human-First Approach</h2>
-      </div>
-      <h6 class="tlgpt pa tlgpt-a">OCT 2020</h6>
-      <span class="qjtdc pa">
-        Click Here
-        <a
-          href="https://www.rga.com/futurevision/pov/creative-companies-push-tech-boundaries-podcast"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://www.rga.com/futurevision/pov/creative-companies-push-tech-boundaries-podcast"
-          data-vars-ctalink="https://www.rga.com/futurevision/pov/creative-companies-push-tech-boundaries-podcast">
-        </a>
-      </span>
-      <div class="wgrmb pa">
-        <amp-img
-          width="2400"
-          height="960"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/11-ldofjwxiav.jpeg"
-          alt="podcast">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".ddzwr-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".tlgpt-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            {
-              "offset": 0,
-              "transform": "translateX(-332px)",
-              "opacity": "1",
-              "visibility": "visible"
-            },
-            {
-              "offset": 1,
-              "transform": "translateX(0)",
-              "opacity": "1",
-              "visibility": "visible"
-            }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="hgcwdyygtc" 
+  category="PODCAST" 
+  title="Exploring Technology for a Human-First Approach" 
+  date="OCT 2020" 
+  link="https://jtubert.medium.com/podcast-transcript-test-and-learn-exploring-technology-for-a-human-first-approach-8eba0edc2886"
+  asset="assets/podcast.png"
+  type="image"
+%}

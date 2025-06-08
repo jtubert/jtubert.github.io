@@ -1,63 +1,9 @@
-<amp-story-page id="mpujfoxowi" class="mpujfoxowi ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbsirukp">
-    <div class="pbsiruk"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="dinqz" class="scrim">
-    <div class="letterbox">
-      <div class="aoete pa aoete-a">
-        <h5 class="zfnqf pa">SPEAKER</h5>
-        <h2 class="oeknl pa">keynote speaker at adai conference</h2>
-      </div>
-      <h6 class="xdawp pa xdawp-a">SEPT 2024</h6>
-      <span class="akbob pa">
-        Click Here
-        <a
-          href="https://2024adaiyto.dailydooh.net/#speakers"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://2024adaiyto.dailydooh.net/#speakers"
-          data-vars-ctalink="https://2024adaiyto.dailydooh.net/#speakers">
-        </a>
-      </span>
-      <div class="nraun pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/Screenshot_2025-06-05_at_9-odnwaixzfa.png"
-          alt="roblox">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".aoete-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".xdawp-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "transform": "translateX(-332px)", "opacity": "1", "visibility": "visible" },
-            { "offset": 1, "transform": "translateX(0)", "opacity": "1", "visibility": "visible" }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="mpujfoxowi" 
+  category="SPEAKER" 
+  title="keynote speaker at adai conference" 
+  date="SEPT 2024" 
+  link="https://2024adaiyto.dailydooh.net/#speakers"
+  asset="assets/Screenshot_2025-06-05_at_9-odnwaixzfa.png"
+  type="image"
+%}

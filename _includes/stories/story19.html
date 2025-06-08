@@ -1,73 +1,9 @@
-<amp-story-page id="sbmnhrfhys" class="sbmnhrfhys ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbseoiup">
-    <div class="pbseoiu"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="nkzwz" class="scrim">
-    <div class="letterbox">
-      <div class="lzofe pa lzofe-a">
-        <h5 class="wbjbc pa">CERTIFICATION</h5>
-        <h2 class="nmexa pa">AWS Certified Alexa skill builder</h2>
-      </div>
-      <h6 class="olwet pa olwet-a">Jan 2019</h6>
-      <div class="jxjaz pa">
-        <amp-img
-          width="1572"
-          height="1090"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/23-nzbfojsrjr.png"
-          alt="aws">
-        </amp-img>
-      </div>
-      <span class="oiunw pa">
-        Click Here
-        <a
-          href="https://aw.certmetrics.com/amazon/public/verification.aspx"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://aw.certmetrics.com/amazon/public/verification.aspx"
-          data-vars-ctalink="https://aw.certmetrics.com/amazon/public/verification.aspx">
-        </a>
-      </span>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".lzofe-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".olwet-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            {
-              "offset": 0,
-              "transform": "translateX(-332px)",
-              "opacity": "1",
-              "visibility": "visible"
-            },
-            {
-              "offset": 1,
-              "transform": "translateX(0)",
-              "opacity": "1",
-              "visibility": "visible"
-            }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="sbmnhrfhys" 
+  category="CERTIFICATION" 
+  title="AWS Certified Alexa skill builder" 
+  date="Jan 2019" 
+  link="https://aw.certmetrics.com/amazon/public/verification.aspx"
+  asset="assets/23-nzbfojsrjr.png"
+  type="image"
+%}

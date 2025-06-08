@@ -1,63 +1,10 @@
-<amp-story-page id="hagvvhkhioa" class="hagvvhkhio ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbulkjwp">
-    <div class="pbulkjw"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="omdgq" class="scrim">
-    <div class="letterbox">
-      <div class="nzaxq pa nzaxq-a">
-        <h5 class="nljkx pa">AWARD</h5>
-        <h2 class="sttpq pa">AdAge named Tombras Agency of the year!!</h2>
-      </div>
-      <h6 class="foqgw pa foqgw-a">April 2025</h6>
-      <span class="pmkku pa">
-        Click Here
-        <a
-          href="https://adage.com/article/special-report-agency-list-creativity-awards/tombras-best-agencies-2025/2603541/"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://adage.com/article/special-report-agency-list-creativity-awards/tombras-best-agencies-2025/2603541/"
-          data-vars-ctalink="https://adage.com/article/special-report-agency-list-creativity-awards/tombras-best-agencies-2025/2603541/">
-        </a>
-      </span>
-      <div class="pxout pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/adage.png"
-          alt="fwa">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".nzaxq-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".foqgw-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "transform": "translateX(-332px)", "opacity": "1", "visibility": "visible" },
-            { "offset": 1, "transform": "translateX(0)", "opacity": "1", "visibility": "visible" }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="hagvvhkhioa" 
+  category="AWARD" 
+  title="AdAge named Tombras Agency of the year!!" 
+  date="April 2025" 
+  link="https://adage.com/article/special-report-agency-list-creativity-awards/tombras-best-agencies-2025/2603541/"
+  asset="assets/adage.png"
+  type="image"
+%}
+  

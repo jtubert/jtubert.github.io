@@ -1,81 +1,9 @@
-<amp-story-page id="ygqaeqhcbo" class="ygqaeqhcbo ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbttrocp">
-    <amp-img
-      width="720"
-      height="1280"
-      layout="responsive"
-      class="pbttroc"
-      id="ygqaeqhcbo-bg"
-      src="assets/Steak-umm%20Meataversity%20hed%202022-ms-kidmnyaoxn.jpeg"
-      alt="metaversity">
-    </amp-img>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="tlwut" class="scrim">
-    <div class="letterbox">
-      <div class="cmbew pa cmbew-a">
-        <h5 class="rwsgk pa">JUDGE</h5>
-        <h2 class="gwoob pa">Selected as a Webby's Award Executive Judge</h2>
-      </div>
-      <h6 class="rnfwc pa rnfwc-a">JAN 2023</h6>
-      <span class="bkjfx pa">
-        Click Here
-        <a
-          href="https://www.webbyawards.com/"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://www.webbyawards.com/"
-          data-vars-ctalink="https://www.webbyawards.com/">
-        </a>
-      </span>
-      <div class="kzxnc pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/9-qdsfkgwmhj.jpeg"
-          alt="roblox">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".cmbew-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".rnfwc-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            {
-              "offset": 0,
-              "transform": "translateX(-332px)",
-              "opacity": "1",
-              "visibility": "visible"
-            },
-            {
-              "offset": 1,
-              "transform": "translateX(0)",
-              "opacity": "1",
-              "visibility": "visible"
-            }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="ygqaeqhcbo" 
+  category="JUDGE" 
+  title="Selected as a Webby's Award Executive Judge" 
+  date="JAN 2023" 
+  link="https://www.webbyawards.com/"
+  asset="assets/9-qdsfkgwmhj.jpeg"
+  type="image"
+%}

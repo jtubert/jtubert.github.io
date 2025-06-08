@@ -1,63 +1,9 @@
-<amp-story-page id="hagvvhkhiof" class="hagvvhkhio ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbulkjwp">
-    <div class="pbulkjw"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="omdgq" class="scrim">
-    <div class="letterbox">
-      <div class="nzaxq pa nzaxq-a">
-        <h5 class="nljkx pa">ARTICLE</h5>
-        <h2 class="sttpq pa">La creatividad humana es irremplazable, en la era de la IA</h2>
-      </div>
-      <h6 class="foqgw pa foqgw-a">NOV 2024</h6>
-      <span class="pmkku pa">
-        Click Here
-        <a
-          href="https://www.adlatina.com/publicidad/juan-tubert-la-creatividad-humana-es-irremplazable-incluso-en-la-era-de-la-ia"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://www.adlatina.com/publicidad/juan-tubert-la-creatividad-humana-es-irremplazable-incluso-en-la-era-de-la-ia"
-          data-vars-ctalink="https://www.adlatina.com/publicidad/juan-tubert-la-creatividad-humana-es-irremplazable-incluso-en-la-era-de-la-ia">
-        </a>
-      </span>
-      <div class="pxout pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/Screenshot_2025-06-05_at_9-fldhpirqey.png"
-          alt="roblox">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".nzaxq-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".foqgw-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "transform": "translateX(-332px)", "opacity": "1", "visibility": "visible" },
-            { "offset": 1, "transform": "translateX(0)", "opacity": "1", "visibility": "visible" }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="hagvvhkhiof" 
+  category="ARTICLE" 
+  title="La creatividad humana es irremplazable, en la era de la IA" 
+  date="NOV 2024" 
+  link="https://www.adlatina.com/publicidad/juan-tubert-la-creatividad-humana-es-irremplazable-incluso-en-la-era-de-la-ia"
+  asset="assets/Screenshot_2025-06-05_at_9-fldhpirqey.png"
+  type="image"
+%}

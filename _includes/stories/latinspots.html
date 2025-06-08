@@ -1,63 +1,9 @@
-<amp-story-page id="hagvvhkhioc" class="hagvvhkhio ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbulkjwp">
-    <div class="pbulkjw"></div>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="omdgq" class="scrim">
-    <div class="letterbox">
-      <div class="nzaxq pa nzaxq-a">
-        <h5 class="nljkx pa">INTERVIEW</h5>
-        <h2 class="sttpq pa">Creatividad y tecnología unidas para innovar</h2>
-      </div>
-      <h6 class="foqgw pa foqgw-a">Jan 2025</h6>
-      <span class="pmkku pa">
-        Click Here
-        <a
-          href="https://www.latinspots.com/noticia/tombrasnia-creatividad-y-tecnologa-unidas-para-innovar/89887"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://www.latinspots.com/noticia/tombrasnia-creatividad-y-tecnologa-unidas-para-innovar/89887"
-          data-vars-ctalink="https://www.latinspots.com/noticia/tombrasnia-creatividad-y-tecnologa-unidas-para-innovar/89887">
-        </a>
-      </span>
-      <div class="pxout pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/latinspot.png"
-          alt="fwa">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".nzaxq-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".foqgw-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "transform": "translateX(-332px)", "opacity": "1", "visibility": "visible" },
-            { "offset": 1, "transform": "translateX(0)", "opacity": "1", "visibility": "visible" }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="hagvvhkhioc" 
+  category="INTERVIEW" 
+  title="Creatividad y tecnología unidas para innovar" 
+  date="Jan 2025" 
+  link="https://www.latinspots.com/noticia/tombrasnia-creatividad-y-tecnologa-unidas-para-innovar/89887"
+  asset="assets/latinspot.png"
+  type="image"
+%}

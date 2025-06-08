@@ -1,81 +1,9 @@
-<amp-story-page id="abwvpsusgt" class="abwvpsusgt ms-st-pg" auto-advance-after="5000ms">
-  <amp-story-grid-layer template="fill" class="pbdzkknp">
-    <amp-img
-      width="720"
-      height="1280"
-      layout="responsive"
-      class="pbdzkkn"
-      id="abwvpsusgt-bg"
-      src="assets/Steak-umm%20Meataversity%20hed%202022-ms-kidmnyaoxn.jpeg"
-      alt="metaversity">
-    </amp-img>
-  </amp-story-grid-layer>
-
-  <amp-story-grid-layer template="vertical" id="cjjzu" class="scrim">
-    <div class="letterbox">
-      <div class="ionor pa ionor-a">
-        <h5 class="xptql pa">AWARD</h5>
-        <h2 class="dglob pa">campaign 40 over 40</h2>
-      </div>
-      <h6 class="bdjls pa bdjls-a">JULY 2023</h6>
-      <span class="atcku pa">
-        Click Here
-        <a
-          href="https://www.campaignus40over40.com/"
-          role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain=https://www.campaignus40over40.com/"
-          data-vars-ctalink="https://www.campaignus40over40.com/">
-        </a>
-      </span>
-      <div class="lptkl pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="assets/7-buljlpodyr.png"
-          alt="roblox">
-        </amp-img>
-      </div>
-    </div>
-  </amp-story-grid-layer>
-
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [
-        {
-          "selector": ".ionor-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".bdjls-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            {
-              "offset": 0,
-              "transform": "translateX(-332px)",
-              "opacity": "1",
-              "visibility": "visible"
-            },
-            {
-              "offset": 1,
-              "transform": "translateX(0)",
-              "opacity": "1",
-              "visibility": "visible"
-            }
-          ]
-        }
-      ]
-    </script>
-  </amp-story-animation>
-</amp-story-page>
+{% include gridlayer.html
+  id="abwvpsusgt" 
+  category="AWARD" 
+  title="campaign 40 over 40" 
+  date="JULY 2023" 
+  link="https://www.campaignus40over40.com/"
+  asset="assets/7-buljlpodyr.png"
+  type="image"
+%}
