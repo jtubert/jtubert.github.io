@@ -49,3 +49,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload:{"text": "✅ Build succeeded on ${{ github.repository }} (commit: ${{ github.sha }})"}
+          env:
+            SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
