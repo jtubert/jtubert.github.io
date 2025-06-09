@@ -5,9 +5,6 @@ URL="https://docs.google.com/spreadsheets/d/14C-HoYPzEA0CzmX80Lj_6H3qliqbl2NOjAw
 NEW_NAME="stories.csv"
 DEST_DIR="/Users/jtubert/Desktop/dev-projects/_personal/jtubert.github.io/_data/"
 
-# Create destination directory if it doesn't exist
-#mkdir -p "$DEST_DIR"
-
 # Download the CSV (using curl)
 curl -o "/tmp/temp_download.csv" "$URL"
 
