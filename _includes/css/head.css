@@ -3,6 +3,13 @@
 	src:url(https://cdn2.storyasset.link/GlacialIndifference-Regular.woff2) format("woff2");
 	font-weight:400
 }
+
+.video-wrapper{
+	display: flex;
+  	justify-content: center;
+  	width: 100%;
+}
+
 .b-bottom amp-img,.b-bottom amp-video{
 	bottom:0
 }
@@ -1433,7 +1440,7 @@
 }
 .jpbkc{
 	height:38.09%;
-	left:-23.39%;
+	left:0%;
 	object-fit:cover;
 	object-position:0 0;
 	top:0;

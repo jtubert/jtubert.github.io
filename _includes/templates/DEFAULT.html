@@ -34,17 +34,19 @@
         </amp-img>
       </div>
       {% else %}
-      <amp-video
-        class="jpbkc pa"
-        layout="responsive"
-        width="640"
-        height="360"
-        poster=""
-        autoplay
-        alt="podcast"
-        id="hgajlbldbp">
-        <source src="{{ include.asset }}" type="video/mp4">
-      </amp-video>
+      <div class="video-wrapper">
+        <amp-video
+          class="jpbkc pa"
+          layout="intrinsic"
+          width="640"
+          height="360"
+          poster=""
+          autoplay
+          alt="podcast"
+          id="hgajlbldbp">
+          <source src="{{ include.asset }}" type="video/mp4">
+        </amp-video>
+      </div>
       {% endif %}
 
       

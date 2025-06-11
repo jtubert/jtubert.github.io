@@ -5,9 +5,13 @@ date:   2025-06-08 11:16:09 -0400
 ---
 
 {% comment %}
- {% assign story = site.data.stories[3] %}
+  {% assign story = site.data.stories[23] %}
+
+ 
+
 {% endcomment %}
  
+
 {% for story in site.data.stories %}
   {% assign aa = "hgajlbldbp" %}
 
@@ -28,4 +32,4 @@ date:   2025-06-08 11:16:09 -0400
     autoAdvance=aa
     template=story.template
   %}
-{% endfor %}
+ {% endfor %}
