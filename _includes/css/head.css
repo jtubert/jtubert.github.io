@@ -206,7 +206,7 @@
 	transform:translateX(-50%) translateY(-50%)
 }
 .pxout{
-	left:50%;
+	left:48%;
 	top:21.25%;
 	width:34.49em;
 	height:25.6em
@@ -1433,7 +1433,7 @@
 }
 .jpbkc{
 	height:38.09%;
-	left:-33.39%;
+	left:-23.39%;
 	object-fit:cover;
 	object-position:0 0;
 	top:0;
