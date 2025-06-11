@@ -29,5 +29,6 @@ date:   2025-06-08 11:16:09 -0400
     asset=story.asset
     type=story.type
     autoAdvance=aa
+    template=story.template
   %}
 {% endfor %}
