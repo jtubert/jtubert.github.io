@@ -5,11 +5,16 @@ date:   2025-06-08 11:16:09 -0400
 ---
 
 {% comment %}
- {% include story-loop.html file="freezerflag.html" %}
+  
+ {% assign story = site.data.stories[3] %}
+  
+  
 {% endcomment %}
  
 
-{% include story-loop.html file='story1.html' %}
+
+
+
 
 {% for story in site.data.stories %}
   {% assign aa = "hgajlbldbp" %}
@@ -20,7 +25,7 @@ date:   2025-06-08 11:16:09 -0400
     {% assign aa = "5000ms" %}
   {% endif %}
 
-  {% include gridlayer.html 
+  {% include templates/{{ story.template }}.html
     id=story.id
     category=story.category 
     title=story.title 
