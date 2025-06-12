@@ -6,9 +6,6 @@ date:   2025-06-08 11:16:09 -0400
 
 {% comment %}
   {% assign story = site.data.stories[23] %}
-
- 
-
 {% endcomment %}
  
 
