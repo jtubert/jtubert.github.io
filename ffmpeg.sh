@@ -8,14 +8,18 @@ VIDEO_DIR="./assets"  # Change this to your folder
 OUTPUT_DIR="./assets"  # Where images will be saved
 mkdir -p "$OUTPUT_DIR"
 
-# Loop through video files
 for video in "$VIDEO_DIR"/*.{mp4,mov,mkv,avi}; do
-  [ -e "$video" ] || continue  # Skip if no matching files
+  [ -e "$video" ] || continue  # Skip if no videos
 
-  # Get filename without extension
   filename=$(basename "$video")
   name="${filename%.*}"
+  output_file="$OUTPUT_DIR/${name}.jpg"
 
-  # Extract frame at 1 second and save as JPEG
-  ~/Desktop/ffmpeg -y -ss 00:00:01.000 -i "$video" -vframes 1 -q:v 2 "$OUTPUT_DIR/${name}.jpg"
+  # Only generate image if it doesn't exist
+  if [ ! -f "$output_file" ]; then
+    echo "Generating thumbnail for: $filename"
+    ffmpeg -y -ss 00:00:01.000 -i "$video" -vframes 1 -q:v 2 "$output_file"
+  else
+    echo "Thumbnail already exists for: $filename — skipping"
+  fi
 done

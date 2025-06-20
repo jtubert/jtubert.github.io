@@ -7,7 +7,8 @@
     "local": "BUNDLE_GEMFILE=Gemfile.local /Users/jtubert/.gem/ruby/2.6.0/bin/jekyll serve",
     "deploy": "git add . && git commit -m \"deploying on $(date '+%Y-%m-%d %H:%M:%S')\" && git push",
     "download": "sh script.sh",
-    "download-and-deploy": "npm run download && npm run deploy"
+    "generate_thumbs": "sh ffmpeg.sh",
+    "download_and_deploy": "npm run download && npm run generate_thumbs && npm run deploy"
     
   },
   "files": [
