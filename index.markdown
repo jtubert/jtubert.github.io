@@ -5,10 +5,7 @@ date:   2025-06-08 11:16:09 -0400
 ---
 
 {% comment %}
-  
-{% assign story = site.data.stories[22] %}
-
-
+  {% assign story = site.data.stories[22] %}
 {% endcomment %}
  
 {% for story in site.data.stories %}
@@ -31,5 +28,6 @@ date:   2025-06-08 11:16:09 -0400
     type=story.type
     autoAdvance=aa
     template=story.template
+    poster=story.poster
   %}
 {% endfor %}
