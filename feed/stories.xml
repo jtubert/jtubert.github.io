@@ -1,0 +1,21 @@
+---
+layout: nil
+permalink: /custom-feed.xml
+---
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ site.url | escape}}</link>
+    <description>{{ site.description  | escape}}</description>
+    {% for item in site.data.stories %}
+      <item>
+        <title>{{ item.category }}</title>
+        <description>{{ item.title  | escape}}</description>
+        <link>{{ item.link | escape}}</link>
+        <guid>{{ item.link | escape}}</guid>
+        <pubDate>{{ item.date | date_to_rfc822 }}</pubDate>
+      </item>
+    {% endfor %}
+  </channel>
+</rss>
