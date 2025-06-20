@@ -12,4 +12,5 @@ group :test do
   gem "rubocop", "~> 1.37"
   gem "rubocop-performance"
   gem "webmock"
+  gem "jekyll-minifier"
 end
