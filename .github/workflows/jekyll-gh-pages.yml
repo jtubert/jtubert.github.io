@@ -25,6 +25,8 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
+        env:
+          JEKYLL_ENV: production
         with:
           source: ./
           destination: ./_site
