@@ -48,36 +48,12 @@
         </amp-video>
       </div>
       {% endif %}
-
-      
     </div>
   </amp-story-grid-layer>
 
   <amp-story-animation layout="nodisplay" trigger="visibility">
     <script type="application/json">
-      [
-        {
-          "selector": ".nzaxq-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "opacity": 0, "visibility": "visible" },
-            { "offset": 1, "opacity": "1", "visibility": "visible" }
-          ]
-        },
-        {
-          "selector": ".foqgw-a",
-          "duration": "500ms",
-          "fill": "forwards",
-          "delay": "0ms",
-          "keyframes": [
-            { "offset": 0, "transform": "translateX(-332px)", "opacity": "1", "visibility": "visible" },
-            { "offset": 1, "transform": "translateX(0)", "opacity": "1", "visibility": "visible" }
-          ]
-        }
-        
-      ]
-    </script>
+      [{"selector":".nzaxq-a","duration":"500ms","fill":"forwards","delay":"0ms","keyframes":[{"offset":0,"opacity":0,"visibility":"visible"},{"offset":1,"opacity":"1","visibility":"visible"}]},{"selector":".foqgw-a","duration":"500ms","fill":"forwards","delay":"0ms","keyframes":[{"offset":0,"transform":"translateX(-332px)","opacity":"1","visibility":"visible"},{"offset":1,"transform":"translateX(0)","opacity":"1","visibility":"visible"}]}]
+  </script>
   </amp-story-animation>
 </amp-story-page>

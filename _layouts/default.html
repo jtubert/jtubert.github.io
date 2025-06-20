@@ -7,73 +7,9 @@
 		<amp-story standalone class="ms-MNVBQ6cWkqfHOq9JgBM" poster-portrait-src="assets/ms-seogkaxdds.jpg" publisher-logo-src="assets/27-irgtgpmasc.jpeg" publisher="Juan (John) Tubert" title="jtubert.com" poster-landscape-src="assets/ms-loexnabwvm.jpg" poster-square-src="assets/ms-aksjowweuf.jpg" on="page-visible:AMP.setState({ currentPage: event.id })"> 
 			{{ content }}
 			<amp-analytics type="gtag" data-credentials="include"> 
-			<script type="application/json"> {
-	                    "vars": {
-	                        "gtag_id": "UA-186073653-1",
-	                        "config":{
-	                            "UA-186073653-1":{
-	                                "groups":"default"
-	                            }
-	                        }
-	                    },
-	                    "triggers": {
-	                        "storyProgress": {
-	                            "on": "story-page-visible",
-	                            "vars": {
-	                                "event_name": "custom",
-	                                "event_action": "story_progress",
-	                                "event_category": "${title}",
-	                                "event_label": "${storyPageId}",
-	                                "send_to": ["UA-186073653-1"]
-	                            }
-	                        },
-	                        "storyEnd": {
-	                            "on": "story-last-page-visible",
-	                            "vars": {
-	                                "event_name": "custom",
-	                                "event_action": "story_complete",
-	                                "event_category": "${title}",
-	                                "send_to": ["UA-186073653-1"]
-	                            }
-	                        },
-	                        "anchorClicks": {
-	                            "on": "click",
-	                            "request": "pageview",
-	                            "selector": "a.cta-a",
-	                            "vars": {
-	                                "event_name": "custom",
-	                                "event_action": "cta_clicked",
-	                                "event_category": "${title}",
-	                                "event_label": "${ctalink}",
-	                                "send_to": ["UA-186073653-1"]
-	                            }
-	                        },
-	                        "tooltipClickThrough": {
-	                            "on": "story-click-through",
-	                            "request": "pageview",
-	                            "selector": "a.cta-a",
-	                            "vars": {
-	                                "event_name": "custom",
-	                                "event_action": "link_tooltip_clicked",
-	                                "event_category": "${title}",
-	                                "event_label": "${ctalink}",
-	                                "send_to": ["UA-186073653-1"]
-	                            }
-	                        },
-	                        "tooltipClicks": {
-	                            "on": "story-focus",
-	                            "request": "pageview",
-	                            "vars": {
-	                                "event_name": "custom",
-	                                "event_action": "link_tooltip_opened",
-	                                "event_category": "${title}",
-	                                "event_label": "${ctalink}",
-	                                "send_to": ["UA-186073653-1"]
-	                            }
-	                        }
-	                    }
-	                } 
-	            </script> 
+			<script type="application/json">  
+	        {"vars":{"gtag_id":"UA-186073653-1","config":{"UA-186073653-1":{"groups":"default"}}},"triggers":{"storyProgress":{"on":"story-page-visible","vars":{"event_name":"custom","event_action":"story_progress","event_category":"${title}","event_label":"${storyPageId}","send_to":["UA-186073653-1"]}},"storyEnd":{"on":"story-last-page-visible","vars":{"event_name":"custom","event_action":"story_complete","event_category":"${title}","send_to":["UA-186073653-1"]}},"anchorClicks":{"on":"click","request":"pageview","selector":"a.cta-a","vars":{"event_name":"custom","event_action":"cta_clicked","event_category":"${title}","event_label":"${ctalink}","send_to":["UA-186073653-1"]}},"tooltipClickThrough":{"on":"story-click-through","request":"pageview","selector":"a.cta-a","vars":{"event_name":"custom","event_action":"link_tooltip_clicked","event_category":"${title}","event_label":"${ctalink}","send_to":["UA-186073653-1"]}},"tooltipClicks":{"on":"story-focus","request":"pageview","vars":{"event_name":"custom","event_action":"link_tooltip_opened","event_category":"${title}","event_label":"${ctalink}","send_to":["UA-186073653-1"]}}}}
+			</script> 
 	        </amp-analytics>
 			<amp-story-bookend src="https://jtubert.com/getStoryBookend" layout="nodisplay"></amp-story-bookend> 
 		</amp-story>

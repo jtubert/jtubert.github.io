@@ -33,6 +33,7 @@ github_username:  jekyll
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-minifier
 
 # Exclude from processing.
 # The following items will not be processed, by default.
@@ -53,3 +54,6 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+jekyll-minifier:
+  compress_js_templates: true      # Default: false
