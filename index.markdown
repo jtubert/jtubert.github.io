@@ -5,8 +5,12 @@ date:   2025-06-08 11:16:09 -0400
 ---
 
 {% comment %}
-  {% assign story = site.data.stories[22] %}
+  {% assign story = site.data.stories[24] %}
+  
+  "https://fpoimg.com/500x380?text=Preview&bg_color=e6e6e6&text_color=8F8F8F"
 {% endcomment %}
+ 
+
  
 {% for story in site.data.stories %}
 
