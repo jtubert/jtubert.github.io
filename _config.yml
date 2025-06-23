@@ -14,6 +14,7 @@ plugins:
 exclude:
    - ffmpeg.sh
    - script.sh
+   - resize-images.sh
    - readme.txt
    - package.json
    - Gemfile
