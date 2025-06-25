@@ -1,6 +1,6 @@
 "order","id","category","template","title","date","link","asset","poster","preview","type","deeplink"
 "0","homepage","HOME","HOMEPAGE","N/A","January 2030","N/A","assets/homepage.jpeg","N/A","","image","https://jtubert.com#page=homepage"
-"1","butterfly","SPEAKER","DEFAULT","Spoke about AI at a Los Angeles-based private equity firm ","June 2025","N/A","assets/butterfly.png","N/A","","image","https://jtubert.com#page=butterfly"
+"1","butterfly","SPEAKER","DEFAULT","Spoke about AI at a Los Angeles-based private equity firm ","June 2025","","assets/butterfly.png","N/A","","image","https://jtubert.com#page=butterfly"
 "2","fwa","JUDGE","DEFAULT","Excited to share that I’ve been selected as a judge for the The FWA!","June 2025","https://thefwa.com/about/jury/","assets/fwa.png","N/A","","image","https://jtubert.com#page=fwa"
 "3","webby","AWARD","DEFAULT","2025 Webby for Best Experiential Design in the AI, Immersive & Games category!","May 2025","https://www.webbyawards.com/","assets/webby.png","N/A","","image","https://jtubert.com#page=webby"
 "4","google","WORK","FULL-VIDEO","N/A","May 2025","N/A","assets/google.mp4","assets/google.jpg","","video","https://jtubert.com#page=google"
