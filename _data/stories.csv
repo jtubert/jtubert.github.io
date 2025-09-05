@@ -1,6 +1,6 @@
 "order","id","category","template","title","date","link","asset","poster","preview","type","deeplink"
 "0","homepage","HOME","HOMEPAGE","N/A","January 2030","N/A","assets/homepage.jpeg","N/A","","image","https://jtubert.com#page=homepage"
-"1","gifmaker","WORK","DEFAULT","Created a native mac/windows app","July 2025","N/A","assets/gifmaker.mp4","assets/gifmaker.jpg","","video","https://jtubert.com#page=gifmaker"
+"1","gifmaker","WORK","DEFAULT","Created a native mac/windows app","July 2025","N/A","assets/gifmaker.mp4","assets/gifmaker.jpg?xx=1","","video","https://jtubert.com#page=gifmaker"
 "2","butterfly","SPEAKER","DEFAULT","Spoke about Creativity and AI (using MCPs and AI personas) at a Los Angeles-based private equity firm ","June 2025","N/A","assets/butterfly.png","N/A","","image","https://jtubert.com#page=butterfly"
 "3","fwa","JUDGE","DEFAULT","Excited to share that I’ve been selected as a judge for the The FWA!","June 2025","https://thefwa.com/about/jury/","assets/fwa.png","N/A","","image","https://jtubert.com#page=fwa"
 "4","webby","AWARD","DEFAULT","2025 Webby for Best Experiential Design in the AI, Immersive & Games category!","May 2025","https://www.webbyawards.com/","assets/webby.png","N/A","","image","https://jtubert.com#page=webby"
