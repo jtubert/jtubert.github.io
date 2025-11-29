@@ -9,6 +9,7 @@
     "download": "sh script.sh",
     "generate_thumbs": "sh ffmpeg-video-to-thumb.sh",
     "download_and_deploy": "npm run download && npm run generate_thumbs && npm run deploy"
+  
   },
   "files": [
     "build"
