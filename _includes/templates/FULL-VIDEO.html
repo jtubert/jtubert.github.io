@@ -1,10 +1,43 @@
 <amp-story-page id="{{ include.id }}" class="{{ include.id }} ms-st-pg" auto-advance-after="{{ include.autoAdvance }}">
-
+  
+  <!-- Background video layer -->
   <amp-story-grid-layer template="fill">
-          <amp-video autoplay loop layout="responsive" width="720" height="1280" poster="" id="hgajlbldbp" muted>
-            <source src="{{ include.asset }}" type="video/mp4">
-          </amp-video>
+    <amp-video autoplay loop layout="responsive" width="720" height="1280" poster="" id="hgajlbldbp" muted>
+      <source src="{{ include.asset }}" type="video/mp4">
+    </amp-video>
+  </amp-story-grid-layer>
+  
+  <!-- Text overlay layer with scrim -->
+  <amp-story-grid-layer template="vertical" class="scrim">
+    
+    {% if include.title and include.title != "N/A" and include.title != "" %}
+    <div class="letterbox">
+      <div class="nzaxq pa nzaxq-a">
+        <h2 class="sttpqxx pa">{{ include.title }}</h2>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if include.link and include.link != "N/A" and include.link != "" %}
+      <span class="pmkkuxx pa">
+        Watch full video
+        <a
+          href="{{ include.link }}"
+          role="link"
+          data-tooltip-text="Watch full video"
+          class="story-tooltip pa"
+          data-tooltip-icon="https://www.google.com/s2/favicons?domain={{ include.link }}"
+          data-vars-ctalink="{{ include.link }}">
+        </a>
+      </span>
+      {% endif %}
+
   </amp-story-grid-layer>
 
+  <amp-story-animation layout="nodisplay" trigger="visibility">
+    <script type="application/json">
+      [{"selector":".nzaxq-a","duration":"500ms","fill":"forwards","delay":"0ms","keyframes":[{"offset":0,"opacity":0,"visibility":"visible"},{"offset":1,"opacity":"1","visibility":"visible"}]}]
+    </script>
+  </amp-story-animation>
   
 </amp-story-page>
