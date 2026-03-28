@@ -35,7 +35,6 @@
       </div>
       {% else %}
       <div class="video-wrapper">
-        {% if include.asset contains '/' %}
         <amp-video
           class="jpbkc pa"
           layout="intrinsic"
@@ -47,15 +46,6 @@
           id="hgajlbldbp">
           <source src="{{ include.asset }}" type="video/mp4">
         </amp-video>
-        {% else %}
-        <amp-youtube
-          data-videoid="{{ include.asset }}"
-          layout="responsive"
-          width="640"
-          height="360"
-          credentials="omit">
-        </amp-youtube>
-        {% endif %}
       </div>
       {% endif %}
     </div>
