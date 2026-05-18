@@ -18,7 +18,7 @@ for video in "$VIDEO_DIR"/*.{mp4,mov,mkv,avi}; do
   # Only generate image if it doesn't exist
   if [ ! -f "$output_file" ]; then
     echo "Generating thumbnail for: $filename"
-    ~/Desktop/ffmpeg -y -ss 00:00:01.000 -i "$video" -vframes 1 -q:v 2 "$output_file"
+    ffmpeg -y -ss 00:00:01.000 -i "$video" -vframes 1 -q:v 2 "$output_file"
   else
     echo "Thumbnail already exists for: $filename — skipping"
   fi
