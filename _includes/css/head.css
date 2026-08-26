@@ -1480,7 +1480,8 @@
 	object-fit:cover;
 	object-position:0 0;
 	top:0;
-	width:160.83%
+	width:160.83%;
+	max-width:100%
 }
 .pbxxffk{
 	background:#fff
