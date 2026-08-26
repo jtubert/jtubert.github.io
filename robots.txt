@@ -1,0 +1,8 @@
+# robots.txt for https://www.jtubert.com/
+# Single-page AMP Story site — everything under / is fair game.
+
+User-agent: *
+Allow: /
+Disallow: /test/
+
+Sitemap: https://www.jtubert.com/sitemap.xml
