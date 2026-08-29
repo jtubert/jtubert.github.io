@@ -37,7 +37,7 @@ amp-story-grid-layer{
 	width:100%;
 	height:100%;
 	box-sizing:border-box;
-	padding:4.6em 1.75em 2.1em;
+	padding:7em 1.75em 2.1em;
 	display:flex;
 	flex-direction:column;
 	justify-content:center;
@@ -46,11 +46,16 @@ amp-story-grid-layer{
 
 /* ---------- shared atoms ---------- */
 
+/* Pinned, not part of the centered stack: the label must land at the same
+   height on every page as you advance through the story. */
 .eyebrow{
+	position:absolute;
+	top:4.6em;
+	left:1.75em;
+	right:1.75em;
 	display:flex;
 	align-items:center;
 	gap:.62em;
-	flex:0 0 auto;
 }
 .eyebrow-dot{
 	width:.5em;
@@ -162,10 +167,6 @@ a.story-tooltip{
 .brand{
 	flex:0 0 auto;
 	width:5.4em;
-	opacity:.5;
-}
-.brand-invert{
-	opacity:.9;
 }
 
 /* ---------- cover ---------- */
@@ -227,7 +228,6 @@ a.story-tooltip{
 }
 .cover-foot .brand{
 	width:5.9em;
-	opacity:1;
 }
 
 /* ---------- full-bleed video ---------- */
@@ -252,10 +252,17 @@ a.story-tooltip{
 }
 /* .veil is absolutely positioned, so it paints above in-flow siblings.
    Promote the text so it sits on the scrim, not under it. */
-.pg-full .eyebrow,
 .pg-full .headline,
 .pg-full .meta{
 	position:relative;
+}
+.veil-top{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:20%;
+	background:linear-gradient(to bottom, rgba(16,16,20,.6) 0%, rgba(16,16,20,0) 100%);
 }
 .pg-full .eyebrow-label,
 .pg-full .meta{
@@ -273,6 +280,7 @@ a.story-tooltip{
 /* ---------- quote ---------- */
 
 .pg-quote .frame{
+	padding-top:4.6em;
 	justify-content:center;
 	gap:1.6em;
 	padding-left:2.1em;
