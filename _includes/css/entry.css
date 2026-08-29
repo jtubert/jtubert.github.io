@@ -35,12 +35,26 @@ a{color:var(--accent)}
 	color:var(--ink);
 	font-size:1.05rem;
 }
-.masthead .role{
-	font-size:.8rem;
-	font-weight:600;
-	letter-spacing:.04em;
-	text-transform:uppercase;
-	color:var(--ink-3);
+.masthead .brandmark{
+	flex:0 0 auto;
+	line-height:0;
+	display:block;
+}
+.masthead .brandmark img{
+	width:106px;
+	height:auto;
+	display:block;
+}
+/* the pager doubles as the hint that the arrow keys work */
+.pager-key{
+	display:inline-block;
+	margin-left:.4em;
+	padding:0 .32em;
+	border:1px solid currentColor;
+	border-radius:3px;
+	font-size:.85em;
+	line-height:1.35;
+	opacity:.7;
 }
 .eyebrow{display:flex;align-items:center;gap:.55rem;margin-bottom:1rem}
 .eyebrow-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:0 0 auto}

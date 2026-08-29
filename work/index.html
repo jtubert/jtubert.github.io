@@ -9,7 +9,7 @@ permalink: /work/
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Work — Juan (John) Tubert, CTO at Tombras</title>
 <meta name="description" content="Talks, interviews, press, awards and work by Juan (John) Tubert, Chief Technology Officer at Tombras, from 2017 to today.">
-<link rel="canonical" href="{{ site.url }}/work/">
+<link rel="canonical" href="/work/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
@@ -41,17 +41,19 @@ permalink: /work/
 <body>
 <div class="wrap">
   <header class="masthead">
-    <a href="{{ site.url }}/">Juan (John) Tubert</a>
-    <span class="role">CTO at Tombras</span>
+    <a href="/">Juan (John) Tubert</a>
+    <a class="brandmark" href="https://www.tombras.com/" rel="noopener" aria-label="Tombras">
+      <img src="/assets/tombras-logo.png" alt="Tombras" width="330" height="91">
+    </a>
   </header>
   <main>
     <h1>Work</h1>
-    <p class="lede">Talks, interviews, press, awards and work &mdash; from 2017 to today. The same material runs as a <a href="{{ site.url }}/">story</a>.</p>
+    <p class="lede">Talks, interviews, press, awards and work &mdash; from 2017 to today. The same material runs as a <a href="/">story</a>.</p>
     <ul class="entries">
       {%- for s in site.data.stories -%}
       {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" %}
       <li>
-        <a href="{{ site.url }}/work/{{ s.id }}/">
+        <a href="/work/{{ s.id }}/">
           <span class="c">{{ s.category }}</span>
           <span class="t">{{ s.title }}</span>
           <span class="d">{{ s.date }}</span>

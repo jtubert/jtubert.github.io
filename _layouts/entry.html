@@ -53,8 +53,10 @@
 <div class="wrap">
 
   <header class="masthead">
-    <a href="{{ site.url }}/">Juan (John) Tubert</a>
-    <span class="role">CTO at Tombras</span>
+    <a href="/">Juan (John) Tubert</a>
+    <a class="brandmark" href="https://www.tombras.com/" rel="noopener" aria-label="Tombras">
+      <img src="/assets/tombras-logo.png" alt="Tombras" width="330" height="91">
+    </a>
   </header>
 
   <main>
@@ -73,13 +75,13 @@
     {% if page.asset != "" %}
     {% if page.media_type == "video" %}
     <div class="media">
-      <video controls preload="none" playsinline{% if page.poster != "" %} poster="{{ site.url }}/{{ page.poster }}"{% endif %}>
-        <source src="{{ site.url }}/{{ page.asset }}" type="video/mp4">
+      <video autoplay muted loop playsinline controls preload="metadata"{% if page.poster != "" %} poster="/{{ page.poster }}"{% endif %}>
+        <source src="/{{ page.asset }}" type="video/mp4">
       </video>
     </div>
     {% else %}
     <div class="media">
-      <img src="{{ site.url }}/{{ page.asset }}" alt="{{ page.title | escape }}" loading="lazy">
+      <img src="/{{ page.asset }}" alt="{{ page.title | escape }}" loading="lazy">
     </div>
     {% endif %}
     {% endif %}
@@ -93,27 +95,42 @@
 
     <nav class="pager" aria-label="More work">
       {% if page.prev_id != "" %}
-      <a class="pager-link prev" href="{{ site.url }}/work/{{ page.prev_id }}/">
-        <span class="pager-dir">&larr; Previous</span>
+      <a class="pager-link prev" href="/work/{{ page.prev_id }}/">
+        <span class="pager-dir">Previous<span class="pager-key">&larr;</span></span>
         <span class="pager-title">{{ page.prev_title }}</span>
       </a>
       {% endif %}
       {% if page.next_id != "" %}
-      <a class="pager-link next" href="{{ site.url }}/work/{{ page.next_id }}/">
-        <span class="pager-dir">Next &rarr;</span>
+      <a class="pager-link next" href="/work/{{ page.next_id }}/">
+        <span class="pager-dir">Next<span class="pager-key">&rarr;</span></span>
         <span class="pager-title">{{ page.next_title }}</span>
       </a>
       {% endif %}
     </nav>
 
     <p class="backlink">
-      <a href="{{ site.url }}/work/">All {{ page.total }} pieces of work</a>
-      &middot; <a href="{{ site.url }}/#page={{ page.entry_id }}">see this in the story</a>
+      <a href="/work/">All {{ page.total }} pieces of work</a>
+      &middot; <a href="/#page={{ page.entry_id }}">see this in the story</a>
       <br>
       Juan (John) Tubert is Chief Technology Officer at Tombras.
     </p>
   </main>
 
 </div>
+<script>
+// Left/right arrows walk the collection. Ignored while typing or with a
+// modifier held, so browser shortcuts (back/forward, tab switching) still win.
+(function () {
+  var prev = {% if page.prev_id != "" %}"/work/{{ page.prev_id }}/"{% else %}null{% endif %};
+  var next = {% if page.next_id != "" %}"/work/{{ page.next_id }}/"{% else %}null{% endif %};
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+    var el = e.target;
+    if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+    if (e.key === 'ArrowLeft' && prev) { location.href = prev; }
+    else if (e.key === 'ArrowRight' && next) { location.href = next; }
+  });
+})();
+</script>
 </body>
 </html>
