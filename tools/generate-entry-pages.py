@@ -51,6 +51,36 @@ def build_summary(title, category, date_label):
     s = f"{title.strip()} — {tail}."
     return s if len(s) <= 158 else s[:155].rstrip(' ,—-') + '…'
 
+
+def load_summaries():
+    """Fallback summaries kept in the repo, since `npm run download`
+    overwrites stories.csv from the Google Sheet."""
+    path = os.path.join(ROOT, '_data', 'summaries.yml')
+    out = {}
+    if not os.path.exists(path):
+        return out
+    for line in open(path, encoding='utf-8'):
+        line = line.strip()
+        if not line or line.startswith('#') or ':' not in line:
+            continue
+        k, v = line.split(':', 1)
+        v = v.strip()
+        if v.startswith('"') and v.endswith('"'):
+            v = v[1:-1].replace('\\"', '"').replace('\\\\', '\\')
+        out[k.strip()] = v
+    return out
+
+SUMMARIES = load_summaries()
+
+def pick_summary(eid, row, title, cat, date_label):
+    """Sheet column wins, then the repo file, then a generated fallback."""
+    col = (row.get('summary') or row.get('description') or '').strip()
+    if col and col != 'N/A':
+        return col
+    if SUMMARIES.get(eid):
+        return SUMMARIES[eid]
+    return build_summary(title, cat, date_label)
+
 def main():
     rows = [r for r in csv.DictReader(open(CSV, encoding='utf-8')) if r.get('id')]
     os.makedirs(OUT, exist_ok=True)
@@ -114,7 +144,7 @@ def main():
             'image': image,
             'media_type': mtype,
             'cta_label': 'Watch the video' if mtype == 'video' else 'Read more',
-            'summary': build_summary(title, cat, date_label),
+            'summary': pick_summary(eid, r, title, cat, date_label),
             'sitemap_lastmod': iso_date(date_label),
             'prev_id': prev_r['id'].strip() if prev_r else '',
             'prev_title': prev_r['title'].strip() if prev_r else '',
