@@ -89,11 +89,14 @@ h1{
 .media img,.media video{width:100%;height:auto;display:block}
 .cta{
 	display:inline-flex;align-items:center;gap:.6rem;
-	min-height:52px;padding:0 1.5rem;
+	min-height:52px;padding:.7rem 1.5rem;
+	max-width:100%;box-sizing:border-box;
 	border-radius:12px;background:var(--accent);color:#fff;
-	font-size:1rem;font-weight:700;text-decoration:none;
+	font-size:1rem;font-weight:700;line-height:1.25;text-decoration:none;
+	/* labels name the outlet, so they can run long - wrap rather than overflow */
+	text-wrap:pretty;
 }
-.cta svg{width:19px;height:19px}
+.cta svg{width:19px;height:19px;flex:0 0 auto}
 .backlink{
 	margin-top:2.6rem;padding-top:1.6rem;
 	border-top:1px solid var(--hair);

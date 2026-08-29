@@ -62,20 +62,90 @@ def on_disk(path):
     return os.path.exists(os.path.join(ROOT, path.split('?', 1)[0].split('#', 1)[0]))
 
 VIDEO_HOSTS = ('youtube.com', 'youtu.be', 'vimeo.com', 'instagram.com')
-CTA_BY_CATEGORY = {
+
+# Proper brand names per host, with the preposition that reads correctly:
+# "in" for publications, "on" for platforms.
+OUTLETS = {
+    'adage.com':                ('Ad Age', 'in'),
+    'adweek.com':               ('Adweek', 'in'),
+    'campaignlive.com':         ('Campaign', 'in'),
+    'forbes.com':               ('Forbes', 'in'),
+    'adlatina.com':             ('Adlatina', 'in'),
+    'latinspots.com':           ('Latinspots', 'in'),
+    'commarts.com':             ('Communication Arts', 'in'),
+    'cioapplications.com':      ('CIO Applications', 'in'),
+    'musebyclios.com':          ('Muse by Clios', 'in'),
+    'dailydooh.com':            ('DailyDOOH', 'in'),
+    'afrotech.com':             ('AfroTech', 'in'),
+    'spectrumnoticias.com':     ('Spectrum Noticias', 'on'),
+    'youtube.com':              ('YouTube', 'on'),
+    'youtu.be':                 ('YouTube', 'on'),
+    'instagram.com':            ('Instagram', 'on'),
+    'linkedin.com':             ('LinkedIn', 'on'),
+    'jtubert.medium.com':       ('Medium', 'on'),
+    'amazon.com':               ('Amazon', 'on'),
+    'roblox.com':               ('Roblox', 'on'),
+    'huggingface.co':           ('Hugging Face', 'on'),
+    'business.google.com':      ('Google', 'on'),
+    'thinkwithgoogle.com':      ('Google', 'on'),
+    'webbyawards.com':          ('the Webby Awards', 'on'),
+    'winners.webbyawards.com':  ('the Webby Awards', 'on'),
+    'iadas.net':                ('IADAS', 'on'),
+    'thefwa.com':               ('The FWA', 'on'),
+    'aicpawards.awardcore.com': ('the AICP Awards', 'on'),
+    'aw.certmetrics.com':       ('AWS', 'on'),
+    'elojodeiberoamerica.com':  ('El Ojo', 'on'),
+    'live.mirren.com':          ('Mirren Live', 'on'),
+}
+
+VERBS = {
     'ARTICLE': 'Read the article', 'INTERVIEW': 'Read the interview',
     'QUOTE': 'Read the article', 'PANELIST': 'Read the article',
     'BOOK': 'Buy the book', 'GAME': 'Play the game',
     'CERTIFICATION': 'View the certification',
 }
 
-def cta_label(link, category):
-    """Label describes where the button GOES, not what the page's media is.
-    A video thumbnail above an article link still means 'read'."""
+# Some destinations are not articles at all - a jury listing, an awards
+# winners page, a social post, an event agenda. Matched on host (and path
+# where the host serves more than one kind of thing) before the category
+# fallback, because "Read the article in X" is wrong for all of these.
+DESTINATION_RULES = [
+    ('linkedin.com',              None,          'See the post on LinkedIn'),
+    ('jtubert.medium.com',        None,          'Read the post on Medium'),
+    ('winners.webbyawards.com',   None,          'See the award on the Webby Awards'),
+    ('webbyawards.com',           None,          'See the award on the Webby Awards'),
+    ('thefwa.com',                'jury',        'See the jury on The FWA'),
+    ('iadas.net',                 'bio',         'View the profile on IADAS'),
+    ('aicpawards.awardcore.com',  None,          'See the AICP Awards'),
+    ('live.mirren.com',           'agenda',      'See the agenda on Mirren Live'),
+    ('elojodeiberoamerica.com',   None,          'See the session on El Ojo'),
+    ('business.google.com',       None,          'Read the case study on Google'),
+    ('thinkwithgoogle.com',       None,          'Read the case study on Google'),
+    ('aw.certmetrics.com',        None,          'Verify the certification on AWS'),
+    ('roblox.com',                None,          'Play the game on Roblox'),
+    ('amazon.com',                None,          'Buy the book on Amazon'),
+]
+
+def cta_label(link, category, override=''):
+    """Name the destination, and describe what it actually is.
+    A `cta` column on the sheet overrides everything."""
+    if override and override.strip() and override.strip() != 'N/A':
+        return override.strip()
     host = link.split('//')[-1].split('/')[0].lower()
-    if any(h in host for h in VIDEO_HOSTS):
-        return 'Watch the video'
-    return CTA_BY_CATEGORY.get((category or '').upper(), 'Read more')
+    bare = host[4:] if host.startswith('www.') else host
+    path = '/' + '/'.join(link.split('//')[-1].split('/')[1:])
+    for h, needle, label in DESTINATION_RULES:
+        if bare == h and (needle is None or needle in path.lower()):
+            return label
+    name, prep = OUTLETS.get(bare, (None, 'on'))
+    verb = 'Watch' if any(v in bare for v in VIDEO_HOSTS) else VERBS.get((category or '').upper(), 'Read more')
+    if not name:
+        return verb
+    if verb == 'Watch':
+        return f'Watch {prep} {name}'
+    if verb == 'Read more':
+        verb = 'Read the article' if prep == 'in' else 'Read'
+    return f'{verb} {prep} {name}'
 
 def load_summaries():
     """Fallback summaries kept in the repo, since `npm run download`
@@ -168,7 +238,7 @@ def main():
             'poster': '' if blank(poster) else poster,
             'image': image,
             'media_type': mtype,
-            'cta_label': cta_label(link, cat),
+            'cta_label': cta_label(link, cat, r.get('cta') or r.get('cta_label') or ''),
             # template QUOTE means the title IS the quotation. Note `category`
             # QUOTE means something else - quoted in someone else's article.
             'is_quote': 'yes' if (r.get('template') or '').strip().upper() == 'QUOTE' else '',
