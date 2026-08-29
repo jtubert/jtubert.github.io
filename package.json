@@ -4,12 +4,12 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "local": "npm run unquarantine && PATH=\"$HOME/.gem/ruby/2.6.0/bin:$PATH\" BUNDLE_GEMFILE=Gemfile.local bundle exec jekyll serve --trace",
+    "local": "npm run unquarantine && npm run generate_pages && PATH=\"$HOME/.gem/ruby/2.6.0/bin:$PATH\" BUNDLE_GEMFILE=Gemfile.local bundle exec jekyll serve --trace",
     "deploy": "git add . && git commit -m \"deploying Jekyll site! on $(date '+%Y-%m-%d %H:%M:%S')\" && git push",
     "download": "sh script.sh",
     "generate_thumbs": "sh ffmpeg-video-to-thumb.sh",
     "download_and_deploy": "npm run download && npm run generate_thumbs && npm run generate_pages && npm run deploy",
-    "build": "PATH=\"$HOME/.gem/ruby/2.6.0/bin:$PATH\" BUNDLE_GEMFILE=Gemfile.local bundle exec jekyll build",
+    "build": "npm run generate_pages && PATH=\"$HOME/.gem/ruby/2.6.0/bin:$PATH\" BUNDLE_GEMFILE=Gemfile.local bundle exec jekyll build",
     "generate_pages": "python3 tools/generate-entry-pages.py",
     "unquarantine": "xattr -dr com.apple.quarantine vendor/bundle 2>/dev/null || true"
   },
