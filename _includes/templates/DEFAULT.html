@@ -1,59 +1,55 @@
-<amp-story-page id="{{ include.id }}" class="hagvvhkhio ms-st-pg" auto-advance-after="{{ include.autoAdvance }}">
-  <amp-story-grid-layer template="vertical" id="omdgq" class="scrim">
-    <div class="letterbox">
-      <div class="nzaxq pa nzaxq-a">
-        <h5 class="nljkx pa">{{ include.category }}</h5>
-        <h2 class="sttpq pa">{{ include.title }}</h2>
+<amp-story-page id="{{ include.id }}" class="pg-article ms-st-pg" auto-advance-after="{{ include.autoAdvance }}">
+  <amp-story-grid-layer template="vertical">
+    <div class="frame">
+
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span class="eyebrow-label">{{ include.category }}</span>
       </div>
-      <h6 class="foqgw pa foqgw-a">{{ include.date }}</h6>
-      
+
+      <div class="media">
+        {% if include.type == "image" %}
+        <amp-img layout="fill" src="{{ include.asset }}" alt="{{ include.title }}"></amp-img>
+        {% else %}
+        <amp-video layout="fill" poster="{{ include.poster }}" autoplay id="hgajlbldbp">
+          <source src="{{ include.asset }}" type="video/mp4">
+        </amp-video>
+        {% endif %}
+      </div>
+
+      <h2 class="headline">{{ include.title }}</h2>
+
+      <div class="meta">
+        {% if include.link and include.link != "N/A" and include.link != "" %}
+        <span>{{ include.link | split: "//" | last | split: "/" | first | remove: "www." }}</span>
+        <span class="meta-sep"></span>
+        {% endif %}
+        <span>{{ include.date }}</span>
+      </div>
+
       {% if include.link and include.link != "N/A" and include.link != "" %}
-      <span class="pmkku pa">
-        Click Here
+      <div class="cta">
+        Read more
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
         <a
           href="{{ include.link }}"
           role="link"
-          data-tooltip-text="Click Here"
-          class="story-tooltip pa"
+          class="story-tooltip"
+          data-tooltip-text="Read more"
           data-tooltip-icon="https://www.google.com/s2/favicons?domain={{ include.link }}"
           data-vars-ctalink="{{ include.link }}">
         </a>
-      </span>
+      </div>
       {% endif %}
 
-      {% if include.type == "image" %}
-      <div class="pxout pa">
-        <amp-img
-          width="919"
-          height="684"
-          layout="responsive"
-          class="img-fill pa"
-          src="{{ include.asset }}"
-          alt="{{ include.id }}"
-          id="hgajlbldbp">
-        </amp-img>
-      </div>
-      {% else %}
-      <div class="video-wrapper">
-        <amp-video
-          class="jpbkc pa"
-          layout="responsive"
-          width="640"
-          height="360"
-          poster="{{ include.poster }}"
-          autoplay
-          alt="{{ include.id }}"
-          id="hgajlbldbp">
-          <source src="{{ include.asset }}" type="video/mp4">
-        </amp-video>
-      </div>
-      {% endif %}
+      <amp-img class="brand" layout="responsive" width="424" height="119" src="assets/tombras-logo-alpha.png" alt="Tombras"></amp-img>
+
     </div>
   </amp-story-grid-layer>
 
   <amp-story-animation layout="nodisplay" trigger="visibility">
     <script type="application/json">
-      [{"selector":".nzaxq-a","duration":"500ms","fill":"forwards","delay":"0ms","keyframes":[{"offset":0,"opacity":0,"visibility":"visible"},{"offset":1,"opacity":"1","visibility":"visible"}]},{"selector":".foqgw-a","duration":"500ms","fill":"forwards","delay":"0ms","keyframes":[{"offset":0,"transform":"translateX(-332px)","opacity":"1","visibility":"visible"},{"offset":1,"transform":"translateX(0)","opacity":"1","visibility":"visible"}]}]
-  </script>
+      [{"selector":".headline","duration":"520ms","fill":"forwards","delay":"120ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(14px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]},{"selector":".cta","duration":"520ms","fill":"forwards","delay":"260ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(14px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]}]
+    </script>
   </amp-story-animation>
 </amp-story-page>

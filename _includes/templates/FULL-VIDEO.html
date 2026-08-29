@@ -1,43 +1,54 @@
-<amp-story-page id="{{ include.id }}" class="{{ include.id }} ms-st-pg" auto-advance-after="{{ include.autoAdvance }}">
-  
-  <!-- Background video layer -->
-  <amp-story-grid-layer template="fill">
-    <amp-video autoplay loop layout="responsive" width="720" height="1280" poster="{{ include.poster }}" id="hgajlbldbp" muted>
+<amp-story-page id="{{ include.id }}" class="pg-full ms-st-pg" auto-advance-after="{{ include.autoAdvance }}">
+
+  <amp-story-grid-layer template="fill" class="bleed">
+    <amp-video layout="fill" autoplay loop muted poster="{{ include.poster }}" id="hgajlbldbp">
       <source src="{{ include.asset }}" type="video/mp4">
     </amp-video>
   </amp-story-grid-layer>
-  
-  <!-- Text overlay layer with scrim -->
-  <amp-story-grid-layer template="vertical" class="scrim">
-    
-    {% if include.title and include.title != "N/A" and include.title != "" %}
-    <div class="letterbox">
-      <div class="nzaxq pa nzaxq-a">
-        <h2 class="sttpqxx pa">{{ include.title }}</h2>
-      </div>
-    </div>
-    {% endif %}
 
-    {% if include.link and include.link != "N/A" and include.link != "" %}
-      <span class="pmkkuxx pa">
-        Watch full video
+  <amp-story-grid-layer template="vertical">
+    <div class="frame">
+      <div class="veil"></div>
+
+      {% if include.category and include.category != "N/A" and include.category != "" %}
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span class="eyebrow-label">{{ include.category }}</span>
+      </div>
+      {% endif %}
+
+      {% if include.title and include.title != "N/A" and include.title != "" %}
+      <h2 class="headline">{{ include.title }}</h2>
+      {% endif %}
+
+      <div class="meta">
+        {% if include.link and include.link != "N/A" and include.link != "" %}
+        <span>{{ include.link | split: "//" | last | split: "/" | first | remove: "www." }}</span>
+        <span class="meta-sep"></span>
+        {% endif %}
+        <span>{{ include.date }}</span>
+      </div>
+
+      {% if include.link and include.link != "N/A" and include.link != "" %}
+      <div class="cta">
+        Watch the full video
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
         <a
           href="{{ include.link }}"
           role="link"
-          data-tooltip-text="Watch full video"
-          class="story-tooltip pa"
+          class="story-tooltip"
+          data-tooltip-text="Watch the full video"
           data-tooltip-icon="https://www.google.com/s2/favicons?domain={{ include.link }}"
           data-vars-ctalink="{{ include.link }}">
         </a>
-      </span>
+      </div>
       {% endif %}
-
+    </div>
   </amp-story-grid-layer>
 
   <amp-story-animation layout="nodisplay" trigger="visibility">
     <script type="application/json">
-      [{"selector":".nzaxq-a","duration":"500ms","fill":"forwards","delay":"0ms","keyframes":[{"offset":0,"opacity":0,"visibility":"visible"},{"offset":1,"opacity":"1","visibility":"visible"}]}]
+      [{"selector":".headline","duration":"520ms","fill":"forwards","delay":"140ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(14px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]}]
     </script>
   </amp-story-animation>
-  
 </amp-story-page>

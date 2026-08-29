@@ -1,17 +1,32 @@
-<amp-story-page id="aklmvecujp" class="aklmvecujp ms-st-pg" auto-advance-after="5000ms"> 
-	<amp-story-grid-layer template="fill" class="pbobwkpp"> 
-		<amp-img width="720" height="1280" layout="responsive" class="pbobwkp" id="aklmvecujp-bg" src="{{ include.asset }}" alt="John"></amp-img> 
-	</amp-story-grid-layer> 
+<amp-story-page id="aklmvecujp" class="pg-cover ms-st-pg" auto-advance-after="7000ms">
+  <amp-story-grid-layer template="vertical">
+    <div class="frame">
 
-	<amp-story-grid-layer template="vertical" id="krqcu" class="scrim">
-		<div class="letterbox"> 
-			<h1 class="kwzju pa">Juan(John)<br>Tubert!</h1> 
-			<h6 class="uonbi pa">https://www.linkedin.com/in/jtubert/</h6> 
-			<h6 class="ejcin pa">CTO @ Tombras</h6> 
-			<div class="iandz pa">
-				<amp-img width="424" height="119" layout="responsive" class="img-fill pa" src="assets/tombraslogo.png" alt="logo">
-				</amp-img>
-			</div>
-		</div>
-	</amp-story-grid-layer> 
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span class="eyebrow-label">Portfolio</span>
+      </div>
+
+      <div class="cover-photo">
+        <amp-img layout="fill" src="{{ include.asset }}" alt="Juan Tubert"></amp-img>
+      </div>
+
+      <h1 class="cover-name">Juan Tubert</h1>
+      <p class="cover-role">Chief Technology Officer at Tombras.</p>
+
+      <div class="rule"></div>
+
+      <div class="cover-foot">
+        <span class="handle">in/jtubert</span>
+        <amp-img class="brand" layout="responsive" width="424" height="119" src="assets/tombras-logo-alpha.png" alt="Tombras"></amp-img>
+      </div>
+
+    </div>
+  </amp-story-grid-layer>
+
+  <amp-story-animation layout="nodisplay" trigger="visibility">
+    <script type="application/json">
+      [{"selector":".cover-name","duration":"560ms","fill":"forwards","delay":"140ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(16px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]},{"selector":".cover-role","duration":"560ms","fill":"forwards","delay":"280ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(16px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]}]
+    </script>
+  </amp-story-animation>
 </amp-story-page>
