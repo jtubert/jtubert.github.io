@@ -4,3 +4,6 @@ _site
 .jekyll-metadata
 vendor
 .DS_Store
+
+# uncompressed video master - the web encode is assets/homepage-cover.mp4
+assets/homepage.mp4

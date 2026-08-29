@@ -11,6 +11,7 @@ GEM
       http_parser.rb (~> 0)
     eventmachine (1.2.7)
     execjs (2.10.0)
+    ffi (1.17.2)
     ffi (1.17.2-arm64-darwin)
     forwardable-extended (2.6.0)
     htmlcompressor (0.4.0)
@@ -82,6 +83,7 @@ GEM
 PLATFORMS
   arm64-darwin-24
   arm64-darwin-25
+  ruby
 
 DEPENDENCIES
   jekyll (~> 4.2.0)

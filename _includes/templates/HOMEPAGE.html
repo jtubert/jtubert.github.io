@@ -1,30 +1,15 @@
-<amp-story-page id="aklmvecujp" class="pg-cover ms-st-pg" auto-advance-after="7000ms">
+<amp-story-page id="aklmvecujp" class="pg-cover ms-st-pg" auto-advance-after="hgajlbldbp">
 
   <amp-story-grid-layer template="fill" class="bleed">
-    <amp-img layout="fill" src="{{ include.asset }}" alt="Juan Tubert"></amp-img>
+    <amp-video layout="fill" autoplay muted poster="assets/homepage-cover.jpg" id="hgajlbldbp">
+      <source src="assets/homepage-cover.mp4" type="video/mp4">
+    </amp-video>
   </amp-story-grid-layer>
 
   <amp-story-grid-layer template="vertical">
     <div class="frame">
-      <div class="veil"></div>
-      <div class="veil-top"></div>
-
-      <div class="cover-text">
-        <div class="cover-rule"></div>
-        <h1 class="cover-name">Juan<br>Tubert</h1>
-        <p class="cover-role">Chief Technology Officer at Tombras.</p>
-      </div>
-
-      <div class="cover-foot">
-        <span class="handle">in/jtubert</span>
-        <amp-img class="brand" layout="responsive" width="424" height="119" src="assets/tombras-logo-alpha.png" alt="Tombras"></amp-img>
-      </div>
+      <h1 class="sr-only">Juan Tubert — Chief Technology Officer at Tombras</h1>
     </div>
   </amp-story-grid-layer>
 
-  <amp-story-animation layout="nodisplay" trigger="visibility">
-    <script type="application/json">
-      [{"selector":".cover-name","duration":"620ms","fill":"forwards","delay":"140ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(18px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]},{"selector":".cover-role","duration":"560ms","fill":"forwards","delay":"320ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(16px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]}]
-    </script>
-  </amp-story-animation>
 </amp-story-page>

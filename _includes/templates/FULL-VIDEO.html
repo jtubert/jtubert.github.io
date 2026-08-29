@@ -29,21 +29,6 @@
         {% endif %}
         <span>{{ include.date }}</span>
       </div>
-
-      {% if include.link and include.link != "N/A" and include.link != "" %}
-      <div class="cta">
-        Watch the full video
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
-        <a
-          href="{{ include.link }}"
-          role="link"
-          class="story-tooltip"
-          data-tooltip-text="Watch the full video"
-          data-tooltip-icon="https://www.google.com/s2/favicons?domain={{ include.link }}"
-          data-vars-ctalink="{{ include.link }}">
-        </a>
-      </div>
-      {% endif %}
     </div>
   </amp-story-grid-layer>
 
@@ -52,4 +37,10 @@
       [{"selector":".headline","duration":"520ms","fill":"forwards","delay":"140ms","keyframes":[{"offset":0,"opacity":0,"transform":"translateY(14px)"},{"offset":1,"opacity":1,"transform":"translateY(0)"}]}]
     </script>
   </amp-story-animation>
+
+  {% if include.link and include.link != "N/A" and include.link != "" %}
+  <amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#e0141d" cta-accent-element="background">
+    <a href="{{ include.link }}" title="Watch the full video" data-vars-ctalink="{{ include.link }}">Watch the full video</a>
+  </amp-story-page-outlink>
+  {% endif %}
 </amp-story-page>
