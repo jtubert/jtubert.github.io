@@ -52,6 +52,31 @@ def build_summary(title, category, date_label):
     return s if len(s) <= 158 else s[:155].rstrip(' ,—-') + '…'
 
 
+
+
+def on_disk(path):
+    """Asset paths may carry a cache-busting query (assets/x.gif?v=1); the
+    file on disk has no query, so strip it before testing existence."""
+    if not path or path.strip() in ('', 'N/A'):
+        return False
+    return os.path.exists(os.path.join(ROOT, path.split('?', 1)[0].split('#', 1)[0]))
+
+VIDEO_HOSTS = ('youtube.com', 'youtu.be', 'vimeo.com', 'instagram.com')
+CTA_BY_CATEGORY = {
+    'ARTICLE': 'Read the article', 'INTERVIEW': 'Read the interview',
+    'QUOTE': 'Read the article', 'PANELIST': 'Read the article',
+    'BOOK': 'Buy the book', 'GAME': 'Play the game',
+    'CERTIFICATION': 'View the certification',
+}
+
+def cta_label(link, category):
+    """Label describes where the button GOES, not what the page's media is.
+    A video thumbnail above an article link still means 'read'."""
+    host = link.split('//')[-1].split('/')[0].lower()
+    if any(h in host for h in VIDEO_HOSTS):
+        return 'Watch the video'
+    return CTA_BY_CATEGORY.get((category or '').upper(), 'Read more')
+
 def load_summaries():
     """Fallback summaries kept in the repo, since `npm run download`
     overwrites stories.csv from the Google Sheet."""
@@ -115,7 +140,7 @@ def main():
         next_r = eligible[idx+1] if idx < len(eligible)-1 else None
 
         asset = (r.get('asset') or '').strip()
-        has_asset = not blank(asset) and os.path.exists(os.path.join(ROOT, asset))
+        has_asset = on_disk(asset)
         poster = (r.get('poster') or '').strip()
         mtype = (r.get('type') or 'image').strip()
         link = (r.get('link') or '').strip()
@@ -125,7 +150,7 @@ def main():
         # og:image: the entry's own art where it has some, else the story poster
         if has_asset and mtype == 'image':
             image = asset
-        elif not blank(poster) and os.path.exists(os.path.join(ROOT, poster)):
+        elif on_disk(poster):
             image = poster
         else:
             image = 'assets/story-poster-landscape.jpg'
@@ -143,7 +168,10 @@ def main():
             'poster': '' if blank(poster) else poster,
             'image': image,
             'media_type': mtype,
-            'cta_label': 'Watch the video' if mtype == 'video' else 'Read more',
+            'cta_label': cta_label(link, cat),
+            # template QUOTE means the title IS the quotation. Note `category`
+            # QUOTE means something else - quoted in someone else's article.
+            'is_quote': 'yes' if (r.get('template') or '').strip().upper() == 'QUOTE' else '',
             'summary': pick_summary(eid, r, title, cat, date_label),
             'sitemap_lastmod': iso_date(date_label),
             'prev_id': prev_r['id'].strip() if prev_r else '',

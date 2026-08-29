@@ -133,3 +133,22 @@ h1{
 	.pager{grid-template-columns:1fr}
 	.pager-link.next,.pager-link.next:only-child{grid-column:1;text-align:left}
 }
+
+/* quote entries: the title IS the quotation, so set it as one */
+.quote{margin:0 0 2rem;padding:0;border:0}
+.quote-mark{display:block;width:2.6rem;height:auto;color:var(--accent);margin-bottom:1.3rem}
+.quote-text{
+	margin:0 0 1.5rem;
+	font-size:clamp(1.75rem,5vw,2.55rem);
+	font-weight:800;
+	line-height:1.22;
+	letter-spacing:-.028em;
+	color:var(--ink);
+	text-wrap:pretty;
+}
+.quote-by{
+	display:flex;align-items:center;gap:.7rem;
+	font-size:.85rem;font-weight:700;letter-spacing:.11em;
+	text-transform:uppercase;color:var(--ink-3);
+}
+.quote-dash{width:1.8rem;height:2px;background:var(--accent);flex:0 0 auto}

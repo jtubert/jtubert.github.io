@@ -65,7 +65,18 @@
       <span class="eyebrow-label">{{ page.category }}</span>
     </div>
 
+    {% if page.is_quote != "" %}
+    <blockquote class="quote">
+      <svg class="quote-mark" viewBox="0 0 269.875 233.147" aria-hidden="true">
+        <path d="M.057,203.475a64.413,64.413,0,1,0,43.436-60.731C57.951,59.828,122.609,6.357,62.671,50.365-3.792,99.165-.014,201.512.061,203.387.061,203.417.057,203.443.057,203.475Z" transform="translate(0 -34.571)" fill="currentColor"/>
+        <path d="M266.118,203.475a64.413,64.413,0,1,0,43.436-60.731C324.011,59.828,388.67,6.357,328.732,50.365c-66.463,48.8-62.685,151.147-62.61,153.023C266.121,203.417,266.118,203.443,266.118,203.475Z" transform="translate(-124.728 -34.571)" fill="currentColor"/>
+      </svg>
+      <h1 class="quote-text">{{ page.title }}</h1>
+      <footer class="quote-by"><span class="quote-dash"></span>Juan Tubert</footer>
+    </blockquote>
+    {% else %}
     <h1>{{ page.title }}</h1>
+    {% endif %}
 
     <div class="meta">
       {%- if page.link != "" %}<span>{{ src }}</span><span class="meta-sep"></span>{% endif -%}
