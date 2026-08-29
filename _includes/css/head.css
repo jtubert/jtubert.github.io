@@ -74,9 +74,10 @@ amp-story-grid-layer{
 
 /* Media well. flex-shrink is deliberate: a long headline is allowed
    to steal height from the picture rather than run off the page. */
-/* Assets range from 0.71 to 2.50 in aspect — a lot of them are article
-   screenshots with type baked in. Anything that crops clips that type, so
-   the well mats instead of cropping. */
+/* Assets range 0.71-2.50 in aspect against a 3:2 well, so nothing but an
+   exact 3:2 fits it. Fill the frame edge to edge and accept the crop;
+   y-bias sits above centre because faces and headlines sit high in these
+   assets. Anything losing too much wants a re-crop at source. */
 .media{
 	position:relative;
 	width:100%;
@@ -89,12 +90,12 @@ amp-story-grid-layer{
 	background:var(--surface);
 }
 .media amp-img img{
-	object-fit:contain;
-	object-position:50% 50%;
+	object-fit:cover;
+	object-position:50% 40%;
 }
 .media amp-video video{
 	object-fit:cover;
-	object-position:50% 50%;
+	object-position:50% 40%;
 }
 
 .headline{
