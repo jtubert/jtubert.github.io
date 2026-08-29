@@ -240,8 +240,12 @@ a.story-tooltip{
 	text-transform:uppercase;
 	color:rgba(255,255,255,.74);
 }
+/* the mark is brand red on transparent with a knocked-out swoosh. Left as-is
+   it sits at ~3.9:1 on the dark scrim; knocked to white it reads at ~16:1 and
+   the swoosh still reads, since the gap shows the portrait through. */
 .cover-foot .brand{
 	width:5.9em;
+	filter:brightness(0) invert(1);
 }
 .pg-cover .bleed amp-img img{
 	object-fit:cover;
