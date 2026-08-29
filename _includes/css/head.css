@@ -37,7 +37,7 @@ amp-story-grid-layer{
 	width:100%;
 	height:100%;
 	box-sizing:border-box;
-	padding:7em 1.75em 5.6em;
+	padding:7em 1.75em 94px;
 	display:flex;
 	flex-direction:column;
 	gap:1.35em;
@@ -82,7 +82,12 @@ amp-story-grid-layer{
 	position:relative;
 	width:100%;
 	aspect-ratio:3 / 2;
-	flex:0 0 auto;
+	min-height:0;
+	/* shrink ONLY as a last resort: flex items compress only when content
+	   would overflow, so on every real viewport this stays a constant 3:2
+	   and the well does not move page to page. On a very short screen it
+	   gives up height rather than pushing content off the page. */
+	flex:0 1 auto;
 	border-radius:1.2em;
 	overflow:hidden;
 	box-sizing:border-box;
@@ -129,8 +134,10 @@ amp-story-grid-layer{
 	flex:0 0 auto;
 }
 
-/* AMP renders the call to action itself via amp-story-page-outlink, so the
-   frame only has to keep its own content clear of that bar. */
+/* AMP renders the call to action itself via amp-story-page-outlink. Its block
+   is a FIXED 74px tall whatever the viewport, so the reserve below has to be
+   px too - in em it shrinks with the viewport and collides on short screens
+   (a phone with browser chrome showing). 94px = 74 + a 20px gap. */
 
 .brand{
 	flex:0 0 auto;
