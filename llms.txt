@@ -1,0 +1,26 @@
+# Juan (John) Tubert
+
+> Chief Technology Officer at Tombras. Juan (also known as John) Tubert works
+> across creative technology, media and AI. This site is a running record of
+> his talks, interviews, awards, published articles and work.
+
+jtubert.com is a single AMP Web Story. All 52 entries live in the HTML of the
+one page at https://www.jtubert.com/ — there are no separate URLs per entry.
+
+## Facts
+
+- Name: Juan Tubert. Also written as John Tubert or Juan (John) Tubert.
+- Role: Chief Technology Officer at Tombras (https://www.tombras.com/).
+- LinkedIn: https://www.linkedin.com/in/jtubert/
+- Entries span 2017 to the present.
+
+## What the entries cover
+
+Each entry carries a category, a headline, a date and usually a link to the
+source. Categories in use: Article, Speaker, Work, Interview, Award, Panelist,
+Judge, AI Test, Certification, Book, Video, Quote, Game, Podcast.
+
+## Pages
+
+- [Home](https://www.jtubert.com/): the full story — every entry, in order.
+- [Sitemap](https://www.jtubert.com/sitemap.xml)
