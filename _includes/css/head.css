@@ -176,66 +176,76 @@ a.story-tooltip{
 	line-height:1.2;
 }
 
-/* ---------- cover ---------- */
+/* ---------- cover: full bleed ---------- */
 
+.pg-cover{
+	background:#17161a;
+}
 .pg-cover .frame{
 	padding-top:4.6em;
-	gap:1.15em;
+	justify-content:flex-end;
+	gap:1.5em;
 }
-.cover-photo{
+.pg-cover .veil{
+	height:66%;
+}
+/* the portrait's studio backdrop is near-white exactly where AMP paints its
+   progress bars and share icon, so lift a light scrim under them */
+.pg-cover .veil-top{
+	height:16%;
+	background:linear-gradient(to bottom, rgba(16,16,20,.42) 0%, rgba(16,16,20,0) 100%);
+}
+/* .veil is absolutely positioned and would otherwise paint over these */
+.cover-text,
+.cover-foot{
 	position:relative;
-	width:100%;
-	flex:1 1 auto;
-	min-height:0;
-	border-radius:1.35em;
-	overflow:hidden;
-	box-sizing:border-box;
-	border:1px solid var(--accent);
-	background:var(--surface);
+	flex:0 0 auto;
 }
-.cover-photo amp-img img{
-	object-fit:cover;
-	object-position:45% 18%;
+.cover-text{
+	display:flex;
+	flex-direction:column;
+	gap:.85em;
+}
+.cover-rule{
+	width:3em;
+	height:.2em;
+	background:var(--accent);
 }
 .cover-name{
 	margin:0;
-	font-size:2.9em;
+	font-size:3.5em;
 	font-weight:800;
-	line-height:1.02;
-	letter-spacing:-.038em;
-	color:var(--ink);
-	flex:0 0 auto;
+	line-height:.98;
+	letter-spacing:-.042em;
+	color:#fff;
 }
 .cover-role{
 	margin:0;
-	font-size:1.1em;
+	font-size:1.14em;
 	font-weight:600;
 	line-height:1.5;
-	color:var(--ink-2);
+	color:rgba(255,255,255,.88);
 	text-wrap:pretty;
-	flex:0 0 auto;
-}
-.rule{
-	height:1px;
-	background:var(--hair);
-	flex:0 0 auto;
 }
 .cover-foot{
 	display:flex;
 	align-items:center;
 	justify-content:space-between;
 	gap:1em;
-	flex:0 0 auto;
 }
 .handle{
 	font-size:.86em;
 	font-weight:700;
 	letter-spacing:.08em;
 	text-transform:uppercase;
-	color:var(--ink-3);
+	color:rgba(255,255,255,.74);
 }
 .cover-foot .brand{
 	width:5.9em;
+}
+.pg-cover .bleed amp-img img{
+	object-fit:cover;
+	object-position:46% 16%;
 }
 
 /* ---------- full-bleed video ---------- */
