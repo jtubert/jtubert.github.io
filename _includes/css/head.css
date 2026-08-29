@@ -40,7 +40,6 @@ amp-story-grid-layer{
 	padding:7em 1.75em 2.1em;
 	display:flex;
 	flex-direction:column;
-	justify-content:center;
 	gap:1.35em;
 }
 
@@ -82,8 +81,7 @@ amp-story-grid-layer{
 	position:relative;
 	width:100%;
 	aspect-ratio:3 / 2;
-	min-height:0;
-	flex:0 1 auto;
+	flex:0 0 auto;
 	border-radius:1.2em;
 	overflow:hidden;
 	box-sizing:border-box;
@@ -107,7 +105,7 @@ amp-story-grid-layer{
 	letter-spacing:-.025em;
 	color:var(--ink);
 	text-wrap:pretty;
-	flex:0 0 auto;
+	flex:1 0 auto;
 }
 
 .meta{
@@ -167,6 +165,14 @@ a.story-tooltip{
 .brand{
 	flex:0 0 auto;
 	width:5.4em;
+}
+.sitemark{
+	flex:0 0 auto;
+	font-size:.82em;
+	font-weight:700;
+	letter-spacing:.09em;
+	color:var(--ink-3);
+	line-height:1.2;
 }
 
 /* ---------- cover ---------- */
