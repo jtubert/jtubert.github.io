@@ -158,19 +158,22 @@ amp-story-grid-layer{
    name card, so this page carries no text overlay - it would double up.
    The h1 stays for document structure and screen readers, since none of the
    video's own type is machine readable. */
-/* The reel is a designed 9:16 layout with type at its edges, so it must not
-   be cropped - a phone taller than 9:16 would slice its header and ticker.
-   contain shows all of it; the letterbox matches the reel's own ground
-   (#f2efe8), so the bars are invisible. */
+/* The reel is 1080x2340, matching current phones almost exactly - at full
+   screen contain and cover are within 0.1% of each other. It stays contain
+   because the moment browser chrome shortens the viewport, cover would crop
+   8.6% off each end, and the reel's content starts 1.5% from the top and
+   ends 7.6% from the bottom: cover would clip it. The letterbox is sampled
+   from the encoded reel's own ground (#eeede4, 5 levels off --ground after
+   the full-to-limited range conversion) so the bars leave no seam. */
 .pg-cover{
-	background:var(--ground);
+	background:#eeede4;
 }
 .pg-cover .frame{
 	padding:0;
 }
 .pg-cover .bleed amp-video video{
 	object-fit:contain;
-	background:var(--ground);
+	background:#eeede4;
 }
 .sr-only{
 	position:absolute;
