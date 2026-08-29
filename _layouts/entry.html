@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+{%- assign src = page.link | split: "//" | last | split: "/" | first | remove: "www." -%}
+<title>{{ page.title | escape }} — Juan (John) Tubert</title>
+<meta name="description" content="{{ page.summary | escape }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>{% include css/entry.css %}</style>
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Juan (John) Tubert">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:title" content="{{ page.title | escape }}">
+<meta property="og:description" content="{{ page.summary | escape }}">
+<meta property="og:image" content="{{ site.url }}/{{ page.image }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@{{ site.twitter_username }}">
+<meta name="twitter:title" content="{{ page.title | escape }}">
+<meta name="twitter:description" content="{{ page.summary | escape }}">
+<meta name="twitter:image" content="{{ site.url }}/{{ page.image }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": {{ page.title | jsonify }},
+  "headline": {{ page.title | jsonify }},
+  "description": {{ page.summary | jsonify }},
+  "url": "{{ site.url }}{{ page.url }}",
+  "image": "{{ site.url }}/{{ page.image }}",
+  "genre": {{ page.category | jsonify }},
+  {% if page.iso_date != "" %}"datePublished": "{{ page.iso_date }}",
+  {% endif %}  {% if page.link != "" %}"sameAs": {{ page.link | jsonify }},
+  {% endif %}"author": {
+    "@type": "Person",
+    "name": "Juan Tubert",
+    "alternateName": "John Tubert",
+    "jobTitle": "Chief Technology Officer",
+    "worksFor": { "@type": "Organization", "name": "Tombras" },
+    "url": "{{ site.url }}/",
+    "sameAs": ["https://www.linkedin.com/in/jtubert/"]
+  },
+  "isPartOf": { "@type": "WebSite", "name": "jtubert.com", "url": "{{ site.url }}/" }
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <a href="{{ site.url }}/">Juan (John) Tubert</a>
+    <span class="role">CTO at Tombras</span>
+  </header>
+
+  <main>
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span class="eyebrow-label">{{ page.category }}</span>
+    </div>
+
+    <h1>{{ page.title }}</h1>
+
+    <div class="meta">
+      {%- if page.link != "" %}<span>{{ src }}</span><span class="meta-sep"></span>{% endif -%}
+      <span>{{ page.date_label }}</span>
+    </div>
+
+    {% if page.asset != "" %}
+    {% if page.media_type == "video" %}
+    <div class="media">
+      <video controls preload="none" playsinline{% if page.poster != "" %} poster="{{ site.url }}/{{ page.poster }}"{% endif %}>
+        <source src="{{ site.url }}/{{ page.asset }}" type="video/mp4">
+      </video>
+    </div>
+    {% else %}
+    <div class="media">
+      <img src="{{ site.url }}/{{ page.asset }}" alt="{{ page.title | escape }}" loading="lazy">
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if page.link != "" %}
+    <a class="cta" href="{{ page.link }}" rel="noopener">
+      {{ page.cta_label }}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+    </a>
+    {% endif %}
+
+    <nav class="pager" aria-label="More work">
+      {% if page.prev_id != "" %}
+      <a class="pager-link prev" href="{{ site.url }}/work/{{ page.prev_id }}/">
+        <span class="pager-dir">&larr; Previous</span>
+        <span class="pager-title">{{ page.prev_title }}</span>
+      </a>
+      {% endif %}
+      {% if page.next_id != "" %}
+      <a class="pager-link next" href="{{ site.url }}/work/{{ page.next_id }}/">
+        <span class="pager-dir">Next &rarr;</span>
+        <span class="pager-title">{{ page.next_title }}</span>
+      </a>
+      {% endif %}
+    </nav>
+
+    <p class="backlink">
+      <a href="{{ site.url }}/work/">All {{ page.total }} pieces of work</a>
+      &middot; <a href="{{ site.url }}/#page={{ page.entry_id }}">see this in the story</a>
+      <br>
+      Juan (John) Tubert is Chief Technology Officer at Tombras.
+    </p>
+  </main>
+
+</div>
+</body>
+</html>

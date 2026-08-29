@@ -1,0 +1,66 @@
+---
+layout: null
+permalink: /work/
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Work — Juan (John) Tubert, CTO at Tombras</title>
+<meta name="description" content="Talks, interviews, press, awards and work by Juan (John) Tubert, Chief Technology Officer at Tombras, from 2017 to today.">
+<link rel="canonical" href="{{ site.url }}/work/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>{% include css/entry.css %}</style>
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ site.url }}/work/">
+<meta property="og:title" content="Work — Juan (John) Tubert">
+<meta property="og:description" content="Talks, interviews, press, awards and work by Juan (John) Tubert, CTO at Tombras.">
+<meta property="og:image" content="{{ site.url }}/assets/story-poster-landscape.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Work — Juan (John) Tubert",
+  "url": "{{ site.url }}/work/",
+  "about": {
+    "@type": "Person",
+    "name": "Juan Tubert",
+    "alternateName": "John Tubert",
+    "jobTitle": "Chief Technology Officer",
+    "worksFor": { "@type": "Organization", "name": "Tombras" },
+    "url": "{{ site.url }}/",
+    "sameAs": ["https://www.linkedin.com/in/jtubert/"]
+  }
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a href="{{ site.url }}/">Juan (John) Tubert</a>
+    <span class="role">CTO at Tombras</span>
+  </header>
+  <main>
+    <h1>Work</h1>
+    <p class="lede">Talks, interviews, press, awards and work &mdash; from 2017 to today. The same material runs as a <a href="{{ site.url }}/">story</a>.</p>
+    <ul class="entries">
+      {%- for s in site.data.stories -%}
+      {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" %}
+      <li>
+        <a href="{{ site.url }}/work/{{ s.id }}/">
+          <span class="c">{{ s.category }}</span>
+          <span class="t">{{ s.title }}</span>
+          <span class="d">{{ s.date }}</span>
+        </a>
+      </li>
+      {%- endif -%}
+      {%- endfor %}
+    </ul>
+  </main>
+</div>
+</body>
+</html>

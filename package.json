@@ -8,8 +8,9 @@
     "deploy": "git add . && git commit -m \"deploying Jekyll site! on $(date '+%Y-%m-%d %H:%M:%S')\" && git push",
     "download": "sh script.sh",
     "generate_thumbs": "sh ffmpeg-video-to-thumb.sh",
-    "download_and_deploy": "npm run download && npm run generate_thumbs && npm run deploy",
-    "build": "PATH=\"$HOME/.gem/ruby/2.6.0/bin:$PATH\" BUNDLE_GEMFILE=Gemfile.local bundle exec jekyll build"
+    "download_and_deploy": "npm run download && npm run generate_thumbs && npm run generate_pages && npm run deploy",
+    "build": "PATH=\"$HOME/.gem/ruby/2.6.0/bin:$PATH\" BUNDLE_GEMFILE=Gemfile.local bundle exec jekyll build",
+    "generate_pages": "python3 tools/generate-entry-pages.py"
   },
   "files": [
     "build"
