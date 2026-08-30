@@ -183,6 +183,23 @@ h1{
 }
 .media-note svg{width:14px;height:14px;flex:0 0 auto}
 
+/* ---- desktop: /work/ index ----
+   Same problem the entry pages had: a 44rem column leaves most of a laptop
+   empty. The cards go three across, and the 46 row list runs in two columns
+   so the titles keep a sensible measure instead of stretching a title and a
+   date apart across the full width. */
+@media (min-width:62rem){
+	.wrap-index{max-width:70rem;padding-left:2rem;padding-right:2rem}
+	.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:.4rem}
+	.cards li{margin-bottom:0}
+	/* stacked, so the thumbnail stays 92px rather than being squeezed beside
+	   text in a third of the width */
+	.cards a{flex-direction:column;gap:.85rem;height:100%}
+	.cards .t{font-size:1.05rem}
+	.entries{column-count:2;column-gap:3rem}
+	.entries li{break-inside:avoid}
+}
+
 /* ---- desktop: media left, everything else right ----
    The pages were a 44rem column at every width, leaving ~280px of dead margin
    either side on a laptop. 46 of the 49 entries are title + media + CTA and
