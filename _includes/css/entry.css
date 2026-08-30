@@ -176,38 +176,39 @@ h1{
 	.entries .d{text-align:right}
 }
 
-/* ---- desktop: title and media side by side ----
-   46 of the 49 entries are title + media + CTA and nothing else, so the width
-   has to be spent at the top of the page - a sidebar would leave most pages
-   looking empty. Everything here is inside the query; the stacked layout on
-   narrow screens is untouched. */
+/* ---- desktop: media left, everything else right ----
+   The pages were a 44rem column at every width, leaving ~280px of dead margin
+   either side on a laptop. 46 of the 49 entries are title + media + CTA and
+   nothing else, so the width is spent on the media rather than on a sidebar,
+   which would have left most pages looking empty.
+
+   Placement only - the DOM order (head, media, CTA, body) is already what a
+   phone should stack, so the narrow layout needs no rules at all. */
 @media (min-width:62rem){
-	/* entry pages only - /work/ shares this stylesheet and its list wants
-	   to stay a narrow, scannable column */
 	.wrap-entry{max-width:70rem;padding-left:2rem;padding-right:2rem}
-	.hero{
+	.entry-main{
 		display:grid;
-		grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
-		/* the third row is empty and exists only to soak up the slack when the
-		   media is taller than the text. Without it the media, spanning both
-		   real rows, stretches them and opens a gap under the meta line. */
-		grid-template-rows:auto auto 1fr;
-		column-gap:3.25rem;
-		margin-bottom:2.4rem;
+		grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);
+		/* the fourth row is empty and exists only to absorb the slack when the
+		   media is taller than the column beside it. Without it the media,
+		   spanning the real rows, stretches them and opens gaps between the
+		   meta, the CTA and the body. */
+		grid-template-rows:auto auto auto 1fr;
+		column-gap:3rem;
 	}
-	.hero-head{grid-column:1;grid-row:1}
-	/* justify-self, or the button stretches to fill the grid column */
-	.hero > .cta{grid-column:1;grid-row:2;align-self:start;justify-self:start;margin-bottom:0}
-	.hero-media{grid-column:2;grid-row:1 / 4;align-self:start}
-	/* one entry has no media; it gets the plain centred column back */
-	.hero-solo{display:block;max-width:44rem}
+	.hero-media{grid-column:1;grid-row:1 / 5;align-self:start}
+	.hero-head{grid-column:2;grid-row:1}
+	.entry-main > .cta{grid-column:2;grid-row:2;align-self:start;justify-self:start}
+	.entry-main > .body{grid-column:2;grid-row:3}
+	.entry-main > .pager,
+	.entry-main > .backlink{grid-column:1 / -1}
+	/* one entry has no media; it keeps the plain centred column */
+	.entry-main.no-media{display:block;max-width:44rem}
 	/* the fluid size is tuned for a full-width column and is far too big in
 	   a half-width one */
-	.hero h1{font-size:clamp(1.9rem,2.7vw,2.45rem)}
-	.hero .meta{margin-bottom:1.6rem}
+	.entry-main h1{font-size:clamp(1.7rem,2.4vw,2.2rem)}
 	.hero-media .media{margin-bottom:0}
-	/* prose keeps a readable measure rather than running the full container */
-	.body{max-width:40rem}
+	.entry-main > .body{margin-top:1.6rem}
 }
 
 /* pager - every entry is a way into the rest, not a dead end */
