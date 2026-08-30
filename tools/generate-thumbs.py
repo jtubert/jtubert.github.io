@@ -9,22 +9,39 @@ Images are centre-cropped; videos use their poster, or a frame pulled with
 ffmpeg when there is no poster. Skips work already done, so re-running is
 cheap - only new or changed assets are processed.
 """
-import csv, glob, json, os, subprocess, sys
-import numpy as np
-from PIL import Image
+import csv, glob, json, os, shutil, subprocess, sys
+
+# `python3` resolves to a different interpreter depending on which shell runs
+# this - homebrew's has no Pillow, miniforge's does. Rather than pin a path in
+# package.json, find one that works and hand off to it.
+try:
+    from PIL import Image, ImageStat
+except ModuleNotFoundError:
+    if os.environ.get('_THUMBS_REEXEC'):
+        sys.exit('thumbs: no python3 with Pillow found. pip install Pillow')
+    for cand in ('/opt/homebrew/Caskroom/miniforge/base/bin/python3',
+                 '/usr/local/bin/python3', '/opt/homebrew/bin/python3',
+                 '/usr/bin/python3', shutil.which('python3')):
+        if not cand or not os.path.exists(cand):
+            continue
+        if subprocess.run([cand, '-c', 'import PIL'], capture_output=True).returncode == 0:
+            os.environ['_THUMBS_REEXEC'] = '1'
+            os.execv(cand, [cand] + sys.argv)
+    sys.exit('thumbs: no python3 with Pillow found. pip install Pillow')
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT  = os.path.join(ROOT, 'assets', 'thumbs')
-SIZE = 200           # displayed at 92px; 200 covers a 2x screen
-MAX_BYTES = 14000
+SIZE = 288           # 90px of picture inside the border; 288 covers a 3x screen
+MAX_BYTES = 24000
+HAND = os.path.join(ROOT, 'assets', 'thumbs-src')   # hand-made art wins
 
 
 def detail(im):
     """Spatial variation per channel. A blank or single-colour frame scores
     near zero; note that a solid cyan scores HIGH if you measure across
     channels instead, which is how the first pass shipped a blank tile."""
-    a = np.asarray(im.convert('RGB')).astype(float)
-    return float(np.mean([a[:, :, c].std() for c in range(3)]))
+    sd = ImageStat.Stat(im.convert('RGB')).stddev
+    return sum(sd) / len(sd)
 
 def best_frame(srcp, eid):
     """Sample across the clip and keep the frame with the most detail.
@@ -82,13 +99,30 @@ def main():
     for f in os.listdir(OUT):
         if f.endswith('.jpg') and f[:-4] not in want:
             os.remove(os.path.join(OUT, f))
+    # Which source produced each file, so that swapping art - or deleting an
+    # override so the derived frame comes back - actually invalidates it.
+    mpath = os.path.join(OUT, 'sources.json')
+    try:
+        manifest = json.load(open(mpath, encoding='utf-8'))
+    except Exception:
+        manifest = {}
     made = skipped = nothing = 0
     for r in rows:
         eid = r['id'].strip()
         dst = os.path.join(OUT, f'{eid}.jpg')
         asset, poster = clean(r.get('asset')), clean(r.get('poster'))
         src = None
-        if r.get('type') == 'image' and exists(asset):
+        # A file dropped in assets/thumbs-src/ beats anything derived from the
+        # sheet: art composed for a 90px square always reads better than a
+        # crop out of a video frame or a title card.
+        for ext in ('.png', '.jpg', '.jpeg', '.webp'):
+            cand = os.path.join('assets', 'thumbs-src', eid + ext)
+            if os.path.exists(os.path.join(ROOT, cand)):
+                src = cand
+                break
+        if src:
+            pass
+        elif r.get('type') == 'image' and exists(asset):
             src = asset
         elif exists(poster):
             src = poster
@@ -98,7 +132,9 @@ def main():
             nothing += 1
             continue
         srcp = os.path.join(ROOT, src)
-        if os.path.exists(dst) and os.path.getmtime(dst) >= os.path.getmtime(srcp):
+        stamp = [src, int(os.path.getmtime(srcp)), SIZE]
+        if os.path.exists(dst) and manifest.get(eid) == stamp \
+           and Image.open(dst).size == (SIZE, SIZE):
             skipped += 1
             continue
         try:
@@ -111,17 +147,20 @@ def main():
             # A poster is preferred, but some posters are a title card or a
             # fade. If the result carries almost no detail and there is a video
             # behind it, pull a real frame instead.
-            if detail(Image.open(dst)) < 20 and exists(asset) and \
+            if not src.startswith('assets/thumbs-src') and \
+               detail(Image.open(dst)) < 20 and exists(asset) and \
                asset.lower().endswith(('.mp4', '.mov', '.webm')):
                 frame = best_frame(os.path.join(ROOT, asset), eid)
                 if frame and detail(Image.open(frame)) > detail(Image.open(dst)):
                     square(Image.open(frame).convert('RGB'), dst)
                 for t in glob.glob(os.path.join(OUT, f'_{eid}_*.png')):
                     os.remove(t)
+            manifest[eid] = stamp
             made += 1
         except Exception as e:
             print(f'  {eid}: {e.__class__.__name__} on {src}')
             nothing += 1
+    json.dump({k: v for k, v in manifest.items() if k in want}, open(mpath, 'w'), indent=1)
     total = sum(os.path.getsize(os.path.join(OUT, f)) for f in os.listdir(OUT) if f.endswith('.jpg'))
     print(f'thumbs: {made} generated, {skipped} already current, {nothing} without art')
     print(f'  {len([f for f in os.listdir(OUT) if f.endswith(".jpg")])} files, {total//1024} KB total')
