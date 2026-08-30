@@ -103,40 +103,77 @@ h1{
 	font-size:.95rem;color:var(--ink-2);
 }
 .backlink a{font-weight:700}
-/* index */
+/* ---- /work/ index ---- */
 .lede{font-size:1.1rem;color:var(--ink-2);margin:0 0 2.4rem;max-width:34rem;text-wrap:pretty}
-.entries{list-style:none;margin:0;padding:0}
-.entries li{border-bottom:1px solid var(--hair)}
-/* ---- /work/ index, grouped by year ---- */
-.year{
-	display:flex;align-items:baseline;gap:.85rem;
-	margin:2.4rem 0 0;padding-bottom:.5rem;
+.sec{
+	display:flex;align-items:baseline;gap:.7rem;
+	margin:2.6rem 0 1rem;padding-bottom:.55rem;
 	border-bottom:2px solid var(--ink);
-	font-size:1.75rem;font-weight:800;letter-spacing:-.03em;
+	font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
 }
-.year:first-of-type{margin-top:1.6rem}
-.year .n{
-	font-size:.7rem;font-weight:700;letter-spacing:.12em;
+.sec:first-of-type{margin-top:0}
+.sec .n{font-weight:600;letter-spacing:.1em;color:var(--ink-3)}
+
+/* the few entries with a written piece behind them lead the page */
+.cards{list-style:none;margin:0 0 .4rem;padding:0}
+.cards li{margin-bottom:.75rem}
+.cards a{
+	display:flex;gap:1.15rem;align-items:flex-start;
+	padding:1rem;border:1px solid var(--hair);border-radius:.9rem;
+	background:rgba(255,255,255,.5);
+	text-decoration:none;color:var(--ink);
+}
+.cards a:hover{border-color:var(--ink-3);background:rgba(255,255,255,.9)}
+.cards a:hover .t{color:var(--accent)}
+.cards img{
+	width:92px;height:92px;flex:0 0 auto;display:block;
+	object-fit:cover;border-radius:.65rem;border:1px solid var(--accent);
+	background:var(--surface);
+}
+.cards .txt{flex:1 1 auto;min-width:0}
+.cards .c{
+	display:block;margin-bottom:.35rem;
+	font-size:.68rem;font-weight:700;letter-spacing:.12em;
 	text-transform:uppercase;color:var(--ink-3);
 }
+.cards .t{
+	display:block;margin-bottom:.35rem;
+	font-size:1.18rem;font-weight:800;letter-spacing:-.02em;line-height:1.25;
+	text-wrap:pretty;
+}
+.cards .b{
+	font-size:.88rem;line-height:1.5;color:var(--ink-2);text-wrap:pretty;
+	/* two lines keeps the three cards the same height; a longer blurb
+	   would otherwise make one card noticeably taller than its neighbours */
+	display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+	line-clamp:2;overflow:hidden;
+}
+@media (max-width:26rem){
+	.cards img{width:68px;height:68px}
+	.cards .t{font-size:1.02rem}
+	.cards .b{font-size:.82rem}
+}
+
+/* everything else, as a scannable list */
 .entries{list-style:none;margin:0;padding:0}
 .entries li{border-bottom:1px solid var(--hair)}
 .entries a{
 	display:grid;
-	grid-template-columns:2.6rem 6rem 1fr;
+	grid-template-columns:6rem 1fr auto;
 	gap:.9rem;align-items:baseline;
 	padding:.8rem 0;text-decoration:none;color:var(--ink);
 }
 .entries a:hover .t{color:var(--accent)}
-.entries .m{font-size:.8rem;font-weight:600;color:var(--ink-3)}
 .entries .c{
 	font-size:.68rem;font-weight:700;letter-spacing:.12em;
 	text-transform:uppercase;color:var(--ink-3);
 }
 .entries .t{font-size:.98rem;font-weight:700;letter-spacing:-.015em;line-height:1.35;text-wrap:pretty}
+.entries .d{font-size:.78rem;font-weight:600;color:var(--ink-3);white-space:nowrap}
 @media (max-width:32rem){
-	.entries a{grid-template-columns:2.4rem 1fr;gap:.35rem .75rem}
-	.entries .t{grid-column:1 / -1}
+	.entries a{grid-template-columns:1fr auto;gap:.3rem .75rem}
+	.entries .t{grid-column:1 / -1;order:2}
+	.entries .d{text-align:right}
 }
 
 /* pager - every entry is a way into the rest, not a dead end */

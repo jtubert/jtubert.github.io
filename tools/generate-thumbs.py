@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 """
-Square thumbnails for the /work/ grid, one per entry.
+Small square thumbnails for the cards that lead /work/.
+
+Only the featured entries need one - the rest of the index is a text list -
+so this generates from _data/featured.json, which the page generator writes.
 
 Images are centre-cropped; videos use their poster, or a frame pulled with
 ffmpeg when there is no poster. Skips work already done, so re-running is
 cheap - only new or changed assets are processed.
 """
-import csv, glob, os, subprocess, sys
+import csv, glob, json, os, subprocess, sys
 import numpy as np
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT  = os.path.join(ROOT, 'assets', 'thumbs')
-SIZE = 360           # displayed ~244px in a 3-col grid; 360 covers ~1.5x
-MAX_BYTES = 26000
+SIZE = 200           # displayed at 92px; 200 covers a 2x screen
+MAX_BYTES = 14000
 
 
 def detail(im):
@@ -68,8 +71,17 @@ def square(im, dst):
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    fp = os.path.join(ROOT, '_data', 'featured.json')
+    if not os.path.exists(fp):
+        print('thumbs: no _data/featured.json - run generate-entry-pages.py first')
+        return 1
+    want = {i['id'] for i in json.load(open(fp, encoding='utf-8'))['items']}
     rows = [r for r in csv.DictReader(open(os.path.join(ROOT, '_data/stories.csv'), encoding='utf-8'))
-            if r.get('id') and r['id'] != 'homepage' and (r.get('title') or '') not in ('', 'N/A')]
+            if (r.get('id') or '').strip() in want]
+    # Entries demoted out of the featured set shouldn't leave art behind.
+    for f in os.listdir(OUT):
+        if f.endswith('.jpg') and f[:-4] not in want:
+            os.remove(os.path.join(OUT, f))
     made = skipped = nothing = 0
     for r in rows:
         eid = r['id'].strip()

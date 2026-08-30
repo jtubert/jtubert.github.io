@@ -6,7 +6,7 @@ The AMP story is a single URL, so all 52 entries share one title, one
 description and one canonical. These pages give each entry its own.
 Run after editing the spreadsheet; wired into `npm run generate_pages`.
 """
-import csv, os, re, sys
+import csv, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT  = os.path.join(ROOT, 'work')
@@ -59,7 +59,18 @@ def build_summary(title, category, date_label):
 BODIES = os.path.join(ROOT, '_work_bodies')
 
 
-def write_year_index(eligible):
+def write_featured(items):
+    """Emitted as JSON, which Jekyll reads as data the same as YAML, so titles
+    and blurbs carrying quotes need no escaping dance."""
+    with open(os.path.join(ROOT, '_data', 'featured.json'), 'w', encoding='utf-8') as f:
+        json.dump({'items': items}, f, ensure_ascii=False, indent=2)
+    stale = os.path.join(ROOT, '_data', 'featured.yml')
+    if os.path.exists(stale):
+        os.remove(stale)
+    return [i['id'] for i in items]
+
+
+def write_year_index(eligible, featured):
     """Year label per entry plus a count per year, written for the /work/ index.
 
     Doing it here rather than in Liquid because one entry has no date and has
@@ -70,12 +81,15 @@ def write_year_index(eligible):
     current = ''
     for r in eligible:
         eid = r['id'].strip()
+        skip = eid in featured
         date = (r.get('date') or '').strip()
         yr = date.split()[-1] if date and date.split()[-1].isdigit() else ''
         if yr:
             current = yr
         year = current or 'Undated'
         label[eid] = year
+        if skip:
+            continue
         if year not in counts:
             counts[year] = 0
             order.append(year)
@@ -259,6 +273,7 @@ def main():
         eligible.append(r)
 
     written = 0
+    featured_items = []
     for idx, r in enumerate(eligible):
         eid = r['id'].strip()
         title = r['title'].strip()
@@ -309,6 +324,16 @@ def main():
             'total': len(eligible),
         }
         prose = load_body(eid)
+        # A written body is what promotes an entry to a card at the top of
+        # /work/. Derived, so the split never needs hand-maintaining.
+        if prose:
+            featured_items.append({
+                'id': eid,
+                'title': fm['title_plain'],
+                'category': cat,
+                'blurb': fm['summary'],
+                'date': date_label,
+            })
         fm['has_body'] = 'yes' if prose else ''
         fm['word_count'] = str(len(prose.split())) if prose else '0'
         page = '---\n' + ''.join(f'{k}: {yaml_str(v)}\n' for k, v in fm.items()) + '---\n'
@@ -318,8 +343,10 @@ def main():
             fh.write(page)
         written += 1
 
-    order, counts = write_year_index(eligible)
+    featured = write_featured(featured_items)
+    order, counts = write_year_index(eligible, featured)
     print(f"generated {written} entry pages in work/")
+    print(f"  featured: {featured}")
     print("  years: " + ", ".join(f"{y} ({counts[y]})" for y in order))
     for eid, why in skipped:
         print(f"  skipped {eid}: {why}")

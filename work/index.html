@@ -51,28 +51,56 @@ permalink: /work/
     <p class="lede">Talks, interviews, press, awards and work &mdash; from 2017 to today. The same material runs as a <a href="/">story</a>.</p>
 
     {%- comment -%}
-      Year labels and counts come from _data/years.yml, written by
-      tools/generate-entry-pages.py. One entry has no date and inherits the
-      year above it, which is fiddly in Liquid and easy in the generator.
+      Two tiers. _data/featured.json is written by tools/generate-entry-pages.py
+      and holds the entries that have a long-form piece behind them; writing one
+      promotes an entry up here on the next build, so the split is never a
+      hand-kept list. Everything below is the same set minus those.
     {%- endcomment -%}
-    {%- assign shown_year = "" -%}
-    {%- for s in site.data.stories -%}
-    {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" -%}
-    {%- assign yr = site.data.years.entry[s.id] -%}
-    {%- if yr != shown_year %}
-    {%- if shown_year != "" %}    </ul>
-    {% endif %}
-    <h2 class="year">{{ yr }}<span class="n">{{ site.data.years.counts[yr] }} entries</span></h2>
-    <ul class="entries">
-    {%- assign shown_year = yr -%}
-    {%- endif %}
+    {%- assign fids = site.data.featured.items | map: "id" | join: "," -%}
+    {%- assign fids = "," | append: fids | append: "," -%}
+
+    <h2 class="sec">Selected <span class="n">{{ site.data.featured.items | size }} with a full story</span></h2>
+    <ul class="cards">
+    {%- for f in site.data.featured.items %}
       <li>
-        <a href="/work/{{ s.id }}/">
-          <span class="m">{{ s.date | split: " " | first | truncate: 3, "" }}</span>
-          <span class="c">{{ s.category }}</span>
-          <span class="t">{{ s.title }}</span>
+        <a href="/work/{{ f.id }}/">
+          <img src="/assets/thumbs/{{ f.id }}.jpg" alt="" width="92" height="92" loading="lazy" decoding="async">
+          <span class="txt">
+            <span class="c">{{ f.category }}</span>
+            <span class="t">{{ f.title }}</span>
+            <span class="b">{{ f.blurb }}</span>
+          </span>
         </a>
       </li>
+    {%- endfor %}
+    </ul>
+
+    {%- assign rest = 0 -%}
+    {%- for s in site.data.stories -%}
+      {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" -%}
+        {%- assign key = "," | append: s.id | append: "," -%}
+        {%- unless fids contains key -%}{%- assign rest = rest | plus: 1 -%}{%- endunless -%}
+      {%- endif -%}
+    {%- endfor %}
+    <h2 class="sec">Everything else <span class="n">{{ rest }} more</span></h2>
+    <ul class="entries">
+    {%- for s in site.data.stories -%}
+    {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" -%}
+    {%- assign key = "," | append: s.id | append: "," -%}
+    {%- unless fids contains key %}
+      <li>
+        <a href="/work/{{ s.id }}/">
+          <span class="c">{{ s.category }}</span>
+          <span class="t">{{ s.title }}</span>
+          {%- comment -%}
+            One entry has no date in the sheet; years.yml carries the year down
+            from the entry above it, which is fiddly in Liquid and easy in the
+            generator.
+          {%- endcomment -%}
+          <span class="d">{% if s.date and s.date != "" and s.date != "N/A" %}{{ s.date | split: " " | first | truncate: 3, "" }} {{ s.date | split: " " | last }}{% else %}{{ site.data.years.entry[s.id] }}{% endif %}</span>
+        </a>
+      </li>
+    {%- endunless -%}
     {%- endif -%}
     {%- endfor %}
     </ul>
