@@ -24,11 +24,11 @@ next_title: "Will be speaking at a panel at Mirren live in May 13 and 14"
 position: "1"
 total: "49"
 has_body: "yes"
-word_count: "51"
+word_count: "56"
 ---
 
-LatinSpots interviewed me about how Tombras has evolved across creativity, media,
-technology and AI, viewed from Buenos Aires.
+LatinSpots interviewed Natalia Verri, our CMO, and me about how Tombras has
+evolved across creativity, media, technology and AI, seen from Buenos Aires.
 
 The Buenos Aires vantage point is the interesting part. Since the
 [Niña acquisition](/work/argentina/), a meaningful amount of the agency's

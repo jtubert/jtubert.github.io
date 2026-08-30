@@ -24,14 +24,18 @@ next_title: "Excited to share that I’ve been selected as a judge for the The F
 position: "16"
 total: "49"
 has_body: "yes"
-word_count: "80"
+word_count: "147"
 ---
 
-I spoke about creativity and AI at a private equity firm in Los Angeles, using
-MCPs and AI personas as the working examples.
+Paul Caiozzo, our Chief Creative Officer, and I gave a talk called Creative
+Intelligence to a Los Angeles private equity firm. Rather than describe an AI led
+creative process we ran one in front of the room.
 
-It is a different room from an advertising festival. The questions are about
-where the leverage is and what breaks at scale, not about craft. Model Context
-Protocol is a good thing to demonstrate to that audience because it makes the
-plumbing legible: an agent is only as useful as the tools you actually connect it
-to.
+The frame was a line of Paul's: AI agents will not replace all marketers, they
+will replace the hours that keep the brilliant ones from being brilliant. We
+walked the actual loop, brief to concept to consumer testing to execution, with
+Model Context Protocol connecting the agents to real tools and data, and a
+synthetic focus group of AI personas standing in for early reaction. The worked
+example took an avocado oil brand from a pile of documents to a single strategic
+line. The humans still set the filters: what is the most provocative thing we can
+say, and how do we say it in a way nobody has seen.

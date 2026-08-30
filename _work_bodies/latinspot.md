@@ -1,5 +1,5 @@
-LatinSpots interviewed me about how Tombras has evolved across creativity, media,
-technology and AI, viewed from Buenos Aires.
+LatinSpots interviewed Natalia Verri, our CMO, and me about how Tombras has
+evolved across creativity, media, technology and AI, seen from Buenos Aires.
 
 The Buenos Aires vantage point is the interesting part. Since the
 [Niña acquisition](/work/argentina/), a meaningful amount of the agency's
