@@ -50,74 +50,33 @@ permalink: /work/
     <h1>Work</h1>
     <p class="lede">Talks, interviews, press, awards and work &mdash; from 2017 to today. The same material runs as a <a href="/">story</a>.</p>
 
-    {%- comment -%} 14 categories is too many chips, so they group into four {%- endcomment -%}
-    {%- assign g_speaking = "SPEAKER,PANELIST" | split: "," -%}
-    {%- assign g_press    = "ARTICLE,INTERVIEW,QUOTE,PODCAST" | split: "," -%}
-    {%- assign g_awards   = "AWARD,JUDGE,CERTIFICATION" | split: "," -%}
-    {%- assign n_all = 0 -%}{%- assign n_sp = 0 -%}{%- assign n_pr = 0 -%}{%- assign n_aw = 0 -%}{%- assign n_wk = 0 -%}
+    {%- comment -%}
+      Year labels and counts come from _data/years.yml, written by
+      tools/generate-entry-pages.py. One entry has no date and inherits the
+      year above it, which is fiddly in Liquid and easy in the generator.
+    {%- endcomment -%}
+    {%- assign shown_year = "" -%}
     {%- for s in site.data.stories -%}
-      {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" -%}
-        {%- assign n_all = n_all | plus: 1 -%}
-        {%- if g_speaking contains s.category -%}{%- assign n_sp = n_sp | plus: 1 -%}
-        {%- elsif g_press contains s.category -%}{%- assign n_pr = n_pr | plus: 1 -%}
-        {%- elsif g_awards contains s.category -%}{%- assign n_aw = n_aw | plus: 1 -%}
-        {%- else -%}{%- assign n_wk = n_wk | plus: 1 -%}{%- endif -%}
-      {%- endif -%}
-    {%- endfor %}
-
-    <div class="filters" role="group" aria-label="Filter work">
-      <button type="button" data-filter="all" aria-pressed="true">All<span class="n">{{ n_all }}</span></button>
-      <button type="button" data-filter="speaking" aria-pressed="false">Speaking<span class="n">{{ n_sp }}</span></button>
-      <button type="button" data-filter="press" aria-pressed="false">Press<span class="n">{{ n_pr }}</span></button>
-      <button type="button" data-filter="awards" aria-pressed="false">Awards<span class="n">{{ n_aw }}</span></button>
-      <button type="button" data-filter="work" aria-pressed="false">Work<span class="n">{{ n_wk }}</span></button>
-    </div>
-
-    <ul class="grid">
-      {%- for s in site.data.stories -%}
-      {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" %}
-      {%- if g_speaking contains s.category -%}{%- assign grp = "speaking" -%}
-      {%- elsif g_press contains s.category -%}{%- assign grp = "press" -%}
-      {%- elsif g_awards contains s.category -%}{%- assign grp = "awards" -%}
-      {%- else -%}{%- assign grp = "work" -%}{%- endif -%}
-      {%- assign art = true -%}
-      {%- if s.asset == "N/A" or s.asset == "" -%}{%- if s.poster == "N/A" or s.poster == "" -%}{%- assign art = false -%}{%- endif -%}{%- endif -%}
-      <li class="tile" data-group="{{ grp }}">
+    {%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" -%}
+    {%- assign yr = site.data.years.entry[s.id] -%}
+    {%- if yr != shown_year %}
+    {%- if shown_year != "" %}    </ul>
+    {% endif %}
+    <h2 class="year">{{ yr }}<span class="n">{{ site.data.years.counts[yr] }} entries</span></h2>
+    <ul class="entries">
+    {%- assign shown_year = yr -%}
+    {%- endif %}
+      <li>
         <a href="/work/{{ s.id }}/">
-          {%- if art %}
-          <img src="/assets/thumbs/{{ s.id }}.jpg" alt="" width="360" height="360" loading="lazy" decoding="async">
-          {%- else %}
-          <span class="noart">{{ s.title | truncate: 90 }}</span>
-          {%- endif %}
+          <span class="m">{{ s.date | split: " " | first | truncate: 3, "" }}</span>
           <span class="c">{{ s.category }}</span>
           <span class="t">{{ s.title }}</span>
-          <span class="d">{{ s.date }}</span>
         </a>
       </li>
-      {%- endif -%}
-      {%- endfor %}
+    {%- endif -%}
+    {%- endfor %}
     </ul>
-    <p class="empty" hidden>Nothing in that group.</p>
   </main>
 </div>
-<script>
-(function () {
-  var buttons = document.querySelectorAll('.filters button');
-  var tiles = document.querySelectorAll('.tile');
-  var empty = document.querySelector('.empty');
-  buttons.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var group = btn.dataset.filter, shown = 0;
-      buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
-      tiles.forEach(function (t) {
-        var show = group === 'all' || t.dataset.group === group;
-        t.hidden = !show;
-        if (show) shown++;
-      });
-      if (empty) empty.hidden = shown > 0;
-    });
-  });
-})();
-</script>
 </body>
 </html>
