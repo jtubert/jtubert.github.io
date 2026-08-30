@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 {%- assign src = page.link | split: "//" | last | split: "/" | first | remove: "www." -%}
-<title>{{ page.title | escape }} — Juan (John) Tubert</title>
+<title>{{ page.title_plain | escape }} — Juan (John) Tubert</title>
 <meta name="description" content="{{ page.summary | escape }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,12 +15,12 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Juan (John) Tubert">
 <meta property="og:url" content="{{ site.url }}{{ page.url }}">
-<meta property="og:title" content="{{ page.title | escape }}">
+<meta property="og:title" content="{{ page.title_plain | escape }}">
 <meta property="og:description" content="{{ page.summary | escape }}">
 <meta property="og:image" content="{{ site.url }}/{{ page.image }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@{{ site.twitter_username }}">
-<meta name="twitter:title" content="{{ page.title | escape }}">
+<meta name="twitter:title" content="{{ page.title_plain | escape }}">
 <meta name="twitter:description" content="{{ page.summary | escape }}">
 <meta name="twitter:image" content="{{ site.url }}/{{ page.image }}">
 
@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "name": {{ page.title | jsonify }},
-  "headline": {{ page.title | jsonify }},
+  "name": {{ page.title_plain | jsonify }},
+  "headline": {{ page.title_plain | jsonify }},
   "description": {{ page.summary | jsonify }},
   "url": "{{ site.url }}{{ page.url }}",
   "image": "{{ site.url }}/{{ page.image }}",
@@ -92,7 +92,7 @@
     </div>
     {% else %}
     <div class="media">
-      <img src="/{{ page.asset }}" alt="{{ page.title | escape }}" loading="lazy">
+      <img src="/{{ page.asset }}" alt="{{ page.title_plain | escape }}" loading="lazy">
     </div>
     {% endif %}
     {% endif %}

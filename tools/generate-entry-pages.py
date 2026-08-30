@@ -54,6 +54,13 @@ def build_summary(title, category, date_label):
 
 
 
+
+def strip_tags(text):
+    """Titles occasionally carry markup (a <br> used for the story layout).
+    It renders as a line break in the H1 but leaks literally into <title>
+    and og:title, so metadata gets a plain-text version."""
+    return ' '.join(re.sub(r'<[^>]+>', ' ', text or '').split())
+
 def on_disk(path):
     """Asset paths may carry a cache-busting query (assets/x.gif?v=1); the
     file on disk has no query, so strip it before testing existence."""
@@ -230,6 +237,7 @@ def main():
             'permalink': f'/work/{eid}/',
             'entry_id': eid,
             'title': title,
+            'title_plain': strip_tags(title),
             'category': cat,
             'date_label': date_label,
             'iso_date': iso_date(date_label),
