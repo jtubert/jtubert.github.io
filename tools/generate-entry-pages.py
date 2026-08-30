@@ -6,7 +6,7 @@ The AMP story is a single URL, so all 52 entries share one title, one
 description and one canonical. These pages give each entry its own.
 Run after editing the spreadsheet; wired into `npm run generate_pages`.
 """
-import csv, json, os, re, sys
+import csv, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT  = os.path.join(ROOT, 'work')
@@ -57,6 +57,24 @@ def build_summary(title, category, date_label):
 
 
 BODIES = os.path.join(ROOT, '_work_bodies')
+
+
+def has_audio(path):
+    """Whether a clip actually carries sound. The pages autoplay muted, so they
+    tell the reader to unmute - but only where there is something to hear.
+    Four of the clips are silent screen recordings."""
+    full = os.path.join(ROOT, path.split('?')[0])
+    if not os.path.exists(full):
+        return False
+    try:
+        out = subprocess.run(
+            ['ffprobe', '-v', 'error', '-select_streams', 'a',
+             '-show_entries', 'stream=codec_name', '-of', 'csv=p=0', full],
+            capture_output=True, text=True, timeout=30).stdout.strip()
+        return bool(out)
+    except Exception:
+        # no ffprobe on this machine: stay silent rather than promise sound
+        return False
 
 
 def load_selected():
@@ -322,6 +340,8 @@ def main():
             'poster': '' if blank(poster) else poster,
             'image': image,
             'media_type': mtype,
+            'has_audio': 'yes' if (mtype == 'video' and has_asset
+                                   and has_audio(asset)) else '',
             'cta_label': cta_label(link, cat, r.get('cta') or r.get('cta_label') or ''),
             # template QUOTE means the title IS the quotation. Note `category`
             # QUOTE means something else - quoted in someone else's article.

@@ -104,10 +104,21 @@
         <img src="/{{ page.asset }}" alt="{{ page.title_plain | escape }}" loading="lazy">
       </div>
       {% endif %}
+      {%- comment -%}
+        The clip autoplays muted, so say so. Only where there is something to
+        hear: has_audio comes from ffprobe in tools/generate-entry-pages.py, and
+        four of the clips are silent screen recordings.
+      {%- endcomment -%}
+      {% if page.has_audio != "" %}
+      <p class="media-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a9 9 0 0 1 0 14"></path></svg>
+        Plays muted. Use the player controls for sound.
+      </p>
+      {% endif %}
     </div>
     {% endif %}
     {% if page.link != "" %}
-    <a class="cta" href="{{ page.link }}" rel="noopener">
+    <a class="cta" href="{{ page.link }}" target="_blank" rel="noopener noreferrer">
       {{ page.cta_label }}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
     </a>

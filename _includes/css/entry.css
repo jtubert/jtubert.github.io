@@ -176,6 +176,13 @@ h1{
 	.entries .d{text-align:right}
 }
 
+.media-note{
+	display:flex;align-items:center;gap:.4rem;
+	margin:.6rem 0 0;
+	font-size:.78rem;font-weight:600;color:var(--ink-3);
+}
+.media-note svg{width:14px;height:14px;flex:0 0 auto}
+
 /* ---- desktop: media left, everything else right ----
    The pages were a 44rem column at every width, leaving ~280px of dead margin
    either side on a laptop. 46 of the 49 entries are title + media + CTA and

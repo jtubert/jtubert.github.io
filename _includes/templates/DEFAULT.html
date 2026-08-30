@@ -44,7 +44,7 @@
   {%- assign cta = "Read more" -%}
   {%- if host contains "youtube" or host contains "youtu.be" or host contains "vimeo" or host contains "instagram" -%}{%- assign cta = "Watch the video" -%}{%- endif -%}
   <amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#e0141d" cta-accent-element="background">
-    <a href="{{ include.link }}" title="{{ cta }}" data-vars-ctalink="{{ include.link }}">{{ cta }}</a>
+    <a href="{{ include.link }}" title="{{ cta }}" target="_blank" data-vars-ctalink="{{ include.link }}">{{ cta }}</a>
   </amp-story-page-outlink>
   {% endif %}
 </amp-story-page>
