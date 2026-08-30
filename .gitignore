@@ -10,3 +10,6 @@ assets/homepage.mp4
 
 # playwright scratch output
 .playwright-mcp
+
+# uncompressed image master - the web encode is assets/book.jpeg
+assets/book.png
