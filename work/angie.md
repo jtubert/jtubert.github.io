@@ -22,6 +22,13 @@ next_id: "posttalk"
 next_title: "Post talk interview"
 position: "7"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "47"
 ---
+
+A conversation with Angie Hernández about AI, recorded for her audience rather
+than an industry one.
+
+Explaining this work to people outside advertising is a good discipline. The
+jargon does not survive the trip, and what is left is either a clear idea or
+nothing at all.

@@ -22,6 +22,15 @@ next_id: "female"
 next_title: "The Female Quotient: Moving from conversation to action"
 position: "42"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "75"
 ---
+
+I recorded a podcast on testing and learning, and exploring technology with a
+human first approach, and published the transcript.
+
+The argument was that the useful posture toward new technology is neither
+enthusiasm nor refusal, but a habit of trying things at small scale and being
+honest about what did not work. It is the position I still hold, and it is
+roughly what I said years later at
+[El Ojo](/work/ojo3/) and in the [book](/work/book/).

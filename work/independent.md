@@ -22,6 +22,14 @@ next_id: "deepfake"
 next_title: "Deepfakes Awareness: Steak-umm Anti-Misinformation"
 position: "31"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "63"
 ---
+
+Ad Age named Tombras Independent Agency of the Year for 2024.
+
+Independence is the part that matters to me technically. It means we can decide
+what to build rather than adopt whatever a holding company has standardised on,
+which is how projects like the [PODS billboard](/work/pods/) get made at all.
+Tombras went on to be named [Agency of the Year](/work/adage/) the following
+year.

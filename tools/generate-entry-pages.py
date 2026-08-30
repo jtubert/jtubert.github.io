@@ -59,6 +59,15 @@ def build_summary(title, category, date_label):
 BODIES = os.path.join(ROOT, '_work_bodies')
 
 
+def load_selected():
+    """The ids that lead /work/, from _data/selected.yml. A repo-side file, so
+    it survives `npm run download` overwriting the sheet."""
+    path = os.path.join(ROOT, '_data', 'selected.yml')
+    ids = re.findall(r'^\s*-\s*["\']?([A-Za-z0-9_-]+)["\']?\s*$',
+                     open(path, encoding='utf-8').read(), re.M)
+    return ids
+
+
 def write_featured(items):
     """Emitted as JSON, which Jekyll reads as data the same as YAML, so titles
     and blurbs carrying quotes need no escaping dance."""
@@ -246,6 +255,9 @@ def pick_summary(eid, row, title, cat, date_label):
         return SUMMARIES[eid]
     return build_summary(title, cat, date_label)
 
+SELECTED = load_selected()
+
+
 def main():
     rows = [r for r in csv.DictReader(open(CSV, encoding='utf-8')) if r.get('id')]
     os.makedirs(OUT, exist_ok=True)
@@ -324,9 +336,7 @@ def main():
             'total': len(eligible),
         }
         prose = load_body(eid)
-        # A written body is what promotes an entry to a card at the top of
-        # /work/. Derived, so the split never needs hand-maintaining.
-        if prose:
+        if eid in SELECTED:
             featured_items.append({
                 'id': eid,
                 'title': fm['title_plain'],
@@ -343,6 +353,8 @@ def main():
             fh.write(page)
         written += 1
 
+    # keep the order given in selected.yml rather than sheet order
+    featured_items.sort(key=lambda i: SELECTED.index(i['id']))
     featured = write_featured(featured_items)
     order, counts = write_year_index(eligible, featured)
     print(f"generated {written} entry pages in work/")

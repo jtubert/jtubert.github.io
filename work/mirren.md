@@ -22,6 +22,12 @@ next_id: "ojo_full"
 next_title: "Full video with my talk from the Ojo de Iberoamerica now available"
 position: "2"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "50"
 ---
+
+I am speaking on a panel at Mirren Live in May.
+
+Mirren's audience is agency leadership rather than practitioners, so the
+conversation tends to be about how you run the place: what to build, what to buy,
+and how to tell the difference between a capability and a press release.

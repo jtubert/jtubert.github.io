@@ -22,6 +22,14 @@ next_id: "sxsw"
 next_title: "SXSW speaker: Danger of bias in AI"
 position: "46"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "70"
 ---
+
+I spoke on an inclusive advertising panel at Google Marketing Live.
+
+The conversation was about advertising that reaches people it has historically
+talked past, and about the fact that inclusion is a production and technology
+question as much as a creative one. Casting, language, captioning and testing all
+sit downstream of decisions someone makes in a build. It runs alongside the
+argument I was making the same year at [SXSW](/work/sxsw/).

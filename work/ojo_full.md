@@ -22,6 +22,13 @@ next_id: "book"
 next_title: "Surviving the AI Shift — a book on building human-centered AI"
 position: "3"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "52"
 ---
+
+The full video of the El Ojo de Iberoamérica talk is now online.
+
+It is the complete session in Spanish, rather than the clips that circulated
+after the festival. If you want the argument rather than the highlights, this is
+the one to watch. The written summary is on
+[the talk's page](/work/ojo3/).

@@ -23,23 +23,23 @@ next_title: "Test every model that comes out, but be selective about what you pu
 position: "10"
 total: "49"
 has_body: "yes"
-word_count: "332"
+word_count: "330"
 ---
 
 At El Ojo de Iberoamérica 2025 in Buenos Aires, Gonzalo Vecino and I gave a talk
-called *Cómo usar la IA para construir una agencia más eficiente* — how to use AI
+called *Cómo usar la IA para construir una agencia más eficiente*, on how to use AI
 to build a more efficient agency. Gonzalo is CCO Latam at TombrasNiña and
 president of Agencias Argentinas; I came at it from the technology side.
 
 <dl class="facts">
-  <dt>My role</dt><dd>Chief Technology Officer, Tombras — co-presenter</dd>
+  <dt>My role</dt><dd>Chief Technology Officer, Tombras, co-presenter</dd>
   <dt>With</dt><dd>Gonzalo Vecino, CCO Latam, TombrasNiña</dd>
   <dt>Where</dt><dd>El Ojo de Iberoamérica 2025, Buenos Aires</dd>
 </dl>
 
 ## The argument
 
-Most conversations about AI in advertising stop at the last step — generating the
+Most conversations about AI in advertising stop at the last step, generating the
 asset. We wanted to make a different case: that AI changes the operating model of
 an agency, not just its output. Briefs, research, production, personalisation and
 measurement are all places where the work can change shape.

@@ -14,14 +14,14 @@ R/GA in 2025.
 
 The argument running through the book is the one I keep making in talks: AI is
 an amplifier, not a replacement. A model can produce a thousand variations and
-cannot tell you which one will land. That gap — between generating options and
-knowing which one matters — is where people still do the work.
+cannot tell you which one will land. That gap, between generating options and
+knowing which one matters, is where people still do the work.
 
 It also covers how teams should operate. Play with everything, deploy with
 care: test every model that ships, and be
 [selective about what reaches production](/work/ojoquote/). Don't centralise AI
 in a specialist team, because that removes the domain expert exactly when their
-judgement is most needed — your finance lead catches errors in a budget
+judgement is most needed. Your finance lead catches errors in a budget
 projection that a creative technologist never would. And expect the lines
 between disciplines to blur, because a designer who can prototype and a
 developer who can design are more capable versions of themselves, not diluted
@@ -34,7 +34,7 @@ sorts the risks into three kinds: harm to yourself, harm to others, harm to the
 planet.
 
 The first is cognitive. Every act of delegation is individually rational and
-collectively dangerous — the same pattern as GPS and spatial memory. Hence the
+collectively dangerous, the same pattern as GPS and spatial memory. Hence the
 thirty percent rule: if more than half your output is AI-generated, you have
 crossed from collaboration into dependence.
 

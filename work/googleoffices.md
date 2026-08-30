@@ -22,6 +22,15 @@ next_id: "argentina"
 next_title: "Tombras expands globally with acquisition of Argentine agency"
 position: "28"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "83"
 ---
+
+I spoke at Google's offices about the campaign we built with them for PODS, and
+Think with Google wrote it up as part of their AI Excellence series.
+
+Talking about it in that room was useful because the questions were about the
+plumbing rather than the idea: latency, failure handling, how you hold a brand
+voice across thousands of generated lines. Those are the parts that decide
+whether this kind of work ships. The full write up is on the
+[PODS project page](/work/pods/).

@@ -4,7 +4,7 @@ turned a PODS moving truck into a billboard whose message changed with its
 location and with real-time context as it drove through New York City.
 
 <dl class="facts">
-  <dt>My role</dt><dd>Chief Technology Officer, Tombras — the API and cloud system behind the truck</dd>
+  <dt>My role</dt><dd>Chief Technology Officer, Tombras. The API and cloud system behind the truck</dd>
   <dt>Technology</dt><dd>Google Gemini, Vertex AI, Maps, Sheets and Cloud Run</dd>
   <dt>Recognition</dt><dd>2025 Webby for Best Experiential Design, AI Immersive &amp; Games</dd>
 </dl>
@@ -35,7 +35,7 @@ This was not AI replacing creative work. The creative team set the voice, wrote
 the premise and chose the strongest outputs; the system made it possible to
 operate at a scale that would otherwise have needed thousands of manual
 executions. One of the copywriters told Think with Google he would "personally
-never agree to writing 6,000 lines" — which is exactly the point. The machine
+never agree to writing 6,000 lines", which is exactly the point. The machine
 did the volume. People decided what was worth saying.
 
 I keep coming back to that division of labour. It is the same one I argued for

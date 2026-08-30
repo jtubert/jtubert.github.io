@@ -22,6 +22,14 @@ next_id: "cio"
 next_title: "Chatbot Innovation Featured in CIO Applications"
 position: "39"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "70"
 ---
+
+I built a small game in Roblox called Deadly Stairs, for no reason other than
+wanting to see how the platform worked.
+
+Roblox is where an enormous number of people now spend their time, and reading
+about it is not the same as shipping something into it and watching what happens.
+Most of what I understand about a platform comes from making something small and
+slightly bad on it first.

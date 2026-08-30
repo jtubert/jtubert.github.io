@@ -22,6 +22,15 @@ next_id: "freezerflag"
 next_title: "Steak-umm Freezer Flag: Smart Kitchen Innovation"
 position: "21"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "66"
 ---
+
+I completed the AI Agents Fundamentals course from Hugging Face and Unit 0 of
+their agents curriculum.
+
+I keep doing these. Reading about agent frameworks and actually building one that
+has to call tools, handle failures and stay within a budget are different
+activities, and the second one is where you find out what the abstractions
+actually cost. The same instinct is behind the
+[ComfyUI experiments](/work/comfyui/).

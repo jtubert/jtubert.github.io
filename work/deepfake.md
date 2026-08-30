@@ -22,6 +22,19 @@ next_id: "forty"
 next_title: "Campaign 40 Over 40 Award Recognition"
 position: "32"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "121"
 ---
+
+DeepSteaks was a Steak-umm campaign we made at Tombras in October 2023. Real
+vegans were invited to what they believed was a focus group about their diet.
+Behind the scenes, a production team directed by Jason Woliner built a deepfake
+of each participant in about twenty minutes, then played it back to them saying
+things they had never said.
+
+The reactions were the point. "That's not what I said." "Those words did not come
+out of my mouth." It ran as a public service announcement, pointing people to a
+petition for the DEEP FAKES Accountability Act and to guidance on spotting
+manipulated video. It came out of the same brand position as the
+[Meataversity](/work/meataversity/): a frozen beef company taking misinformation
+seriously.

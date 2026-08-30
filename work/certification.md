@@ -22,6 +22,13 @@ next_id: "adweek"
 next_title: "ADWEEK: Tech Companies Need to Improve Their Voice Assistants to Make Them Inclusive"
 position: "48"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "59"
 ---
+
+I earned the AWS Alexa Skill Builder certification in early 2019.
+
+It was the practical follow up to the voice work I had been doing at R/GA,
+including the [Assassin's Creed Spartan skill](/work/alexa/) and the
+[Adweek piece](/work/adweek/) on how badly these assistants handled accents. It
+is easier to argue about a platform's limits when you have shipped on it.

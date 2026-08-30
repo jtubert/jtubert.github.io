@@ -22,6 +22,15 @@ next_id: "ojo"
 next_title: "Speaking at Ojo de Iberoamerica about AI in November 2025"
 position: "12"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "75"
 ---
+
+I spent time with ComfyUI, which is a node based interface for running image and
+video models.
+
+The reason it is worth the trouble is that the graph is explicit. You can see
+where the model sits in relation to everything around it, swap one out, and
+compare results without rebuilding anything. That makes it a good place to try
+several models honestly, which is the position I keep arguing for: test
+everything, [ship selectively](/work/ojoquote/).

@@ -22,6 +22,13 @@ next_id: "tombrasai"
 next_title: "Presented a new AI platform at an internal all-hands meeting"
 position: "13"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "57"
 ---
+
+El Ojo de Iberoamérica announced me as a speaker for its 2025 edition in Buenos
+Aires, on using AI to build a more efficient agency.
+
+El Ojo is the largest creative festival in Latin America, and presenting there in
+Spanish, in the city I am from, was not a small thing.
+[The talk itself](/work/ojo3/) came in November.

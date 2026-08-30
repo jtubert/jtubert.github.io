@@ -22,6 +22,15 @@ next_id: "pods"
 next_title: "Google Gemini AI Campaign for Pods Storage"
 position: "24"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "71"
 ---
+
+LatinSpots interviewed me about TombrasNiña and how creativity and technology
+work together in practice.
+
+The honest answer is that they only work together when the technologists are in
+the room early. Handing a finished idea to a technical team and asking whether it
+is possible produces a much smaller set of ideas than having both in the
+conversation from the start. That is the argument I later took to
+[El Ojo](/work/ojo3/).

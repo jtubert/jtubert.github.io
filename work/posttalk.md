@@ -22,6 +22,13 @@ next_id: "ojo2"
 next_title: "Presented at Ojo de Iberoamerica in Argentina"
 position: "8"
 total: "49"
-has_body: ""
-word_count: "0"
+has_body: "yes"
+word_count: "52"
 ---
+
+A short interview recorded straight after the El Ojo talk.
+
+Post talk interviews tend to be more useful than prepared ones. You have just
+spent forty minutes making an argument and you know immediately which parts of it
+landed and which needed another pass. The talk itself is on
+[its own page](/work/ojo3/).
