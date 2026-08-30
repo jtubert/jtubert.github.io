@@ -83,9 +83,11 @@ h1{
 	overflow:hidden;
 	border:1px solid var(--accent);
 	background:var(--surface);
-	margin-bottom:2rem;
 	line-height:0;
 }
+/* the gap sits on the wrapper, so the note stays tucked under the video and
+   the space falls after it rather than between the two */
+.hero-media{margin-bottom:2rem}
 .media img,.media video{width:100%;height:auto;display:block}
 .cta{
 	display:inline-flex;align-items:center;gap:.6rem;
@@ -178,7 +180,7 @@ h1{
 
 .media-note{
 	display:flex;align-items:center;gap:.4rem;
-	margin:.6rem 0 0;
+	margin:.5rem 0 0;
 	font-size:.78rem;font-weight:600;color:var(--ink-3);
 }
 .media-note svg{width:14px;height:14px;flex:0 0 auto}
@@ -220,7 +222,7 @@ h1{
 		grid-template-rows:auto auto auto 1fr;
 		column-gap:3rem;
 	}
-	.hero-media{grid-column:1;grid-row:1 / 5;align-self:start}
+	.hero-media{grid-column:1;grid-row:1 / 5;align-self:start;margin-bottom:0}
 	.hero-head{grid-column:2;grid-row:1}
 	.entry-main > .cta{grid-column:2;grid-row:2;align-self:start;justify-self:start}
 	.entry-main > .body{grid-column:2;grid-row:3}
@@ -231,7 +233,6 @@ h1{
 	/* the fluid size is tuned for a full-width column and is far too big in
 	   a half-width one */
 	.entry-main h1{font-size:clamp(1.7rem,2.4vw,2.2rem)}
-	.hero-media .media{margin-bottom:0}
 	.entry-main > .body{margin-top:1.6rem}
 }
 
