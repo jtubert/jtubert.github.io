@@ -50,7 +50,7 @@
 </script>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap wrap-entry">
 
   <header class="masthead">
     <a href="/">Juan (John) Tubert</a>
@@ -60,49 +60,61 @@
   </header>
 
   <main>
-    <div class="eyebrow">
-      <span class="eyebrow-dot"></span>
-      <span class="eyebrow-label">{{ page.category }}</span>
-    </div>
+    {%- comment -%}
+      Hero: the text and the media sit side by side on desktop and stack on
+      narrow screens. Three children in the order head / media / CTA, which is
+      exactly the stacked order wanted on a phone - desktop reorders them with
+      grid placement rather than the DOM, so mobile needs no rules at all.
+    {%- endcomment -%}
+    <div class="hero{% if page.asset == "" %} hero-solo{% endif %}">
+      <div class="hero-head">
+        <div class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span class="eyebrow-label">{{ page.category }}</span>
+        </div>
 
-    {% if page.is_quote != "" %}
-    <blockquote class="quote">
-      <svg class="quote-mark" viewBox="0 0 269.875 233.147" aria-hidden="true">
-        <path d="M.057,203.475a64.413,64.413,0,1,0,43.436-60.731C57.951,59.828,122.609,6.357,62.671,50.365-3.792,99.165-.014,201.512.061,203.387.061,203.417.057,203.443.057,203.475Z" transform="translate(0 -34.571)" fill="currentColor"/>
-        <path d="M266.118,203.475a64.413,64.413,0,1,0,43.436-60.731C324.011,59.828,388.67,6.357,328.732,50.365c-66.463,48.8-62.685,151.147-62.61,153.023C266.121,203.417,266.118,203.443,266.118,203.475Z" transform="translate(-124.728 -34.571)" fill="currentColor"/>
-      </svg>
-      <h1 class="quote-text">{{ page.title }}</h1>
-      <footer class="quote-by"><span class="quote-dash"></span>Juan Tubert</footer>
-    </blockquote>
-    {% else %}
-    <h1>{{ page.title }}</h1>
-    {% endif %}
+        {% if page.is_quote != "" %}
+        <blockquote class="quote">
+          <svg class="quote-mark" viewBox="0 0 269.875 233.147" aria-hidden="true">
+            <path d="M.057,203.475a64.413,64.413,0,1,0,43.436-60.731C57.951,59.828,122.609,6.357,62.671,50.365-3.792,99.165-.014,201.512.061,203.387.061,203.417.057,203.443.057,203.475Z" transform="translate(0 -34.571)" fill="currentColor"/>
+            <path d="M266.118,203.475a64.413,64.413,0,1,0,43.436-60.731C324.011,59.828,388.67,6.357,328.732,50.365c-66.463,48.8-62.685,151.147-62.61,153.023C266.121,203.417,266.118,203.443,266.118,203.475Z" transform="translate(-124.728 -34.571)" fill="currentColor"/>
+          </svg>
+          <h1 class="quote-text">{{ page.title }}</h1>
+          <footer class="quote-by"><span class="quote-dash"></span>Juan Tubert</footer>
+        </blockquote>
+        {% else %}
+        <h1>{{ page.title }}</h1>
+        {% endif %}
 
-    <div class="meta">
-      {%- if page.link != "" %}<span>{{ src }}</span><span class="meta-sep"></span>{% endif -%}
-      <span>{{ page.date_label }}</span>
-    </div>
+        <div class="meta">
+          {%- if page.link != "" %}<span>{{ src }}</span><span class="meta-sep"></span>{% endif -%}
+          <span>{{ page.date_label }}</span>
+        </div>
+      </div>
 
-    {% if page.asset != "" %}
-    {% if page.media_type == "video" %}
-    <div class="media">
-      <video autoplay muted loop playsinline controls preload="metadata"{% if page.poster != "" %} poster="/{{ page.poster }}"{% endif %}>
-        <source src="/{{ page.asset }}" type="video/mp4">
-      </video>
-    </div>
-    {% else %}
-    <div class="media">
-      <img src="/{{ page.asset }}" alt="{{ page.title_plain | escape }}" loading="lazy">
-    </div>
-    {% endif %}
-    {% endif %}
-
+      {% if page.asset != "" %}
+      <div class="hero-media">
+        {% if page.media_type == "video" %}
+        <div class="media">
+          <video autoplay muted loop playsinline controls preload="metadata"{% if page.poster != "" %} poster="/{{ page.poster }}"{% endif %}>
+            <source src="/{{ page.asset }}" type="video/mp4">
+          </video>
+        </div>
+        {% else %}
+        <div class="media">
+          <img src="/{{ page.asset }}" alt="{{ page.title_plain | escape }}" loading="lazy">
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
     {% if page.link != "" %}
-    <a class="cta" href="{{ page.link }}" rel="noopener">
-      {{ page.cta_label }}
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
-    </a>
-    {% endif %}
+      <a class="cta" href="{{ page.link }}" rel="noopener">
+        {{ page.cta_label }}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+      </a>
+      {% endif %}
+    </div>
+
 
     {% if page.has_body != "" %}
     <div class="body">

@@ -176,6 +176,40 @@ h1{
 	.entries .d{text-align:right}
 }
 
+/* ---- desktop: title and media side by side ----
+   46 of the 49 entries are title + media + CTA and nothing else, so the width
+   has to be spent at the top of the page - a sidebar would leave most pages
+   looking empty. Everything here is inside the query; the stacked layout on
+   narrow screens is untouched. */
+@media (min-width:62rem){
+	/* entry pages only - /work/ shares this stylesheet and its list wants
+	   to stay a narrow, scannable column */
+	.wrap-entry{max-width:70rem;padding-left:2rem;padding-right:2rem}
+	.hero{
+		display:grid;
+		grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+		/* the third row is empty and exists only to soak up the slack when the
+		   media is taller than the text. Without it the media, spanning both
+		   real rows, stretches them and opens a gap under the meta line. */
+		grid-template-rows:auto auto 1fr;
+		column-gap:3.25rem;
+		margin-bottom:2.4rem;
+	}
+	.hero-head{grid-column:1;grid-row:1}
+	/* justify-self, or the button stretches to fill the grid column */
+	.hero > .cta{grid-column:1;grid-row:2;align-self:start;justify-self:start;margin-bottom:0}
+	.hero-media{grid-column:2;grid-row:1 / 4;align-self:start}
+	/* one entry has no media; it gets the plain centred column back */
+	.hero-solo{display:block;max-width:44rem}
+	/* the fluid size is tuned for a full-width column and is far too big in
+	   a half-width one */
+	.hero h1{font-size:clamp(1.9rem,2.7vw,2.45rem)}
+	.hero .meta{margin-bottom:1.6rem}
+	.hero-media .media{margin-bottom:0}
+	/* prose keeps a readable measure rather than running the full container */
+	.body{max-width:40rem}
+}
+
 /* pager - every entry is a way into the rest, not a dead end */
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:2.8rem}
 .pager-link{
