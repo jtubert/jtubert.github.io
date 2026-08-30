@@ -155,3 +155,28 @@ h1{
 	text-transform:uppercase;color:var(--ink-3);
 }
 .quote-dash{width:1.8rem;height:2px;background:var(--accent);flex:0 0 auto}
+
+/* long-form page content */
+.body{margin:2.4rem 0 0;max-width:38rem}
+.body p{margin:0 0 1.15rem;font-size:1.06rem;line-height:1.62;color:var(--ink-2)}
+.body p:first-child{font-size:1.16rem;color:var(--ink)}
+.body h2{
+	margin:2.2rem 0 .9rem;font-size:1.32rem;font-weight:800;
+	letter-spacing:-.02em;color:var(--ink);
+}
+.body ul{margin:0 0 1.15rem;padding-left:1.15rem;color:var(--ink-2)}
+.body li{margin:0 0 .45rem;line-height:1.6}
+.body a{font-weight:600}
+.body strong{color:var(--ink);font-weight:700}
+.facts{
+	display:grid;grid-template-columns:auto 1fr;gap:.5rem 1.1rem;
+	margin:1.6rem 0 1.9rem;padding:1.1rem 1.25rem;
+	border:1px solid var(--hair);border-radius:12px;
+	background:rgba(255,255,255,.45);font-size:.95rem;
+}
+.facts dt{
+	font-size:.72rem;font-weight:700;letter-spacing:.11em;
+	text-transform:uppercase;color:var(--ink-3);padding-top:.2rem;
+}
+.facts dd{margin:0;color:var(--ink-2)}
+@media (max-width:30rem){.facts{grid-template-columns:1fr;gap:.15rem .5rem}.facts dd{margin-bottom:.6rem}}

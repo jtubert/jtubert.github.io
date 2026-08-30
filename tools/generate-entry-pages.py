@@ -55,6 +55,18 @@ def build_summary(title, category, date_label):
 
 
 
+
+BODIES = os.path.join(ROOT, '_work_bodies')
+
+def load_body(eid):
+    """Long-form page content, if written. Markdown, one file per entry.
+    Lives in the repo rather than the sheet: 150-300 words does not belong
+    in a spreadsheet cell, and `npm run download` would overwrite it."""
+    path = os.path.join(BODIES, eid + '.md')
+    if not os.path.exists(path):
+        return ''
+    return open(path, encoding='utf-8').read().strip()
+
 def strip_tags(text):
     """Titles occasionally carry markup (a <br> used for the story layout).
     It renders as a line break in the H1 but leaks literally into <title>
@@ -190,7 +202,7 @@ def main():
     # linger as a live URL - while leaving hand-written files (index.html) alone.
     for f in os.listdir(OUT):
         path = os.path.join(OUT, f)
-        if f == 'index.html' or not f.endswith('.html'):
+        if f == 'index.html' or not (f.endswith('.html') or f.endswith('.md')):
             continue
         with open(path, encoding='utf-8') as fh:
             head = fh.read(400)
@@ -259,9 +271,14 @@ def main():
             'position': idx + 1,
             'total': len(eligible),
         }
-        body = '---\n' + ''.join(f'{k}: {yaml_str(v)}\n' for k, v in fm.items()) + '---\n'
-        with open(os.path.join(OUT, f'{eid}.html'), 'w', encoding='utf-8') as fh:
-            fh.write(body)
+        prose = load_body(eid)
+        fm['has_body'] = 'yes' if prose else ''
+        fm['word_count'] = str(len(prose.split())) if prose else '0'
+        page = '---\n' + ''.join(f'{k}: {yaml_str(v)}\n' for k, v in fm.items()) + '---\n'
+        if prose:
+            page += '\n' + prose + '\n'
+        with open(os.path.join(OUT, f'{eid}.md'), 'w', encoding='utf-8') as fh:
+            fh.write(page)
         written += 1
 
     print(f"generated {written} entry pages in work/")

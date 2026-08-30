@@ -104,6 +104,12 @@
     </a>
     {% endif %}
 
+    {% if page.has_body != "" %}
+    <div class="body">
+      {{ content }}
+    </div>
+    {% endif %}
+
     <nav class="pager" aria-label="More work">
       {% if page.prev_id != "" %}
       <a class="pager-link prev" href="/work/{{ page.prev_id }}/">
