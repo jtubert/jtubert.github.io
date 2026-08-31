@@ -43,5 +43,5 @@ I keep coming back to that division of labour. It is the same one I argued for
 at [El Ojo de Iberoamérica](/work/ojo3/), and the reason I think
 [human creativity still leads](/work/human/) even as the tooling gets better.
 
-Google liked the work enough to ask us to talk about it on camera, which is
-[its own piece](/work/pods/).
+Google went on to use the campaign in its own advertising for Gemini, which is
+[its own entry](/work/pods/).

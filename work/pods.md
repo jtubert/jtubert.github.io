@@ -25,16 +25,17 @@ next_title: "Human Creativity vs AI: Irreplaceable Innovation"
 position: "25"
 total: "49"
 has_body: "yes"
-word_count: "107"
+word_count: "123"
 ---
 
-Google liked the PODS campaign enough to ask us to make a film about it. This is
-that piece, produced with Google Cloud: about a minute and a half of me
-explaining how the moving billboard worked, cut against footage of the truck
-going through New York.
+This is an ad Google made to promote Gemini. They asked us to take part after
+the PODS campaign landed, so it is me on camera as CTO of Tombras explaining how
+the moving billboard worked, cut against footage of the truck moving through New
+York.
 
-Being asked is the part I find worth recording. The work was built for Google's
-AI Lighthouse program, and the request to turn round and explain it publicly
-came because the campaign landed, not because we pitched a case study. What the
-campaign actually was, what it produced and the engineering behind it are on the
+The part worth recording is who is selling what. We built the campaign; Google
+used it to sell Gemini. Being the proof point in someone else's advertising is a
+different thing from a case study you write about yourself, and it is a better
+signal, because nobody puts your work in their own ad unless it actually worked.
+What the campaign was, what it produced and the engineering behind it are on the
 [Ad Age write up](/work/googlepods/).
