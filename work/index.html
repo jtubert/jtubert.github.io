@@ -41,8 +41,13 @@ permalink: /work/
 <body>
 <div class="wrap wrap-index">
   <header class="masthead">
-    <a href="/">Juan (John) Tubert</a>
-    <a class="brandmark" href="https://www.tombras.com/" rel="noopener" aria-label="Tombras">
+    {%- comment -%}
+      Personal site, so the lockup reads as one line: the name links home and
+      the Tombras logo stands in for the word, linking to Tombras. Nothing sits
+      on the right any more.
+    {%- endcomment -%}
+    <a class="whoami" href="/">Juan Tubert, CTO @</a>
+    <a class="brandmark" href="https://www.tombras.com/" target="_blank" rel="noopener" aria-label="Tombras">
       <img src="/assets/tombras-logo.png" alt="Tombras" width="330" height="91">
     </a>
   </header>

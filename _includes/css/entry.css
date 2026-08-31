@@ -22,8 +22,9 @@ a{color:var(--accent)}
 .masthead{
 	display:flex;
 	align-items:center;
-	justify-content:space-between;
-	gap:1rem;
+	justify-content:flex-start;
+	gap:.4rem;
+	flex-wrap:wrap;
 	padding:.9rem 0 1.6rem;
 	border-bottom:1px solid var(--hair);
 	margin-bottom:2.2rem;
@@ -41,8 +42,10 @@ a{color:var(--accent)}
 	display:block;
 }
 .masthead .brandmark img{
-	width:106px;
-	height:auto;
+	/* sized to sit in the line of text, since the logo now stands in for the
+	   word "Tombras" rather than being a separate mark in the corner */
+	height:1.5em;
+	width:auto;
 	display:block;
 }
 /* the pager doubles as the hint that the arrow keys work */
