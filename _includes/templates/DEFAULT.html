@@ -44,7 +44,15 @@
   {%- assign cta = "Read more" -%}
   {%- if host contains "youtube" or host contains "youtu.be" or host contains "vimeo" or host contains "instagram" -%}{%- assign cta = "Watch the video" -%}{%- endif -%}
   <amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#e0141d" cta-accent-element="background">
-    <a href="{{ include.link }}" title="{{ cta }}" target="_blank" data-vars-ctalink="{{ include.link }}">{{ cta }}</a>
+  {%- comment -%}
+    No target here. The AMP runtime overwrites it with target="_top" on every
+    page outlink, so target="_blank" is inert. It is deliberate upstream
+    (ampproject/amphtml#36428): opening a new tab needs a trusted event, and
+    Safari does not treat the swipe-up gesture as trusted, so _blank broke
+    navigation on iOS. Story CTAs open in the same tab and cannot be changed.
+    The /work/ entry pages are ordinary HTML and do open in a new tab.
+  {%- endcomment -%}
+    <a href="{{ include.link }}" title="{{ cta }}" data-vars-ctalink="{{ include.link }}">{{ cta }}</a>
   </amp-story-page-outlink>
   {% endif %}
 </amp-story-page>

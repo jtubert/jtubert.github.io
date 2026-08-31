@@ -135,6 +135,12 @@ correctly. It only generates for ids in `_data/selected.yml`.
   hardcodes its label, so a search for the shared markup will miss it.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
+- **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
+  target with `_top`, so `target="_blank"` validates but is inert. Deliberate
+  upstream (ampproject/amphtml#36428): a new tab needs a trusted event and
+  Safari does not treat the swipe-up as trusted, which broke navigation on iOS.
+  Do not re-add it. The `/work/` entry pages are ordinary HTML and do open in a
+  new tab.
 - **AMP constraints**: `amp-custom` CSS is capped at 75,000 bytes and forbids
   `!important`. `amp-video` does not support `layout="intrinsic"`. Validate with
   `npx amphtml-validator _site/index.html` after touching anything in the story.
