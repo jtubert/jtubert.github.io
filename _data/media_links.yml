@@ -1,0 +1,4 @@
+# Entries whose hero image links to a PDF of the original article.
+# Repo-side, so npm run download cannot overwrite it. id: path
+cio: /pdfs/chatbot.pdf
+emotional: /pdfs/communicationarts.pdf

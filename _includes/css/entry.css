@@ -184,6 +184,16 @@ h1{
 	font-size:.78rem;font-weight:600;color:var(--ink-3);
 }
 .media-note svg{width:14px;height:14px;flex:0 0 auto}
+/* the hero image links to a PDF on a couple of entries; say so, since a
+   clickable image with no affordance is a link nobody finds */
+.media a{display:block}
+.media-link{margin:.5rem 0 0;font-size:.78rem;font-weight:600}
+.media-link a{
+	display:inline-flex;align-items:center;gap:.4rem;
+	color:var(--ink-3);text-decoration:none;
+}
+.media-link a:hover{color:var(--accent);text-decoration:underline}
+.media-link svg{width:14px;height:14px;flex:0 0 auto}
 
 /* ---- desktop: /work/ index ----
    Same problem the entry pages had: a 44rem column leaves most of a laptop

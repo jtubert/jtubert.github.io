@@ -77,6 +77,18 @@ def has_audio(path):
         return False
 
 
+def load_media_links():
+    """Entries whose hero image opens a PDF of the original article."""
+    path = os.path.join(ROOT, '_data', 'media_links.yml')
+    out = {}
+    if os.path.exists(path):
+        for line in open(path, encoding='utf-8'):
+            m = re.match(r'^\s*([A-Za-z0-9_-]+)\s*:\s*(\S+)\s*$', line)
+            if m:
+                out[m.group(1)] = m.group(2)
+    return out
+
+
 def load_selected():
     """The ids that lead /work/, from _data/selected.yml. A repo-side file, so
     it survives `npm run download` overwriting the sheet."""
@@ -274,6 +286,7 @@ def pick_summary(eid, row, title, cat, date_label):
     return build_summary(title, cat, date_label)
 
 SELECTED = load_selected()
+MEDIA_LINKS = load_media_links()
 
 
 def main():
@@ -340,6 +353,7 @@ def main():
             'poster': '' if blank(poster) else poster,
             'image': image,
             'media_type': mtype,
+            'media_link': MEDIA_LINKS.get(eid, ''),
             'has_audio': 'yes' if (mtype == 'video' and has_asset
                                    and has_audio(asset)) else '',
             'cta_label': cta_label(link, cat, r.get('cta') or r.get('cta_label') or ''),

@@ -101,8 +101,23 @@
       </div>
       {% else %}
       <div class="media">
+        {%- comment -%}
+          A few entries have a PDF of the original article, listed in
+          _data/media_links.yml. The image opens it, and the caption below says
+          so: a clickable image with no affordance is a link nobody finds.
+        {%- endcomment -%}
+        {% if page.media_link != "" %}<a href="{{ page.media_link }}" target="_blank" rel="noopener" aria-label="Open the original article as a PDF">{% endif %}
         <img src="/{{ page.asset }}" alt="{{ page.title_plain | escape }}" loading="lazy">
+        {% if page.media_link != "" %}</a>{% endif %}
       </div>
+      {% endif %}
+      {% if page.media_link != "" %}
+      <p class="media-link">
+        <a href="{{ page.media_link }}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          Read the original article as a PDF
+        </a>
+      </p>
       {% endif %}
       {%- comment -%}
         The clip autoplays muted, so say so. Only where there is something to
