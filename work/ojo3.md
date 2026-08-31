@@ -66,6 +66,6 @@ capability in the hands of the whole team rather than a specialist queue; use AI
 where personalisation was previously too expensive to attempt; and redesign around
 what the technology now makes possible instead of bolting it onto the old process.
 
-Related: the [PODS Gemini campaign](/work/pods/) is what this thinking looks like
+Related: the [PODS Gemini campaign](/work/googlepods/) is what this thinking looks like
 applied to a single piece of work, and this
 [interview with Latinspots](/work/latinspot/) covers the same ground.

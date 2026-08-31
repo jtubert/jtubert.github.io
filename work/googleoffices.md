@@ -35,4 +35,4 @@ Talking about it in that room was useful because the questions were about the
 plumbing rather than the idea: latency, failure handling, how you hold a brand
 voice across thousands of generated lines. Those are the parts that decide
 whether this kind of work ships. The full write up is on the
-[PODS project page](/work/pods/).
+[PODS project page](/work/googlepods/).
