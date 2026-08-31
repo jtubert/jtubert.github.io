@@ -1,5 +1,5 @@
-*Surviving the AI Shift: How to Build Human-Centered Products in the Age of
-Artificial Intelligence* is a book I wrote with Brian Hanley and Rick Barber.
+*You Work for Your User: How to Design User-Centric Products in the Age of AI*
+is a book I wrote with Brian Hanley and Rick Barber.
 Brian leads product management at Comcast and wrote *The Roadmap Is a Lie*;
 Rick is CTO and co-founder of Addition, an AI system design studio that joined
 R/GA in 2025.
