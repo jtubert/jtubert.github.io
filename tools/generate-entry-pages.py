@@ -77,17 +77,27 @@ def has_audio(path):
         return False
 
 
-def load_media_links():
-    """Entries whose hero image opens a PDF of the original article."""
-    path = os.path.join(ROOT, '_data', 'media_links.yml')
+def load_pairs(filename, default_label):
+    """id: <url> | <optional caption>, one per line. Used by media_links.yml
+    and audio.yml, both repo-side so a sheet download cannot clear them."""
+    path = os.path.join(ROOT, '_data', filename)
     out = {}
     if os.path.exists(path):
         for line in open(path, encoding='utf-8'):
             m = re.match(r'^\s*([A-Za-z0-9_-]+)\s*:\s*(\S+)\s*(?:\|\s*(.+?)\s*)?$', line)
             if m:
-                out[m.group(1)] = (m.group(2),
-                                   m.group(3) or 'Read the original article as a PDF')
+                out[m.group(1)] = (m.group(2), m.group(3) or default_label)
     return out
+
+
+def load_media_links():
+    """Entries whose hero image opens a PDF of the original article."""
+    return load_pairs('media_links.yml', 'Read the original article as a PDF')
+
+
+def load_audio():
+    """Entries with an episode to play on the page."""
+    return load_pairs('audio.yml', 'Listen to the full episode')
 
 
 def load_selected():
@@ -288,6 +298,7 @@ def pick_summary(eid, row, title, cat, date_label):
 
 SELECTED = load_selected()
 MEDIA_LINKS = load_media_links()
+AUDIO = load_audio()
 
 
 def main():
@@ -356,6 +367,8 @@ def main():
             'media_type': mtype,
             'media_link': MEDIA_LINKS.get(eid, ('', ''))[0],
             'media_link_label': MEDIA_LINKS.get(eid, ('', ''))[1],
+            'audio_file': AUDIO.get(eid, ('', ''))[0],
+            'audio_label': AUDIO.get(eid, ('', ''))[1],
             'has_audio': 'yes' if (mtype == 'video' and has_asset
                                    and has_audio(asset)) else '',
             'cta_label': cta_label(link, cat, r.get('cta') or r.get('cta_label') or ''),

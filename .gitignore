@@ -16,3 +16,6 @@ assets/book.png
 
 # camera master for the ojo3 card art; the web file is assets/thumbs-src/ojo3.jpg
 IMG_7532.JPG
+
+# uncompressed audio masters; the web encode is assets/podcast.mp3
+mp3/

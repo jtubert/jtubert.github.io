@@ -32,6 +32,7 @@ survive a download lives in the repo instead:
 | `_data/summaries.yml` | Fallback summaries, used only when the sheet column is empty. |
 | `assets/thumbs-src/<id>.jpg` | Hand-made card art that overrides the derived thumbnail. |
 | `_data/media_links.yml` | Entries whose hero opens a PDF. `id: <url> | <optional caption>`. |
+| `_data/audio.yml` | Entries with an episode to play. Same `id: <url> | <caption>` format. |
 
 Generated, do not edit by hand: `work/*.md`, `_data/featured.json`,
 `_data/years.yml`, `assets/thumbs/*`.
@@ -139,6 +140,10 @@ correctly. It only generates for ids in `_data/selected.yml`.
   caption does, since a clickable video would swallow the player controls.
   Percent-encode spaces in the path. The caption defaults to the article
   wording, so decks pass their own after a `|`.
+- **Audio.** `_data/audio.yml` puts a player under the hero. `preload="metadata"`
+  so the file is not fetched until play. Encode speech as mono: the source for
+  `podcast` was 320kbps dual-mono stereo at 80 MB, and 64kbps mono is 16 MB with
+  no audible loss, since its side channel measured 0.08% of the mid.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's

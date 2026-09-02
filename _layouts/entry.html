@@ -127,6 +127,21 @@
         Plays muted. Use the player controls for sound.
       </p>
       {% endif %}
+      {%- comment -%}
+        Entries with an episode to play, from _data/audio.yml. preload=metadata
+        so a 16 MB file is not pulled down until someone presses play.
+      {%- endcomment -%}
+      {% if page.audio_file != "" %}
+      <div class="media-audio">
+        <audio controls preload="metadata" src="{{ page.audio_file }}">
+          <a href="{{ page.audio_file }}">Download the episode</a>
+        </audio>
+        <p class="media-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a9 9 0 0 1 0 14"></path></svg>
+          {{ page.audio_label }}
+        </p>
+      </div>
+      {% endif %}
       {% if page.media_link != "" %}
       <p class="media-link">
         <a href="{{ page.media_link }}" target="_blank" rel="noopener">

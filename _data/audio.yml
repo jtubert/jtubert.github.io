@@ -1,0 +1,3 @@
+# Entries with a playable audio file. Repo-side, so npm run download cannot
+# overwrite it. Format: id: <url> | <optional caption>
+podcast: /assets/podcast.mp3 | Listen to the full episode, 35 minutes
