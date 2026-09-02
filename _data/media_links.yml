@@ -1,4 +1,6 @@
-# Entries whose hero image links to a PDF of the original article.
-# Repo-side, so npm run download cannot overwrite it. id: path
+# Entries whose hero image opens a PDF. Repo-side, so npm run download cannot
+# overwrite it. Format: id: <url> | <optional caption>
+# Percent-encode spaces in the path; the caption defaults to the article wording.
 cio: /pdfs/chatbot.pdf
 emotional: /pdfs/communicationarts.pdf
+sxsw: /pdfs/SXSW%20Extreme%20danger%20of%20bias%20in%20Artificial%20Intelligence.pptx.pdf | See the slides as a PDF

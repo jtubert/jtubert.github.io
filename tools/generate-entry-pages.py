@@ -83,9 +83,10 @@ def load_media_links():
     out = {}
     if os.path.exists(path):
         for line in open(path, encoding='utf-8'):
-            m = re.match(r'^\s*([A-Za-z0-9_-]+)\s*:\s*(\S+)\s*$', line)
+            m = re.match(r'^\s*([A-Za-z0-9_-]+)\s*:\s*(\S+)\s*(?:\|\s*(.+?)\s*)?$', line)
             if m:
-                out[m.group(1)] = m.group(2)
+                out[m.group(1)] = (m.group(2),
+                                   m.group(3) or 'Read the original article as a PDF')
     return out
 
 
@@ -353,7 +354,8 @@ def main():
             'poster': '' if blank(poster) else poster,
             'image': image,
             'media_type': mtype,
-            'media_link': MEDIA_LINKS.get(eid, ''),
+            'media_link': MEDIA_LINKS.get(eid, ('', ''))[0],
+            'media_link_label': MEDIA_LINKS.get(eid, ('', ''))[1],
             'has_audio': 'yes' if (mtype == 'video' and has_asset
                                    and has_audio(asset)) else '',
             'cta_label': cta_label(link, cat, r.get('cta') or r.get('cta_label') or ''),

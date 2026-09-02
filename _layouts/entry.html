@@ -116,14 +116,6 @@
         {% if page.media_link != "" %}</a>{% endif %}
       </div>
       {% endif %}
-      {% if page.media_link != "" %}
-      <p class="media-link">
-        <a href="{{ page.media_link }}" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-          Read the original article as a PDF
-        </a>
-      </p>
-      {% endif %}
       {%- comment -%}
         The clip autoplays muted, so say so. Only where there is something to
         hear: has_audio comes from ffprobe in tools/generate-entry-pages.py, and
@@ -133,6 +125,14 @@
       <p class="media-note">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a9 9 0 0 1 0 14"></path></svg>
         Plays muted. Use the player controls for sound.
+      </p>
+      {% endif %}
+      {% if page.media_link != "" %}
+      <p class="media-link">
+        <a href="{{ page.media_link }}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          {{ page.media_link_label }}
+        </a>
       </p>
       {% endif %}
     </div>

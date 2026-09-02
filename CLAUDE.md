@@ -31,6 +31,7 @@ survive a download lives in the repo instead:
 | `_data/selected.yml` | The hand-picked ids that lead `/work/` as cards. Currently `book`, `ojo3`, `pods`. |
 | `_data/summaries.yml` | Fallback summaries, used only when the sheet column is empty. |
 | `assets/thumbs-src/<id>.jpg` | Hand-made card art that overrides the derived thumbnail. |
+| `_data/media_links.yml` | Entries whose hero opens a PDF. `id: <url> | <optional caption>`. |
 
 Generated, do not edit by hand: `work/*.md`, `_data/featured.json`,
 `_data/years.yml`, `assets/thumbs/*`.
@@ -133,6 +134,11 @@ correctly. It only generates for ids in `_data/selected.yml`.
   domain is known ("Read the article in AdAge"), generic otherwise. Both story
   templates carry the outlink: `DEFAULT` and `FULL-VIDEO`. `FULL-VIDEO`
   hardcodes its label, so a search for the shared markup will miss it.
+- **Hero PDFs.** `_data/media_links.yml` gives an entry a PDF of the original.
+  On image entries the hero itself becomes the link; on video entries only the
+  caption does, since a clickable video would swallow the player controls.
+  Percent-encode spaces in the path. The caption defaults to the article
+  wording, so decks pass their own after a `|`.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
