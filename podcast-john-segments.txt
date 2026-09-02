@@ -1,0 +1,6 @@
+{
+  "speakerCounts": {},
+  "johnBlocks": 0,
+  "johnChars": 0,
+  "john": ""
+}
