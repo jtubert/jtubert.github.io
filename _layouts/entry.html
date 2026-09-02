@@ -64,6 +64,14 @@
     </a>
   </header>
 
+  {%- comment -%}
+    The arrow-key handler at the foot of this file has always worked but was
+    only hinted at by the small keycaps in the pager. Sits at the top so it is
+    seen before the reader needs it. CSS hides it on anything without a real
+    keyboard, so phones never see it.
+  {%- endcomment -%}
+  <p class="keyhint">Use the <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> arrow keys to move between entries.</p>
+
   <main class="entry-main{% if page.asset == "" %} no-media{% endif %}">
     {%- comment -%}
     Children run head / media / CTA / body, which is exactly the order a

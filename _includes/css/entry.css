@@ -253,6 +253,23 @@ h1{
 }
 
 /* pager - every entry is a way into the rest, not a dead end */
+/* Keyboard hint. Hidden unless the device actually has one: a wide viewport
+   alone would show it on a touch tablet, where it is useless. */
+.keyhint{display:none}
+@media (min-width:62rem) and (hover:hover) and (pointer:fine){
+	.keyhint{
+		display:block;
+		margin:-1.3rem 0 1.7rem;
+		font-size:.78rem;font-weight:600;color:var(--ink-3);
+	}
+	.keyhint kbd{
+		display:inline-block;
+		padding:0 .32em;margin:0 .1em;
+		border:1px solid currentColor;border-radius:3px;
+		font:inherit;line-height:1.35;opacity:.7;
+	}
+}
+
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:2.8rem}
 .pager-link{
 	display:flex;flex-direction:column;gap:.35rem;
