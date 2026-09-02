@@ -28,14 +28,28 @@ next_title: "Emotional AI: Human-Centered Technology Design"
 position: "40"
 total: "49"
 has_body: "yes"
-word_count: "76"
+word_count: "239"
 ---
 
-CIO Applications featured the chatbot work I had been leading, in their June 2021
-issue on conversational technology.
+I wrote the cover story for CIO Applications' Chatbot Edition in June 2021, on
+where chatbots were heading.
 
-Most chatbot projects of that era failed for the same reason: they were built as
-a cheaper contact centre rather than as a product anyone wanted to use. The ones
-that worked started from what a person was actually trying to get done. That is
-the same argument I later made about [emotional AI](/work/emotional/) and about
-[voice assistants](/work/adweek/).
+The argument was that they had stopped being scripted answer trees. Eliza, in
+1966, could handle a few simple questions if you phrased them simply enough. By
+2021 GPT-3 could produce text that was grammatically sound, and a bot could
+answer almost anything by reaching into a repository like Wikipedia instead of
+having its replies hardcoded. Google's and Microsoft's models had passed the
+human baseline of 89.8 on language understanding benchmarks, and the capability
+list had already run past understanding into translating, summarising, writing
+essays, writing code and generating images from a description. DALL-E had not
+shipped yet. I described it as the thing that would hand you a picture if you
+asked for a chair shaped like an avocado.
+
+The prediction I would still make is that chatbots would take over a share of the
+cognitive load, so you would ask one rather than run a search. The part I have
+since watched arrive is the risk. I wrote about voice cloning and synthetic video
+as the technologies that would make these agents feel human, listed the detection
+tools that existed at the time, and pointed to a campaign we had made that put
+David Beckham into many languages for Malaria Must Die. Two years later I worked
+on [DeepSteaks](/work/deepfake/), which used the same technique to warn people
+about it.
