@@ -63,10 +63,16 @@
       <img src="/assets/tombras-logo.png" alt="Tombras" width="330" height="91">
     </a>
     <div class="masthead-nav">
-      <button type="button" class="wnav-jump" id="wnav-toggle" aria-expanded="false" aria-controls="wnav-list">
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="14" y2="17"></line></svg>
-      Side menu
-    </button>
+      {%- comment -%}
+        One opener, two shapes. On a phone it stays an ordinary header button;
+        from 48rem it becomes a tab fixed to the right edge, where the page has
+        margin to spare. A fixed tab on a 390px screen sits on the words.
+      {%- endcomment -%}
+      <button type="button" class="wnav-tab" id="wnav-toggle" aria-expanded="false" aria-controls="wnav-list">
+        <svg class="wnav-tab-list" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="14" y2="17"></line></svg>
+        <svg class="wnav-tab-chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 6 9 12 15 18"></polyline></svg>
+        <span class="wnav-tab-label">All work</span>
+      </button>
       {% if page.prev_id != "" %}<a class="wnav-step" href="/work/{{ page.prev_id }}/"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="11 6 5 12 11 18"></polyline></svg>Prev</a>{% endif %}
       {% if page.next_id != "" %}<a class="wnav-step" href="/work/{{ page.next_id }}/">Next<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg></a>{% endif %}
     </div>

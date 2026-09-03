@@ -267,18 +267,43 @@ h1{
 .masthead-nav{display:flex;align-items:center;gap:.6rem;margin-left:auto;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .wnav-back{display:inline-flex;align-items:center;gap:.4rem;color:var(--accent);text-decoration:none;flex:0 0 auto}
 .wnav-spacer{flex:1}
-/* Outlined rather than filled: a solid red button would compete with the CTA,
-   which is the only filled red on the page. The 1px accent hairline is the
-   same treatment the media well uses. */
-.wnav-jump{
+/* One opener in two shapes. On a phone it is an ordinary header button; from
+   48rem it becomes a tab clinging to the right edge, the way a bookmark sticks
+   out of a book, present the whole time you read. Fixed positioning only where
+   the page has margin to spare: on a 390px screen a fixed tab sits on the
+   words. Outlined rather than filled either way, so it never competes with the
+   CTA, the only filled red on the page. */
+.wnav-tab{
 	display:inline-flex;align-items:center;gap:.45rem;
 	padding:.34rem .7rem;border:1px solid var(--accent);border-radius:8px;
 	background:rgba(255,255,255,.55);color:var(--accent);
 	font:inherit;font-size:.72rem;font-weight:700;letter-spacing:.08em;
 	text-transform:uppercase;cursor:pointer;
 }
-.wnav-jump:hover{background:var(--accent);color:#fff}
-.wnav-jump[aria-expanded="true"]{background:var(--accent);color:#fff}
+.wnav-tab-chev{display:none}
+.wnav-tab:hover{background:var(--accent);color:#fff}
+.wnav-tab:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+@media (min-width:48rem){
+	.wnav-tab{
+		position:fixed;right:0;top:50%;transform:translateY(-50%);
+		flex-direction:column;gap:.5rem;
+		padding:.95rem .5rem;
+		background:var(--ground);
+		border-right:0;border-radius:10px 0 0 10px;
+		box-shadow:-6px 0 18px rgba(23,22,26,.07);
+		letter-spacing:normal;text-transform:none;
+		z-index:7;
+		transition:padding-right .16s ease,background .16s ease,color .16s ease;
+	}
+	.wnav-tab-list{display:none}
+	.wnav-tab-chev{display:block}
+	.wnav-tab-label{
+		writing-mode:vertical-rl;transform:rotate(180deg);
+		font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+	}
+	.wnav-tab:hover{padding-right:.85rem}
+}
 .wnav-step{display:inline-flex;align-items:center;gap:.35rem;color:var(--ink-2);text-decoration:none;flex:0 0 auto}
 .wnav-step:hover{color:var(--accent)}
 
