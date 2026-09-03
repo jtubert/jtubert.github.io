@@ -262,14 +262,18 @@ h1{
 .masthead-nav{display:flex;align-items:center;gap:.6rem;margin-left:auto;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .wnav-back{display:inline-flex;align-items:center;gap:.4rem;color:var(--accent);text-decoration:none;flex:0 0 auto}
 .wnav-spacer{flex:1}
+/* Outlined rather than filled: a solid red button would compete with the CTA,
+   which is the only filled red on the page. The 1px accent hairline is the
+   same treatment the media well uses. */
 .wnav-jump{
 	display:inline-flex;align-items:center;gap:.45rem;
-	padding:.3rem .62rem;border:1px solid var(--hair);border-radius:7px;
-	background:rgba(255,255,255,.55);color:var(--ink-2);
-	font:inherit;font-size:.72rem;letter-spacing:.08em;cursor:pointer;
+	padding:.34rem .7rem;border:1px solid var(--accent);border-radius:8px;
+	background:rgba(255,255,255,.55);color:var(--accent);
+	font:inherit;font-size:.72rem;font-weight:700;letter-spacing:.08em;
+	text-transform:uppercase;cursor:pointer;
 }
-.wnav-jump:hover{border-color:var(--ink-3)}
-.wnav-jump[aria-expanded="true"]{border-color:var(--accent);color:var(--accent);background:rgba(224,20,29,.07)}
+.wnav-jump:hover{background:var(--accent);color:#fff}
+.wnav-jump[aria-expanded="true"]{background:var(--accent);color:#fff}
 .wnav-step{display:inline-flex;align-items:center;gap:.35rem;color:var(--ink-2);text-decoration:none;flex:0 0 auto}
 .wnav-step:hover{color:var(--accent)}
 
