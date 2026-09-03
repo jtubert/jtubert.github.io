@@ -312,6 +312,9 @@ h1{
    hamburger, and the page is swipeable instead. 44px minimum so it is a real
    touch target. */
 @media (max-width:47.99rem){
+	/* the side menu and the footer both reach the index, so the crumb row is
+	   one row of chrome a phone does not need */
+	.wnav{display:none}
 	.wnav-step{display:none}
 	.wnav-tab{
 		min-width:44px;min-height:44px;
