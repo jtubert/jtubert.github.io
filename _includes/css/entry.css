@@ -283,19 +283,37 @@ h1{
 .wnav-step:hover{color:var(--accent)}
 
 body.wnav-open{overflow:hidden}
-.wnav-scrim{position:fixed;inset:0;background:rgba(23,22,26,.16);z-index:8}
-/* the panel and scrim are toggled with the hidden attribute, so nothing here
-   may set display unconditionally: a plain display:flex outranks the UA sheet's
-   [hidden]{display:none} and pins the drawer open */
-.wnav-drawer[hidden],.wnav-scrim[hidden]{display:none}
+.wnav-scrim{
+	position:fixed;inset:0;background:rgba(23,22,26,.16);z-index:8;
+	opacity:0;visibility:hidden;
+	transition:opacity .28s ease,visibility 0s linear .28s;
+}
+.wnav-scrim:not([hidden]){opacity:1;visibility:visible;transition:opacity .28s ease,visibility 0s}
+/* The panel slides, so it cannot be hidden with display:none: there is nothing
+   to animate out of. display stays flex and [hidden] is expressed as
+   translateX + visibility instead. visibility keeps it out of the tab order and
+   the a11y tree, and a fixed element parked off-screen adds no scrollbar.
+   If the stylesheet ever fails to load, the UA sheet's [hidden]{display:none}
+   takes over and the panel simply stays shut. */
 .wnav-drawer{
 	position:fixed;top:0;right:0;bottom:0;width:392px;max-width:100%;
-	flex-direction:column;
+	display:flex;flex-direction:column;
+	transform:translateX(100%);visibility:hidden;
+	transition:transform .28s cubic-bezier(.22,.61,.36,1),visibility 0s linear .28s;
 	background:var(--ground);border-left:1px solid var(--hair);
 	box-shadow:-14px 0 40px rgba(23,22,26,.10);
 	padding:1.4rem 1.5rem;z-index:9;
 }
-.wnav-drawer:not([hidden]){display:flex}
+.wnav-drawer:not([hidden]){
+	transform:none;visibility:visible;
+	transition:transform .28s cubic-bezier(.22,.61,.36,1),visibility 0s;
+}
+/* after the rules above, and matching both states, or the open-state selector
+   outranks it and the panel animates anyway */
+@media (prefers-reduced-motion:reduce){
+	.wnav-drawer,.wnav-drawer:not([hidden]),
+	.wnav-scrim,.wnav-scrim:not([hidden]){transition:none}
+}
 .wnav-dhead{
 	display:flex;align-items:center;justify-content:space-between;
 	padding-bottom:.85rem;border-bottom:1px solid var(--hair);margin-bottom:.4rem;flex:0 0 auto;

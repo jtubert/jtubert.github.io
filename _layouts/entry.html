@@ -246,13 +246,16 @@
     if (scrim) scrim.hidden = false;
     document.body.classList.add('wnav-open');
     toggle.setAttribute('aria-expanded', 'true');
-    // land on where you are, not the top of 2026
-    var here = document.getElementById('wnav-current');
-    var box = document.getElementById('wnav-scroll');
-    if (here && box) {
-      box.scrollTop = Math.max(0, here.offsetTop - box.clientHeight / 2 + here.offsetHeight / 2);
-    }
-    (here || close || list).focus({ preventScroll: true });
+    // land on where you are, not the top of 2026. After a frame, so the panel
+    // is laid out and focusable before we measure or move focus into it.
+    requestAnimationFrame(function () {
+      var here = document.getElementById('wnav-current');
+      var box = document.getElementById('wnav-scroll');
+      if (here && box) {
+        box.scrollTop = Math.max(0, here.offsetTop - box.clientHeight / 2 + here.offsetHeight / 2);
+      }
+      (here || close || list).focus({ preventScroll: true });
+    });
   }
 
   function shut(refocus) {
