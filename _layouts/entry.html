@@ -280,6 +280,29 @@
     if (list) list.setAttribute('tabindex', '-1');
   }
 
+  // Swipe the page to move through the collection. Threshold-based rather than
+  // a live drag: the page scrolls vertically, and following the finger risks
+  // fighting that. Nothing is prevented, so scrolling is untouched.
+  var sx = 0, sy = 0, st = 0, tracking = false;
+  document.addEventListener('touchstart', function (e) {
+    if (isOpen() || e.touches.length !== 1) { tracking = false; return; }
+    if (list && list.contains(e.target)) { tracking = false; return; }
+    tracking = true;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; st = Date.now();
+  }, { passive: true });
+
+  document.addEventListener('touchend', function (e) {
+    if (!tracking || isOpen()) return;
+    tracking = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - sx, dy = t.clientY - sy, dt = Date.now() - st;
+    if (dt > 800) return;                                  // a slow drag is not a swipe
+    if (Math.abs(dx) < 60) return;                         // too small to mean it
+    if (Math.abs(dx) < Math.abs(dy) * 1.5) return;         // that was a scroll
+    if (dx < 0 && next) { location.href = next; }           // pull left, next comes in
+    else if (dx > 0 && prev) { location.href = prev; }
+  }, { passive: true });
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && isOpen()) { shut(true); return; }
     if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;

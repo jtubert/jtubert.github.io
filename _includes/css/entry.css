@@ -307,6 +307,23 @@ h1{
 .wnav-step{display:inline-flex;align-items:center;gap:.35rem;color:var(--ink-2);text-decoration:none;flex:0 0 auto}
 .wnav-step:hover{color:var(--accent)}
 
+/* Phone: prev and next come off the header, the opener becomes a plain
+   hamburger, and the page is swipeable instead. 44px minimum so it is a real
+   touch target. */
+@media (max-width:47.99rem){
+	.wnav-step{display:none}
+	.wnav-tab{
+		min-width:44px;min-height:44px;
+		justify-content:center;gap:0;padding:.4rem;
+	}
+	.wnav-tab .wnav-tab-label{
+		position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+		overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+	}
+	.wnav-tab-list{width:18px;height:18px}
+}
+
+
 body.wnav-open{overflow:hidden}
 .wnav-scrim{
 	position:fixed;inset:0;background:rgba(23,22,26,.16);z-index:8;
