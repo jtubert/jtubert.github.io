@@ -253,21 +253,70 @@ h1{
 }
 
 /* pager - every entry is a way into the rest, not a dead end */
-/* Keyboard hint. Hidden unless the device actually has one: a wide viewport
-   alone would show it on a touch tablet, where it is useless. */
+/* ---- work navigation: crumb bar plus the full list ---- */
+.wnav{
+	display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .6rem;
+	padding:.8rem 0;border-bottom:1px solid var(--hair);
+	font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.wnav-back{display:inline-flex;align-items:center;gap:.4rem;color:var(--accent);text-decoration:none;flex:0 0 auto}
+.wnav-sep{color:var(--hair)}
+.wnav-cat{color:var(--ink-3)}
+.wnav-spacer{flex:1}
+.wnav-jump{
+	display:inline-flex;align-items:center;gap:.45rem;
+	padding:.3rem .62rem;border:1px solid var(--hair);border-radius:7px;
+	background:rgba(255,255,255,.55);color:var(--ink-2);
+	font:inherit;font-size:.72rem;letter-spacing:.08em;cursor:pointer;
+}
+.wnav-jump:hover{border-color:var(--ink-3)}
+.wnav-jump[aria-expanded="true"]{border-color:var(--accent);color:var(--accent);background:rgba(224,20,29,.07)}
+.wnav-step{display:inline-flex;align-items:center;gap:.35rem;color:var(--ink-2);text-decoration:none;flex:0 0 auto}
+.wnav-step:hover{color:var(--accent)}
+
+/* Keyboard sentence rides the bar. Hidden unless the device actually has a
+   keyboard: a wide viewport alone would show it on a touch tablet. */
 .keyhint{display:none}
 @media (min-width:62rem) and (hover:hover) and (pointer:fine){
-	.keyhint{
-		display:block;
-		margin:-1.3rem 0 1.7rem;
-		font-size:.78rem;font-weight:600;color:var(--ink-3);
-	}
+	.keyhint{display:inline;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:none;color:var(--ink-3);margin-right:.4rem}
 	.keyhint kbd{
-		display:inline-block;
-		padding:0 .32em;margin:0 .1em;
+		display:inline-block;padding:0 .32em;margin:0 .1em;
 		border:1px solid currentColor;border-radius:3px;
 		font:inherit;line-height:1.35;opacity:.7;
 	}
+}
+
+body.wnav-open{overflow:hidden}
+.wnav-scrim{position:fixed;inset:0;background:rgba(23,22,26,.16);z-index:8}
+.wnav-drawer{
+	position:fixed;top:0;right:0;bottom:0;width:392px;max-width:100%;
+	display:flex;flex-direction:column;
+	background:var(--ground);border-left:1px solid var(--hair);
+	box-shadow:-14px 0 40px rgba(23,22,26,.10);
+	padding:1.4rem 1.5rem;z-index:9;
+}
+.wnav-dhead{
+	display:flex;align-items:center;justify-content:space-between;
+	padding-bottom:.85rem;border-bottom:1px solid var(--hair);margin-bottom:.4rem;flex:0 0 auto;
+}
+.wnav-dtitle{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.wnav-close{border:0;background:none;padding:.2rem;cursor:pointer;color:var(--ink-2);line-height:0}
+.wnav-close:hover{color:var(--accent)}
+.wnav-scroll{overflow-y:auto;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+.wnav-yhead{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:.95rem 0 .4rem}
+.wnav-row{
+	display:flex;align-items:baseline;gap:.6rem;padding:.3rem 0;
+	font-size:.89rem;font-weight:600;color:var(--ink-2);
+	line-height:1.35;text-decoration:none;text-wrap:pretty;
+}
+.wnav-row:hover{color:var(--accent)}
+.wnav-mo{flex:0 0 32px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.wnav-row.on{color:var(--ink);font-weight:800}
+.wnav-row.on .wnav-mo{color:var(--accent)}
+/* on a phone a 392px panel is just the screen, so make it one */
+@media (max-width:30rem){
+	.wnav-drawer{width:100%;border-left:0;padding:1.4rem 1.25rem}
+	.wnav-scrim{display:none}
 }
 
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:2.8rem}

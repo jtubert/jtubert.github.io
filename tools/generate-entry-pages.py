@@ -109,6 +109,28 @@ def load_selected():
     return ids
 
 
+def write_nav(eligible, year_of):
+    """Everything the in-page navigation drawer lists: all entries grouped by
+    year, newest first, with the month for each. Written as JSON so the layout
+    can loop it without recomputing the year carry-forward in Liquid."""
+    groups = []
+    for r in eligible:
+        eid = r['id'].strip()
+        yr = year_of.get(eid, 'Undated')
+        month = (r.get('date') or '').strip().split(' ')[0][:3]
+        if not groups or groups[-1]['year'] != yr:
+            groups.append({'year': yr, 'count': 0, 'items': []})
+        groups[-1]['count'] += 1
+        groups[-1]['items'].append({
+            'id': eid,
+            'title': strip_tags(r.get('title') or ''),
+            'month': month,
+        })
+    with open(os.path.join(ROOT, '_data', 'nav.json'), 'w', encoding='utf-8') as f:
+        json.dump({'years': groups}, f, ensure_ascii=False, indent=1)
+    return groups
+
+
 def write_featured(items):
     """Emitted as JSON, which Jekyll reads as data the same as YAML, so titles
     and blurbs carrying quotes need no escaping dance."""
@@ -157,7 +179,7 @@ def write_year_index(eligible, featured):
         f.write('entry:\n')
         for eid, y in label.items():
             f.write(f'  "{eid}": "{y}"\n')
-    return order, counts
+    return order, counts, label
 
 def load_body(eid):
     """Long-form page content, if written. Markdown, one file per entry.
@@ -405,7 +427,8 @@ def main():
     # keep the order given in selected.yml rather than sheet order
     featured_items.sort(key=lambda i: SELECTED.index(i['id']))
     featured = write_featured(featured_items)
-    order, counts = write_year_index(eligible, featured)
+    order, counts, year_of = write_year_index(eligible, featured)
+    nav = write_nav(eligible, year_of)
     print(f"generated {written} entry pages in work/")
     print(f"  featured: {featured}")
     print("  years: " + ", ".join(f"{y} ({counts[y]})" for y in order))

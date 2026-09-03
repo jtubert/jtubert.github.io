@@ -65,12 +65,27 @@
   </header>
 
   {%- comment -%}
-    The arrow-key handler at the foot of this file has always worked but was
-    only hinted at by the small keycaps in the pager. Sits at the top so it is
-    seen before the reader needs it. CSS hides it on anything without a real
-    keyboard, so phones never see it.
+    Work navigation. The count is the control that opens the full list, so
+    browsing costs one element rather than a second button beside the crumbs.
+    The keyboard sentence rides the same row, and CSS drops it on anything
+    without a keyboard.
   {%- endcomment -%}
-  <p class="keyhint">Use the <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> arrow keys to advance or go back to the previous page.</p>
+  <nav class="wnav" aria-label="Work navigation">
+    <a class="wnav-back" href="/work/">
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="11 6 5 12 11 18"></polyline></svg>All work
+    </a>
+    <span class="wnav-sep" aria-hidden="true">/</span>
+    <span class="wnav-cat">{{ page.category }}</span>
+    <span class="wnav-sep" aria-hidden="true">/</span>
+    <button type="button" class="wnav-jump" id="wnav-toggle" aria-expanded="false" aria-controls="wnav-list">
+      {{ page.position }} of {{ page.total }}
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+    <span class="wnav-spacer"></span>
+    <span class="keyhint">Use the <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> arrow keys to advance or go back to the previous page.</span>
+    {% if page.prev_id != "" %}<a class="wnav-step" href="/work/{{ page.prev_id }}/"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="11 6 5 12 11 18"></polyline></svg>Prev</a>{% endif %}
+    {% if page.next_id != "" %}<a class="wnav-step" href="/work/{{ page.next_id }}/">Next<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg></a>{% endif %}
+  </nav>
 
   <main class="entry-main{% if page.asset == "" %} no-media{% endif %}">
     {%- comment -%}
@@ -197,6 +212,23 @@
     </p>
   </main>
 
+  <div class="wnav-scrim" id="wnav-scrim" hidden></div>
+  <aside class="wnav-drawer" id="wnav-list" hidden aria-label="All work">
+    <div class="wnav-dhead">
+      <span class="wnav-dtitle">All work &middot; {{ page.total }}</span>
+      <button type="button" class="wnav-close" id="wnav-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="wnav-scroll" id="wnav-scroll">
+      {%- for g in site.data.nav.years %}
+      <div class="wnav-yhead">{{ g.year }} &middot; {{ g.count }}</div>
+      {%- for it in g.items %}
+      <a class="wnav-row{% if it.id == page.entry_id %} on{% endif %}" href="/work/{{ it.id }}/"{% if it.id == page.entry_id %} aria-current="page" id="wnav-current"{% endif %}><span class="wnav-mo">{{ it.month }}</span>{{ it.title }}</a>
+      {%- endfor %}
+      {%- endfor %}
+    </div>
+  </aside>
 </div>
 <script>
 // Left/right arrows walk the collection. Ignored while typing or with a
@@ -204,10 +236,51 @@
 (function () {
   var prev = {% if page.prev_id != "" %}"/work/{{ page.prev_id }}/"{% else %}null{% endif %};
   var next = {% if page.next_id != "" %}"/work/{{ page.next_id }}/"{% else %}null{% endif %};
+  var toggle = document.getElementById('wnav-toggle');
+  var list = document.getElementById('wnav-list');
+  var scrim = document.getElementById('wnav-scrim');
+  var close = document.getElementById('wnav-close');
+
+  function isOpen() { return list && !list.hidden; }
+
+  function open() {
+    if (!list) return;
+    list.hidden = false;
+    if (scrim) scrim.hidden = false;
+    document.body.classList.add('wnav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    // land on where you are, not the top of 2026
+    var here = document.getElementById('wnav-current');
+    var box = document.getElementById('wnav-scroll');
+    if (here && box) {
+      box.scrollTop = Math.max(0, here.offsetTop - box.clientHeight / 2 + here.offsetHeight / 2);
+    }
+    (here || close || list).focus({ preventScroll: true });
+  }
+
+  function shut(refocus) {
+    if (!list) return;
+    list.hidden = true;
+    if (scrim) scrim.hidden = true;
+    document.body.classList.remove('wnav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    if (refocus) toggle.focus();
+  }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () { isOpen() ? shut(true) : open(); });
+    if (close) close.addEventListener('click', function () { shut(true); });
+    if (scrim) scrim.addEventListener('click', function () { shut(true); });
+    if (list) list.setAttribute('tabindex', '-1');
+  }
+
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isOpen()) { shut(true); return; }
     if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
     var el = e.target;
     if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+    // while the list is open the arrows belong to it, not to the collection
+    if (isOpen()) return;
     if (e.key === 'ArrowLeft' && prev) { location.href = prev; }
     else if (e.key === 'ArrowRight' && next) { location.href = next; }
   });

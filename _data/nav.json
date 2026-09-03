@@ -1,0 +1,303 @@
+{
+ "years": [
+  {
+   "year": "2026",
+   "count": 6,
+   "items": [
+    {
+     "id": "latinspot",
+     "title": "Creativity, Media, Technology and AI: Tombras' Evolution from Buenos Aires",
+     "month": "Jun"
+    },
+    {
+     "id": "mirren",
+     "title": "Will be speaking at a panel at Mirren live in May 13 and 14",
+     "month": "Mar"
+    },
+    {
+     "id": "ojo_full",
+     "title": "Full video with my talk from the Ojo de Iberoamerica now available",
+     "month": "Mar"
+    },
+    {
+     "id": "book",
+     "title": "You Work for Your User: How to Design User-Centric Products in the Age of AI",
+     "month": "Feb"
+    },
+    {
+     "id": "ny1",
+     "title": "Interview with NY1 about Water AI project with Tombras",
+     "month": "Jan"
+    },
+    {
+     "id": "work2025",
+     "title": "2025 has been a great year or talks, work and growth!",
+     "month": "Jan"
+    }
+   ]
+  },
+  {
+   "year": "2025",
+   "count": 18,
+   "items": [
+    {
+     "id": "angie",
+     "title": "Interview with Angie Hernandez about AI",
+     "month": "Dec"
+    },
+    {
+     "id": "posttalk",
+     "title": "Post talk interview",
+     "month": "Dec"
+    },
+    {
+     "id": "ojo2",
+     "title": "Presented at Ojo de Iberoamerica in Argentina",
+     "month": "Nov"
+    },
+    {
+     "id": "ojo3",
+     "title": "Ojo de Iberoamerica 2025",
+     "month": "Nov"
+    },
+    {
+     "id": "ojoquote",
+     "title": "Test every model that comes out, but be selective about what you put in production.",
+     "month": "Nov"
+    },
+    {
+     "id": "comfyui",
+     "title": "Experimenting with Comfy UI, nice way to try multiple models.",
+     "month": "Oct"
+    },
+    {
+     "id": "ojo",
+     "title": "Speaking at Ojo de Iberoamerica about AI in November 2025",
+     "month": "Oct"
+    },
+    {
+     "id": "tombrasai",
+     "title": "Presented a new AI platform at an internal all-hands meeting",
+     "month": ""
+    },
+    {
+     "id": "gifmaker",
+     "title": "Created a native mac/windows app",
+     "month": "Jul"
+    },
+    {
+     "id": "butterfly",
+     "title": "Spoke about Creativity and AI (using MCPs and AI personas) at a Los Angeles-based private equity firm",
+     "month": "Jun"
+    },
+    {
+     "id": "fwa",
+     "title": "Excited to share that I’ve been selected as a judge for the The FWA!",
+     "month": "Jun"
+    },
+    {
+     "id": "webby",
+     "title": "2025 Webby for Best Experiential Design in the AI, Immersive & Games category!",
+     "month": "May"
+    },
+    {
+     "id": "sweethearts",
+     "title": "Webby Nominee: Sweethearts Campaign Excellence",
+     "month": "May"
+    },
+    {
+     "id": "adage",
+     "title": "AdAge named Tombras Agency of the year!!",
+     "month": "Apr"
+    },
+    {
+     "id": "aiagent",
+     "title": "New certification: AI Agents Fundamentals from Hugging Face!",
+     "month": "Apr"
+    },
+    {
+     "id": "freezerflag",
+     "title": "Steak-umm Freezer Flag: Smart Kitchen Innovation",
+     "month": "Apr"
+    },
+    {
+     "id": "test",
+     "title": "Innovation Through Creativity and Technology",
+     "month": "Feb"
+    },
+    {
+     "id": "interview",
+     "title": "Creatividad y tecnología unidas para innovar",
+     "month": "Jan"
+    }
+   ]
+  },
+  {
+   "year": "2024",
+   "count": 7,
+   "items": [
+    {
+     "id": "pods",
+     "title": "Google Gemini AI Campaign for Pods Storage",
+     "month": "Dec"
+    },
+    {
+     "id": "human",
+     "title": "Human Creativity vs AI: Irreplaceable Innovation",
+     "month": "Nov"
+    },
+    {
+     "id": "adai",
+     "title": "AdAi keynote speaker Sept 24, 2024",
+     "month": "Sep"
+    },
+    {
+     "id": "googleoffices",
+     "title": "Spoke at Google offices about project we did with Gemini",
+     "month": "Aug"
+    },
+    {
+     "id": "argentina",
+     "title": "Tombras expands globally with acquisition of Argentine agency",
+     "month": "Aug"
+    },
+    {
+     "id": "googlepods",
+     "title": "AI-Powered Advertising: 6000 Hyperlocal Ads Case Study",
+     "month": "Jun"
+    },
+    {
+     "id": "independent",
+     "title": "Tombras named independent agency of the year",
+     "month": "Mar"
+    }
+   ]
+  },
+  {
+   "year": "2023",
+   "count": 4,
+   "items": [
+    {
+     "id": "deepfake",
+     "title": "Deepfakes Awareness: Steak-umm Anti-Misinformation",
+     "month": "Nov"
+    },
+    {
+     "id": "forty",
+     "title": "Campaign 40 Over 40 Award Recognition",
+     "month": "Jul"
+    },
+    {
+     "id": "aicp",
+     "title": "Selected as a AICP's Award Judge",
+     "month": "Feb"
+    },
+    {
+     "id": "judge",
+     "title": "Selected as a Webby's Award Executive Judge",
+     "month": "Jan"
+    }
+   ]
+  },
+  {
+   "year": "2022",
+   "count": 5,
+   "items": [
+    {
+     "id": "meataversity",
+     "title": "Meataversity Decentraland experience",
+     "month": "Nov"
+    },
+    {
+     "id": "tombras",
+     "title": "New position as Chief Technology Officer at Tombras.",
+     "month": "Jun"
+    },
+    {
+     "id": "rga_flash",
+     "title": "After 17 years at R/GA, I decided to do something different.",
+     "month": "Jun"
+    },
+    {
+     "id": "roblox",
+     "title": "For fun I did a quick game in Roblox",
+     "month": "Jun"
+    },
+    {
+     "id": "cio",
+     "title": "Chatbot Innovation Featured in CIO Applications",
+     "month": "Jun"
+    }
+   ]
+  },
+  {
+   "year": "2021",
+   "count": 1,
+   "items": [
+    {
+     "id": "emotional",
+     "title": "Emotional AI: Human-Centered Technology Design",
+     "month": "May"
+    }
+   ]
+  },
+  {
+   "year": "2020",
+   "count": 2,
+   "items": [
+    {
+     "id": "podcast",
+     "title": "Human-First Technology: Leadership Podcast",
+     "month": "Oct"
+    },
+    {
+     "id": "female",
+     "title": "The Female Quotient: Moving from conversation to action",
+     "month": "Jun"
+    }
+   ]
+  },
+  {
+   "year": "2019",
+   "count": 5,
+   "items": [
+    {
+     "id": "afrotech",
+     "title": "AfroTech Panel: Diversity in Technology Leadership",
+     "month": "Nov"
+    },
+    {
+     "id": "alexa",
+     "title": "Award-Winning Alexa Skill: Game Marketing Innovation",
+     "month": "Aug"
+    },
+    {
+     "id": "panel",
+     "title": "Google Marketing Live: Inclusive Advertising Panel",
+     "month": "May"
+    },
+    {
+     "id": "sxsw",
+     "title": "SXSW speaker: Danger of bias in AI",
+     "month": "Mar"
+    },
+    {
+     "id": "certification",
+     "title": "AWS Alexa Skill Builder Certification",
+     "month": "Jan"
+    }
+   ]
+  },
+  {
+   "year": "2017",
+   "count": 1,
+   "items": [
+    {
+     "id": "adweek",
+     "title": "ADWEEK: Tech Companies Need to Improve Their Voice Assistants to Make Them Inclusive",
+     "month": "Nov"
+    }
+   ]
+  }
+ ]
+}
