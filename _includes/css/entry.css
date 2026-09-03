@@ -43,10 +43,15 @@ a{color:var(--accent)}
 }
 .masthead .brandmark img{
 	/* sized to sit in the line of text, since the logo now stands in for the
-	   word "Tombras" rather than being a separate mark in the corner */
+	   word "Tombras" rather than being a separate mark in the corner.
+	   The boxes centre correctly, but the mark's ink runs taller than the
+	   letterforms beside it, so centring the boxes leaves it reading 1.3px
+	   high. Measured from rendered pixels; in em so it holds if the size
+	   changes. */
 	height:1.5em;
 	width:auto;
 	display:block;
+	transform:translateY(.08em);
 }
 /* the pager doubles as the hint that the arrow keys work */
 .pager-key{
