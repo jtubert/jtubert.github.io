@@ -67,8 +67,8 @@
   {%- comment -%}
     Work navigation. The count is the control that opens the full list, so
     browsing costs one element rather than a second button beside the crumbs.
-    The keyboard sentence rides the same row, and CSS drops it on anything
-    without a keyboard.
+    Prev and next are visible here, so the arrow keys need no sentence
+    explaining them; the handler at the foot of this file still runs.
   {%- endcomment -%}
   <nav class="wnav" aria-label="Work navigation">
     <a class="wnav-back" href="/work/">
@@ -83,7 +83,6 @@
       <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
     </button>
     <span class="wnav-spacer"></span>
-    <span class="keyhint">Use the <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> arrow keys to advance or go back to the previous page.</span>
     {% if page.prev_id != "" %}<a class="wnav-step" href="/work/{{ page.prev_id }}/"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="11 6 5 12 11 18"></polyline></svg>Prev</a>{% endif %}
     {% if page.next_id != "" %}<a class="wnav-step" href="/work/{{ page.next_id }}/">Next<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg></a>{% endif %}
   </nav>

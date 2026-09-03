@@ -274,18 +274,6 @@ h1{
 .wnav-step{display:inline-flex;align-items:center;gap:.35rem;color:var(--ink-2);text-decoration:none;flex:0 0 auto}
 .wnav-step:hover{color:var(--accent)}
 
-/* Keyboard sentence rides the bar. Hidden unless the device actually has a
-   keyboard: a wide viewport alone would show it on a touch tablet. */
-.keyhint{display:none}
-@media (min-width:62rem) and (hover:hover) and (pointer:fine){
-	.keyhint{display:inline;font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:none;color:var(--ink-3);margin-right:.4rem}
-	.keyhint kbd{
-		display:inline-block;padding:0 .32em;margin:0 .1em;
-		border:1px solid currentColor;border-radius:3px;
-		font:inherit;line-height:1.35;opacity:.7;
-	}
-}
-
 body.wnav-open{overflow:hidden}
 .wnav-scrim{position:fixed;inset:0;background:rgba(23,22,26,.16);z-index:8}
 /* the panel and scrim are toggled with the hidden attribute, so nothing here
