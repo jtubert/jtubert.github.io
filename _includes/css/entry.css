@@ -41,6 +41,7 @@ a{color:var(--accent)}
 	line-height:0;
 	display:block;
 }
+.masthead .brandmark picture{display:block;line-height:0}
 .masthead .brandmark img{
 	/* sized to sit in the line of text, since the logo now stands in for the
 	   word "Tombras" rather than being a separate mark in the corner.

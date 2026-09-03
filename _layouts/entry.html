@@ -60,7 +60,16 @@
     {%- endcomment -%}
     <a class="whoami" href="/">Juan Tubert, CTO @</a>
     <a class="brandmark" href="https://www.tombras.com/" target="_blank" rel="noopener" aria-label="Tombras">
-      <img src="/assets/tombras-logo.png" alt="Tombras" width="330" height="91">
+      {%- comment -%}
+        The full wordmark needs about 60px more than a phone has to spare: name,
+        logo and button fit by one pixel at 344px and wrap below that. Phones get
+        the circular mark instead; desktop keeps the wordmark. picture, so only
+        the one that matches is fetched.
+      {%- endcomment -%}
+      <picture>
+        <source media="(min-width: 48rem)" srcset="/assets/tombras-logo.png">
+        <img src="/assets/tombras-mark.png" alt="Tombras" width="76" height="91">
+      </picture>
     </a>
     <div class="masthead-nav">
       {%- comment -%}
