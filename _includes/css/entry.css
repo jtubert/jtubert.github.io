@@ -261,8 +261,6 @@ h1{
 }
 .masthead-nav{display:flex;align-items:center;gap:.6rem;margin-left:auto;font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .wnav-back{display:inline-flex;align-items:center;gap:.4rem;color:var(--accent);text-decoration:none;flex:0 0 auto}
-.wnav-sep{color:var(--hair)}
-.wnav-cat{color:var(--ink-3)}
 .wnav-spacer{flex:1}
 .wnav-jump{
 	display:inline-flex;align-items:center;gap:.45rem;
