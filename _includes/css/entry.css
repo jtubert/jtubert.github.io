@@ -114,80 +114,95 @@ h1{
 	font-size:.95rem;color:var(--ink-2);
 }
 .backlink a{font-weight:700}
-/* ---- /work/ index ----
-   One centred column: reel, headline, three picks. There is no list of 49
-   rows any more - the drawer behind the edge tab is the list, and it is the
-   same one every entry page carries. */
-.index-hero{max-width:44rem;margin:0 auto;text-align:center}
+/* ---- /work/ landing ----
+   Full-bleed footage with the copy at its foot. The dark treatment is scoped
+   to .stage-page so the entry pages, which share this stylesheet, are
+   untouched by any of it. */
+.stage-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#131215;line-height:0}
+.stage-bg video{width:100%;height:100%;object-fit:cover;display:block}
+/* Two layers, because one diagonal could not do both jobs. The diagonal keeps
+   the left quiet for the type and leaves the right open on the person, who
+   sits on the right of a locked-off two-shot. On its own it put the copy
+   halfway along its own ramp, over the brightest part it covers, so a second
+   pass darkens the foot where the copy actually sits. */
+.stage-veil{position:absolute;inset:0;
+	background:
+		linear-gradient(180deg,rgba(12,11,14,0) 38%,rgba(12,11,14,.42) 72%,rgba(12,11,14,.72) 100%),
+		linear-gradient(100deg,rgba(12,11,14,.93) 0%,rgba(12,11,14,.7) 46%,rgba(12,11,14,.24) 100%)}
 
-/* The clip is 1080x2340, so it is shown whole rather than cropped: it is a
-   composed montage and any window onto it shows a meaningless slice for ten
-   of its thirteen seconds. Sized off the viewport height instead of the
-   width, so the headline underneath stays above the fold on a short window. */
-.reel{
-	width:min(15rem,20vh);
-	aspect-ratio:1080 / 2340;
-	margin:0 auto 1.3rem;
-	border-radius:16px;
-	overflow:hidden;
-	border:1px solid var(--accent);
-	background:var(--surface);
-	line-height:0;
-}
-.reel video{width:100%;height:100%;object-fit:cover;display:block}
+/* one column, pinned to the foot of the viewport */
+.stage-page .wrap-index{min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+.index-hero{margin-top:auto;max-width:40rem}
+
+.stage-page{color:#fff}
+.stage-page .masthead{border-bottom-color:rgba(255,255,255,.2)}
+.stage-page .whoami{color:#fff}
+/* the wordmark is red and near-black, and the near-black half vanishes on
+   footage, so the whole lockup goes white here */
+.stage-page .brandmark img{filter:brightness(0) invert(1)}
 
 .kicker{
-	margin:0 0 .5rem;
+	margin:0 0 .55rem;
 	font-size:.72rem;font-weight:700;letter-spacing:.16em;
-	text-transform:uppercase;color:var(--ink-3);
+	text-transform:uppercase;color:rgba(255,255,255,.72);
 }
-/* This headline is a sentence, not a title: about 120 characters against the
-   30 an entry page carries. Same column, so it takes a smaller size or it
-   runs to six lines and swamps the reel above it. */
+/* a sentence, not a title: about 120 characters against the 30 an entry page
+   carries, so it takes a smaller size than the shared h1 */
 .index-hero h1{
-	margin:0 0 1rem;
-	font-size:clamp(1.35rem,3.4vw,1.95rem);
-	line-height:1.22;
-	letter-spacing:-.022em;
-	max-width:36rem;
-	margin-left:auto;margin-right:auto;
+	margin:0 0 .9rem;
+	max-width:34rem;
+	font-size:clamp(1.5rem,3.6vw,2.15rem);
+	line-height:1.2;
+	letter-spacing:-.024em;
+	color:#fff;
 }
-/* the shared .lede is left-aligned and margin-0; centred here, and the
-   measure is narrower than the picks below it so the two do not run level */
-.index-hero .lede{max-width:30rem;margin:0 auto 2.1rem;text-align:center}
+.stage-page .lede{margin:0 0 2rem;font-size:1.02rem;max-width:32rem;color:rgba(255,255,255,.82)}
 
 .picks{
-	list-style:none;margin:0;padding:0;text-align:left;
+	list-style:none;margin:0;padding:0;
 	display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;
 }
-.picks a{display:flex;gap:.7rem;align-items:flex-start;text-decoration:none;color:var(--ink)}
+.picks a{display:flex;gap:.7rem;align-items:flex-start;text-decoration:none}
 .picks a:hover .pt{color:var(--accent)}
 .picks img{
 	width:52px;height:52px;flex:0 0 auto;display:block;
 	object-fit:cover;border-radius:9px;border:1px solid var(--accent);
-	background:var(--surface);
+	background:#131215;
 }
 .picks .txt{min-width:0}
 .picks .pk{
 	display:block;margin-bottom:.2rem;
 	font-size:.66rem;font-weight:700;letter-spacing:.14em;
-	text-transform:uppercase;color:var(--ink-3);
+	text-transform:uppercase;color:rgba(255,255,255,.62);
 }
 .picks .pt{
 	display:block;
 	font-size:.92rem;font-weight:800;letter-spacing:-.015em;line-height:1.25;
-	text-wrap:pretty;
+	text-wrap:pretty;color:#fff;
 }
-.alt{margin:2.6rem 0 0;font-size:.9rem;color:var(--ink-3)}
+
+.alt{margin:2.2rem 0 0;font-size:.9rem;color:rgba(255,255,255,.58)}
 .alt a{font-weight:700}
+
+.stage-page .wnav-tab{background:var(--accent);color:#fff;border-color:var(--accent)}
+.stage-page .wnav-tab:hover{background:#b01016;border-color:#b01016}
 
 /* Three picks side by side stop being readable once each column is under
    about 9rem, which is where a phone lands. They stack instead, and the
    thumbnail grows because it is no longer competing for the width. */
 @media (max-width:34rem){
-	.picks{grid-template-columns:1fr;gap:.85rem;max-width:20rem;margin:0 auto}
-	.picks img{width:60px;height:60px}
+	.picks{grid-template-columns:1fr;gap:.85rem}
+	.picks img{width:56px;height:56px}
 	.picks .pt{font-size:1rem}
+}
+
+/* A 390px-wide window onto a 960x540 clip keeps roughly a quarter of its
+   width. Centred, that quarter is the gap between the two men; at 64% it is
+   him. The veil also turns vertical, because a diagonal built for a wide
+   screen leaves the foot of a tall one too bright to read on. */
+@media (max-width:47.99rem){
+	.stage-bg video{object-position:64% 50%}
+	.stage-veil{background:linear-gradient(180deg,rgba(12,11,14,.72) 0%,rgba(12,11,14,.5) 26%,rgba(12,11,14,.86) 66%,rgba(12,11,14,.94) 100%)}
 }
 
 .media-note{
@@ -210,12 +225,12 @@ h1{
 .media-link a:hover{color:var(--accent);text-decoration:underline}
 .media-link svg{width:14px;height:14px;flex:0 0 auto}
 
-/* ---- desktop: /work/ index ----
-   The content stays a 44rem centred column at every width - that is the whole
-   point of the layout - but the masthead runs to 70rem so the rule under it
-   lines up with the one on the entry pages beside it. */
+/* ---- desktop: /work/ landing ----
+   The wrap runs to 70rem so the masthead rule lines up with the one on the
+   entry pages beside it. The copy stays left in a 40rem block inside that,
+   which is what leaves the right of the frame open on the footage. */
 @media (min-width:62rem){
-	.wrap-index{max-width:70rem;padding-left:2rem;padding-right:2rem}
+	.wrap-index{max-width:70rem;padding-left:2rem;padding-right:2rem;padding-bottom:3rem}
 }
 
 /* ---- desktop: media left, everything else right ----

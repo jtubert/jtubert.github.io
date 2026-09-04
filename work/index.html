@@ -38,7 +38,19 @@ permalink: /work/
 }
 </script>
 </head>
-<body>
+<body class="stage-page">
+{%- comment -%}
+  Full-bleed footage behind everything. Fixed rather than absolute: the page is
+  about one viewport tall, so nothing gains from scrolling it, and fixed avoids
+  the repaint. It sits at z-index -1, under the drawer and the scrim.
+{%- endcomment -%}
+<div class="stage-bg">
+  <video id="stage-video" autoplay muted loop playsinline preload="metadata"
+         poster="/assets/stage-poster.jpg" aria-label="Juan Tubert being interviewed at El Ojo de Iberoamerica">
+    <source src="/assets/stage-loop.mp4" type="video/mp4">
+  </video>
+  <div class="stage-veil"></div>
+</div>
 <div class="wrap wrap-index">
   <header class="masthead">
     {%- comment -%}
@@ -74,33 +86,18 @@ permalink: /work/
   </header>
 
   {%- comment -%}
-    One centred column: the reel, then the headline, then three picks. The
-    full list is not on the page any more - it lives in the drawer behind the
-    edge tab, which every entry page carries too, so the collection has one
-    way in rather than two. The drawer is rendered server-side, so all
+    The copy sits at the foot of the footage, not centred in it: the type
+    needs one quiet side and the veil gives it the left, which is also the
+    side he is not sitting on. The full list is not on the page any more - it
+    lives in the drawer behind the edge tab, which every entry page carries
+    too. The drawer is rendered server-side, so all
     {{ site.data.nav.total }} links are in this page's markup either way.
   {%- endcomment -%}
   <main class="index-hero">
-    <div class="reel">
-      {%- comment -%}
-        The story's cover, silent and 13 seconds. No controls: there is nothing
-        to hear and nothing to seek. It opens on a title card reading "Latino,
-        technologist, awards judge", which is the headline below it almost word
-        for word, so the script at the foot starts and loops it past that. No
-        loop attribute for the same reason. The script also stops it outright
-        when the reader has asked for reduced motion, which CSS cannot do.
-      {%- endcomment -%}
-      <video id="reel-video" autoplay muted playsinline preload="metadata"
-             poster="/assets/reel-poster.jpg" aria-label="A reel of the work on this page">
-        <source src="/assets/homepage-cover.mp4" type="video/mp4">
-      </video>
-    </div>
-
     <p class="kicker">Posts &middot; 2017 to today</p>
     {%- comment -%}
-      The headline is the same device the reel above it opens on: a list of
-      what he is, not a description of the page. It runs long on purpose, so
-      it is set smaller than the h1 on an entry page.
+      A list of what he is, not a description of the page. It runs long on
+      purpose, so it is set smaller than the h1 on an entry page.
     {%- endcomment -%}
     <h1>CTO at Tombras, Latino, technologist, judge for the Webby and AICP Awards, thought leader, speaker and sometimes writer.</h1>
     {%- comment -%}
@@ -189,24 +186,14 @@ permalink: /work/
     if (e.key === 'Escape' && isOpen()) shut(true);
   });
 
-  var reel = document.getElementById('reel-video');
+  // Autoplay is an attribute, so the only way to honour a reduced-motion
+  // preference is to stop the clip once it exists. The poster stands in.
+  var bg = document.getElementById('stage-video');
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (reel) {
-    // Autoplay is an attribute, so the only way to honour a reduced-motion
-    // preference is to stop the clip once it exists. The poster stays.
-    if (still && still.matches) {
-      reel.removeAttribute('autoplay');
-      reel.pause();
-    } else {
-      // Skip the title card, at both ends: seek in once the duration is known,
-      // and loop back to the same point rather than to zero. The poster is
-      // already a frame from the montage, so nothing flashes before this runs.
-      var IN = 3.0;
-      var start = function () { try { reel.currentTime = IN; } catch (e) {} };
-      if (reel.readyState >= 1) start();
-      else reel.addEventListener('loadedmetadata', start, { once: true });
-      reel.addEventListener('ended', function () { start(); reel.play(); });
-    }
+  if (bg && still && still.matches) {
+    bg.removeAttribute('autoplay');
+    bg.removeAttribute('loop');
+    bg.pause();
   }
 })();
 </script>

@@ -12,9 +12,10 @@ Everything is driven from one Google Sheet, and every entry appears twice:
    `amp-story-page` per sheet row.
 2. **`/work/<id>/`** is a normal HTML page per entry, plus the **`/work/`**
    landing. These exist because the story alone gave all 52 entries one URL,
-   which is unindexable. The landing does **not** list the entries: it is the
-   reel, a headline and three picks, and the full list lives in the drawer
-   behind the edge tab, the same drawer every entry page carries. The drawer is
+   which is unindexable. The landing does **not** list the entries: it is a
+   full-bleed clip with a headline and three picks over it, and the full list
+   lives in the drawer behind the edge tab, the same drawer every entry page
+   carries. The drawer is
    rendered server-side from `_data/nav.json`, so all 49 links are in the
    markup of every page either way.
 
@@ -108,18 +109,24 @@ spanning the real rows, stretches them and opens gaps under the meta, CTA and
 body. `ojoquote` has no media and falls back to a centred column via
 `.no-media`.
 
-**`/work/` landing** (`.wrap-index`, `.index-hero`). One centred `44rem`
-column at every width: reel, kicker, headline, lede, three picks. Only the
-masthead widens to `70rem` above `62rem`, so its rule lines up with the one on
-an entry page beside it. The picks go from three columns to one below `34rem`.
+**`/work/` landing** (`.wrap-index`, `.index-hero`). Full-bleed footage with
+the copy at its foot: `.stage-bg` is `position:fixed` at `z-index:-1`, and the
+wrap is a `100svh` flex column so `.index-hero` can sit on `margin-top:auto`.
+Everything fits one viewport at 1440x900, 1280x720, 768x1024 and 390x844.
 
-The reel is sized off the **viewport height**, `min(15rem, 20vh)`, not the
-width: at `26vh` the headline fell below the fold on a 720px window. On a
-1440x900 viewport everything through the picks sits above the fold.
+**The dark treatment is scoped to `.stage-page` on `<body>`.** The entry pages
+share this stylesheet, so anything unscoped turns them dark too. The scoped
+set is the masthead rule, `.whoami`, the inverted `.brandmark img`, `.lede`,
+and the solid-red `.wnav-tab`.
+
+`.stage-veil` carries **two** gradients. A diagonal keeps the left quiet for
+the type and leaves the right open on the person, who sits on the right of a
+locked-off two-shot. On its own it put the copy halfway along its own ramp,
+over the brightest part it covers, so a second vertical pass darkens the foot.
 
 The headline is a sentence rather than a title, about 120 characters against
 the 30 an entry page carries, so `.index-hero h1` overrides the shared `h1`
-size down to `clamp(1.35rem, 3.4vw, 1.95rem)`.
+size down to `clamp(1.5rem, 3.6vw, 2.15rem)`.
 
 ## Image and video specs
 
@@ -127,7 +134,7 @@ size down to `clamp(1.35rem, 3.4vw, 1.95rem)`.
 |---|---|---|---|
 | Story page media (`DEFAULT`) | **3:2** | 1200x800 | Well is a constant 3:2, `object-position: 50% 40%` so the crop favours the top. Max rendered 530px CSS. |
 | `/work/` pick thumbnails | **1:1** | 600x600+ | Displayed at 52px (60 on phones). Build outputs 288px JPEG. One subject, no small text, nothing in the corners. |
-| `/work/` reel | **1080x2340** | the story's cover | Shown whole, uncropped, at 180px wide on a laptop. |
+| `/work/` backdrop | **16:9** | 1920x1080 wanted | `stage-loop.mp4` is 960x540, so it upscales ~1.5x on a laptop. Silent, 13s, 298 KB. |
 | Homepage cover video | **9:16** | portrait | Full bleed. |
 
 Hand-made card art goes in `assets/thumbs-src/<id>.jpg` and beats the derived
@@ -157,16 +164,22 @@ correctly. It only generates for ids in `_data/selected.yml`.
   so the file is not fetched until play. Encode speech as mono: the source for
   `podcast` was 320kbps dual-mono stereo at 80 MB, and 64kbps mono is 16 MB with
   no audible loss, since its side channel measured 0.08% of the mid.
-- **The `/work/` reel starts at 3 seconds.** The story's cover opens on a
-  title card spelling out the headline underneath it word for word, so the
-  inline script seeks past it and loops back to `IN = 3.0` rather than to zero
-  (hence no `loop` attribute). Reduced motion pauses it outright and the poster
-  stands in, which is why the poster is a frame from t=9 rather than the first
-  frame. **Seeking needs byte-range requests**: GitHub Pages serves them,
-  `python3 -m http.server` does not, so against a plain local server the seek
-  silently does nothing and the clip plays from zero. Check
-  `video.seekable.end(0)`: `13` means ranges work, `0` means the server, not
-  the page, is what you are measuring.
+- **The `/work/` backdrop** is `assets/stage-loop.mp4`, cut from
+  `EO2025_VecinoTurbet_small.mp4` at 3:20 for 13 seconds. That window is
+  deliberate: the source is one locked-off two-shot for all 11m35s, but a
+  lower-third naming the interviewer appears around 3:35, and the cut ends
+  before it. Silent, so it is muted with no controls and there is no mute note.
+  Reduced motion pauses it and `stage-poster.jpg` stands in.
+- **A phone keeps about a quarter of a 16:9 backdrop.** At 390px wide, cover
+  crops a 960x540 clip to roughly 26% of its width; centred that quarter is
+  the gap between the two men, so below `48rem` `object-position` moves to
+  `64%`, which is him. The veil also turns vertical there, since a diagonal
+  built for a wide screen leaves the foot of a tall one too bright to read on.
+- **Byte-range requests matter when a video is seeked.** GitHub Pages serves
+  them, `python3 -m http.server` does not, so against a plain local server a
+  seek silently does nothing. Check `video.seekable.end(0)`: the duration means
+  ranges work, `0` means the server, not the page, is what you are measuring.
+  Nothing seeks right now, but the trap cost an hour once already.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
