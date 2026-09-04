@@ -157,6 +157,7 @@ h1{
 	color:#fff;
 }
 .stage-page .lede{margin:0 0 2rem;font-size:1.02rem;max-width:32rem;color:rgba(255,255,255,.82)}
+.lede-narrow{display:none}
 
 .picks{
 	list-style:none;margin:0;padding:0;
@@ -201,6 +202,10 @@ h1{
    him. The veil also turns vertical, because a diagonal built for a wide
    screen leaves the foot of a tall one too bright to read on. */
 @media (max-width:47.99rem){
+	/* below here the tab is a bare hamburger, so the sentence stops naming a
+	   label the reader cannot see */
+	.lede-wide{display:none}
+	.lede-narrow{display:inline}
 	.stage-bg video{object-position:64% 50%}
 	.stage-veil{background:linear-gradient(180deg,rgba(12,11,14,.72) 0%,rgba(12,11,14,.5) 26%,rgba(12,11,14,.86) 66%,rgba(12,11,14,.94) 100%)}
 }
