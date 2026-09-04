@@ -109,24 +109,6 @@ def load_selected():
     return ids
 
 
-ONES = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
-        'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen',
-        'sixteen', 'seventeen', 'eighteen', 'nineteen']
-TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy',
-        'eighty', 'ninety']
-
-
-def spell(n):
-    """The /work/ headline reads "Forty-nine things worth writing down", so the
-    count has to be a word. Deriving it keeps the headline honest when a row is
-    added to the sheet; anything past ninety-nine falls back to the digits."""
-    if n < 20:
-        return ONES[n]
-    if n < 100:
-        return TENS[n // 10] + ('-' + ONES[n % 10] if n % 10 else '')
-    return str(n)
-
-
 def write_nav(eligible, year_of):
     """Everything the in-page navigation drawer lists: all entries grouped by
     year, newest first, with the month for each. Written as JSON so the layout
@@ -145,11 +127,8 @@ def write_nav(eligible, year_of):
             'month': month,
         })
     with open(os.path.join(ROOT, '_data', 'nav.json'), 'w', encoding='utf-8') as f:
-        json.dump({
-            'years': groups,
-            'total': len(eligible),
-            'total_word': spell(len(eligible)).capitalize(),
-        }, f, ensure_ascii=False, indent=1)
+        json.dump({'years': groups, 'total': len(eligible)},
+                  f, ensure_ascii=False, indent=1)
     return groups
 
 

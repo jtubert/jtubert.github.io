@@ -131,18 +131,15 @@ permalink: /work/
     <h1>CTO at Tombras, Latino, technologist, judge for the Webby and AICP Awards, thought leader, speaker and sometimes writer.</h1>
     {%- comment -%}
       Points at the control that holds the rest, since they are not on the
-      page. Two spellings of the same sentence: from 48rem the tab on the right
-      edge is labelled "All posts", but below that it collapses to a bare
-      hamburger in the header and that label is visually hidden, so naming it
-      would send a phone looking for words it cannot see.
-
-      The count is a word, spelled by tools/generate-entry-pages.py, so adding
-      a row to the sheet rewrites this line rather than leaving it wrong.
+      page. The verb and the noun both change below 48rem: the tab on the
+      right edge is labelled "All posts" and is clicked, but on a phone it
+      collapses to a bare hamburger whose label is visually hidden, and is
+      tapped. Naming it there would send a reader looking for words that are
+      not on their screen. It is on the right at both sizes.
     {%- endcomment -%}
     <p class="lede">
-      <span class="lede-wide">All {{ site.data.nav.total_word | downcase }} are behind All posts on the right.</span>
-      <span class="lede-narrow">All {{ site.data.nav.total_word | downcase }} are behind the menu up top.</span>
-      These three are a good place to start.
+      <span class="lede-wide">Click All posts on the right,</span><span class="lede-narrow">Tap the menu on the right,</span>
+      or these three are a good place to start.
     </p>
 
     <ul class="picks">
