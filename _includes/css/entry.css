@@ -114,77 +114,80 @@ h1{
 	font-size:.95rem;color:var(--ink-2);
 }
 .backlink a{font-weight:700}
-/* ---- /work/ index ---- */
-.lede{font-size:1.1rem;color:var(--ink-2);margin:0 0 2.4rem;max-width:34rem;text-wrap:pretty}
-.sec{
-	display:flex;align-items:baseline;gap:.7rem;
-	margin:2.6rem 0 1rem;padding-bottom:.55rem;
-	border-bottom:2px solid var(--ink);
-	font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-}
-.sec:first-of-type{margin-top:0}
-.sec .n{font-weight:600;letter-spacing:.1em;color:var(--ink-3)}
+/* ---- /work/ index ----
+   One centred column: reel, headline, three picks. There is no list of 49
+   rows any more - the drawer behind the edge tab is the list, and it is the
+   same one every entry page carries. */
+.index-hero{max-width:44rem;margin:0 auto;text-align:center}
 
-/* the few entries with a written piece behind them lead the page */
-.cards{list-style:none;margin:0 0 .4rem;padding:0}
-.cards li{margin-bottom:.75rem}
-.cards a{
-	display:flex;gap:1.15rem;align-items:flex-start;
-	padding:1rem;border:1px solid var(--hair);border-radius:.9rem;
-	background:rgba(255,255,255,.5);
-	text-decoration:none;color:var(--ink);
+/* The clip is 1080x2340, so it is shown whole rather than cropped: it is a
+   composed montage and any window onto it shows a meaningless slice for ten
+   of its thirteen seconds. Sized off the viewport height instead of the
+   width, so the headline underneath stays above the fold on a short window. */
+.reel{
+	width:min(15rem,20vh);
+	aspect-ratio:1080 / 2340;
+	margin:0 auto 1.3rem;
+	border-radius:16px;
+	overflow:hidden;
+	border:1px solid var(--accent);
+	background:var(--surface);
+	line-height:0;
 }
-.cards a:hover{border-color:var(--ink-3);background:rgba(255,255,255,.9)}
-.cards a:hover .t{color:var(--accent)}
-.cards img{
-	width:92px;height:92px;flex:0 0 auto;display:block;
-	object-fit:cover;border-radius:.65rem;border:1px solid var(--accent);
+.reel video{width:100%;height:100%;object-fit:cover;display:block}
+
+.kicker{
+	margin:0 0 .5rem;
+	font-size:.72rem;font-weight:700;letter-spacing:.16em;
+	text-transform:uppercase;color:var(--ink-3);
+}
+/* This headline is a sentence, not a title: about 120 characters against the
+   30 an entry page carries. Same column, so it takes a smaller size or it
+   runs to six lines and swamps the reel above it. */
+.index-hero h1{
+	margin:0 0 1rem;
+	font-size:clamp(1.35rem,3.4vw,1.95rem);
+	line-height:1.22;
+	letter-spacing:-.022em;
+	max-width:36rem;
+	margin-left:auto;margin-right:auto;
+}
+/* the shared .lede is left-aligned and margin-0; centred here, and the
+   measure is narrower than the picks below it so the two do not run level */
+.index-hero .lede{max-width:30rem;margin:0 auto 2.1rem;text-align:center}
+
+.picks{
+	list-style:none;margin:0;padding:0;text-align:left;
+	display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;
+}
+.picks a{display:flex;gap:.7rem;align-items:flex-start;text-decoration:none;color:var(--ink)}
+.picks a:hover .pt{color:var(--accent)}
+.picks img{
+	width:52px;height:52px;flex:0 0 auto;display:block;
+	object-fit:cover;border-radius:9px;border:1px solid var(--accent);
 	background:var(--surface);
 }
-.cards .txt{flex:1 1 auto;min-width:0}
-.cards .c{
-	display:block;margin-bottom:.35rem;
-	font-size:.68rem;font-weight:700;letter-spacing:.12em;
+.picks .txt{min-width:0}
+.picks .pk{
+	display:block;margin-bottom:.2rem;
+	font-size:.66rem;font-weight:700;letter-spacing:.14em;
 	text-transform:uppercase;color:var(--ink-3);
 }
-.cards .t{
-	display:block;margin-bottom:.35rem;
-	font-size:1.18rem;font-weight:800;letter-spacing:-.02em;line-height:1.25;
+.picks .pt{
+	display:block;
+	font-size:.92rem;font-weight:800;letter-spacing:-.015em;line-height:1.25;
 	text-wrap:pretty;
 }
-.cards .b{
-	font-size:.88rem;line-height:1.5;color:var(--ink-2);text-wrap:pretty;
-	/* two lines keeps the three cards the same height; a longer blurb
-	   would otherwise make one card noticeably taller than its neighbours */
-	display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
-	line-clamp:2;overflow:hidden;
-}
-@media (max-width:26rem){
-	.cards img{width:68px;height:68px}
-	.cards .t{font-size:1.02rem}
-	.cards .b{font-size:.82rem}
-}
+.alt{margin:2.6rem 0 0;font-size:.9rem;color:var(--ink-3)}
+.alt a{font-weight:700}
 
-/* everything else, as a scannable list */
-.entries{list-style:none;margin:0;padding:0}
-.entries li{border-bottom:1px solid var(--hair)}
-.entries a{
-	display:grid;
-	grid-template-columns:6rem 1fr auto;
-	gap:.9rem;align-items:baseline;
-	padding:.8rem 0;text-decoration:none;color:var(--ink);
-}
-.entries a:hover .t{color:var(--accent)}
-.entries .c{
-	font-size:.68rem;font-weight:700;letter-spacing:.12em;
-	text-transform:uppercase;color:var(--ink-3);
-}
-.entries .t{font-size:.98rem;font-weight:700;letter-spacing:-.015em;line-height:1.35;text-wrap:pretty}
-.entries .d{font-size:.78rem;font-weight:600;color:var(--ink-3);white-space:nowrap}
-@media (max-width:32rem){
-	.entries a{grid-template-columns:1fr auto;gap:.3rem .75rem}
-	.entries .t{grid-column:1 / -1;order:2}
-	.entries .d{text-align:right}
+/* Three picks side by side stop being readable once each column is under
+   about 9rem, which is where a phone lands. They stack instead, and the
+   thumbnail grows because it is no longer competing for the width. */
+@media (max-width:34rem){
+	.picks{grid-template-columns:1fr;gap:.85rem;max-width:20rem;margin:0 auto}
+	.picks img{width:60px;height:60px}
+	.picks .pt{font-size:1rem}
 }
 
 .media-note{
@@ -208,20 +211,11 @@ h1{
 .media-link svg{width:14px;height:14px;flex:0 0 auto}
 
 /* ---- desktop: /work/ index ----
-   Same problem the entry pages had: a 44rem column leaves most of a laptop
-   empty. The cards go three across, and the 46 row list runs in two columns
-   so the titles keep a sensible measure instead of stretching a title and a
-   date apart across the full width. */
+   The content stays a 44rem centred column at every width - that is the whole
+   point of the layout - but the masthead runs to 70rem so the rule under it
+   lines up with the one on the entry pages beside it. */
 @media (min-width:62rem){
 	.wrap-index{max-width:70rem;padding-left:2rem;padding-right:2rem}
-	.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:.4rem}
-	.cards li{margin-bottom:0}
-	/* stacked, so the thumbnail stays 92px rather than being squeezed beside
-	   text in a third of the width */
-	.cards a{flex-direction:column;gap:.85rem;height:100%}
-	.cards .t{font-size:1.05rem}
-	.entries{column-count:2;column-gap:3rem}
-	.entries li{break-inside:avoid}
 }
 
 /* ---- desktop: media left, everything else right ----

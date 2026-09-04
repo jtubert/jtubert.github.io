@@ -11,8 +11,12 @@ Everything is driven from one Google Sheet, and every entry appears twice:
 1. **The homepage** is a single **AMP Web Story** (`index.markdown`). One
    `amp-story-page` per sheet row.
 2. **`/work/<id>/`** is a normal HTML page per entry, plus the **`/work/`**
-   index. These exist because the story alone gave all 52 entries one URL, which
-   is unindexable.
+   landing. These exist because the story alone gave all 52 entries one URL,
+   which is unindexable. The landing does **not** list the entries: it is the
+   reel, a headline and three picks, and the full list lives in the drawer
+   behind the edge tab, the same drawer every entry page carries. The drawer is
+   rendered server-side from `_data/nav.json`, so all 49 links are in the
+   markup of every page either way.
 
 ## Content pipeline
 
@@ -104,17 +108,26 @@ spanning the real rows, stretches them and opens gaps under the meta, CTA and
 body. `ojoquote` has no media and falls back to a centred column via
 `.no-media`.
 
-**`/work/` index** (`.wrap-index`). Above `62rem` it runs at `70rem` with the
-three cards across the top (thumbnail stacked above text, so it stays 92px) and
-the 46-row list in two CSS columns. Columns preserve document order, so the
-chronology still reads down column one then column two.
+**`/work/` landing** (`.wrap-index`, `.index-hero`). One centred `44rem`
+column at every width: reel, kicker, headline, lede, three picks. Only the
+masthead widens to `70rem` above `62rem`, so its rule lines up with the one on
+an entry page beside it. The picks go from three columns to one below `34rem`.
+
+The reel is sized off the **viewport height**, `min(15rem, 20vh)`, not the
+width: at `26vh` the headline fell below the fold on a 720px window. On a
+1440x900 viewport everything through the picks sits above the fold.
+
+The headline is a sentence rather than a title, about 120 characters against
+the 30 an entry page carries, so `.index-hero h1` overrides the shared `h1`
+size down to `clamp(1.35rem, 3.4vw, 1.95rem)`.
 
 ## Image and video specs
 
 | Where | Aspect | Deliver | Notes |
 |---|---|---|---|
 | Story page media (`DEFAULT`) | **3:2** | 1200x800 | Well is a constant 3:2, `object-position: 50% 40%` so the crop favours the top. Max rendered 530px CSS. |
-| `/work/` card thumbnails | **1:1** | 600x600+ | Displayed at 92px (66 on phones). Build outputs 288px JPEG. One subject, no small text, nothing in the corners. |
+| `/work/` pick thumbnails | **1:1** | 600x600+ | Displayed at 52px (60 on phones). Build outputs 288px JPEG. One subject, no small text, nothing in the corners. |
+| `/work/` reel | **1080x2340** | the story's cover | Shown whole, uncropped, at 180px wide on a laptop. |
 | Homepage cover video | **9:16** | portrait | Full bleed. |
 
 Hand-made card art goes in `assets/thumbs-src/<id>.jpg` and beats the derived
@@ -144,6 +157,16 @@ correctly. It only generates for ids in `_data/selected.yml`.
   so the file is not fetched until play. Encode speech as mono: the source for
   `podcast` was 320kbps dual-mono stereo at 80 MB, and 64kbps mono is 16 MB with
   no audible loss, since its side channel measured 0.08% of the mid.
+- **The `/work/` reel starts at 3 seconds.** The story's cover opens on a
+  title card spelling out the headline underneath it word for word, so the
+  inline script seeks past it and loops back to `IN = 3.0` rather than to zero
+  (hence no `loop` attribute). Reduced motion pauses it outright and the poster
+  stands in, which is why the poster is a frame from t=9 rather than the first
+  frame. **Seeking needs byte-range requests**: GitHub Pages serves them,
+  `python3 -m http.server` does not, so against a plain local server the seek
+  silently does nothing and the clip plays from zero. Check
+  `video.seekable.end(0)`: `13` means ranges work, `0` means the server, not
+  the page, is what you are measuring.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
@@ -188,6 +211,11 @@ After pushing, GitHub Pages takes roughly 60 to 90 seconds. Poll the live URL an
 check the actual bytes rather than assuming the deploy worked.
 
 ## Open items
+
+- `_data/years.yml` is still generated but nothing reads it any more: it was
+  only for the old `/work/` list. Harmless, but it is dead output.
+- `_data/featured.json` still carries a `blurb` per entry. The picks show only
+  the category and the title now, so the blurb goes nowhere.
 
 - Six sheet cells had em dashes and were fixed by hand. The `mirren` title still
   reads "Will be speaking..." in future tense while the body is past tense; the
