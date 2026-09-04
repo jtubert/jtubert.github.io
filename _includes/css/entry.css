@@ -206,7 +206,9 @@ h1{
 	   label the reader cannot see */
 	.lede-wide{display:none}
 	.lede-narrow{display:inline}
-	.stage-bg video{object-position:64% 50%}
+	/* each clip sets its own --focus-x; 50% is the fallback when scripting
+	   is off and there is no video to position anyway */
+	.stage-bg video{object-position:var(--focus-x,50%) 50%}
 	.stage-veil{background:linear-gradient(180deg,rgba(12,11,14,.72) 0%,rgba(12,11,14,.5) 26%,rgba(12,11,14,.86) 66%,rgba(12,11,14,.94) 100%)}
 }
 

@@ -45,12 +45,41 @@ permalink: /work/
   the repaint. It sits at z-index -1, under the drawer and the scrim.
 {%- endcomment -%}
 <div class="stage-bg">
-  <video id="stage-video" autoplay muted loop playsinline preload="metadata"
-         poster="/assets/stage-poster.jpg" aria-label="Juan Tubert being interviewed at El Ojo de Iberoamerica">
-    <source src="/assets/stage-loop.mp4" type="video/mp4">
-  </video>
+  <video id="stage-video" autoplay muted loop playsinline preload="metadata"></video>
   <div class="stage-veil"></div>
 </div>
+{%- comment -%}
+  One of five backdrops per visit. The pick runs here, inline and immediately
+  after the element, rather than at the foot of the page: poster and source
+  have to be set in the same breath and before first paint, or the browser
+  paints one clip's still and then loads another's video under it.
+
+  No src or poster in the markup at all, for the same reason - a served
+  default would be fetched and then replaced. The cost is that with scripting
+  off there is no backdrop, which the veil over the dark ground survives.
+
+  Each entry carries its own phone focal point, because cover-cropping a wide
+  clip to a portrait screen keeps only about a quarter of its width and the
+  quarter worth keeping is different in every one of them.
+{%- endcomment -%}
+<script>
+(function () {
+  var v = document.getElementById('stage-video');
+  if (!v) return;
+  var bgs = [
+    { f: 'sofa',     x: '64%', alt: 'Juan Tubert being interviewed at El Ojo de Iberoamerica' },
+    { f: 'ojostage', x: '52%', alt: 'Juan Tubert presenting on stage at El Ojo de Iberoamerica' },
+    { f: 'workwall', x: '50%', alt: 'A wall of the work on this page' },
+    { f: 'nodes',    x: '58%', alt: 'A generative image pipeline being built node by node' },
+    { f: 'pods',     x: '50%', alt: 'PODS containers on the streets of New York' }
+  ];
+  var b = bgs[Math.floor(Math.random() * bgs.length)];
+  v.poster = '/assets/bg/' + b.f + '.jpg';
+  v.setAttribute('aria-label', b.alt);
+  v.style.setProperty('--focus-x', b.x);
+  v.src = '/assets/bg/' + b.f + '.mp4';
+})();
+</script>
 <div class="wrap wrap-index">
   <header class="masthead">
     {%- comment -%}

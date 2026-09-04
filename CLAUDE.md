@@ -134,7 +134,7 @@ size down to `clamp(1.5rem, 3.6vw, 2.15rem)`.
 |---|---|---|---|
 | Story page media (`DEFAULT`) | **3:2** | 1200x800 | Well is a constant 3:2, `object-position: 50% 40%` so the crop favours the top. Max rendered 530px CSS. |
 | `/work/` pick thumbnails | **1:1** | 600x600+ | Displayed at 52px (60 on phones). Build outputs 288px JPEG. One subject, no small text, nothing in the corners. |
-| `/work/` backdrop | **16:9** | 1920x1080 wanted | `stage-loop.mp4` is 960x540, so it upscales ~1.5x on a laptop. Silent, 13s, 298 KB. |
+| `/work/` backdrop | **16:9 or wider** | 1920x1080 wanted | Five clips in `assets/bg/`, one picked per visit. All silent, 13 to 20s, under 410 KB each. The widest source is 960x540, so every one upscales on a laptop. |
 | Homepage cover video | **9:16** | portrait | Full bleed. |
 
 Hand-made card art goes in `assets/thumbs-src/<id>.jpg` and beats the derived
@@ -164,17 +164,35 @@ correctly. It only generates for ids in `_data/selected.yml`.
   so the file is not fetched until play. Encode speech as mono: the source for
   `podcast` was 320kbps dual-mono stereo at 80 MB, and 64kbps mono is 16 MB with
   no audible loss, since its side channel measured 0.08% of the mid.
-- **The `/work/` backdrop** is `assets/stage-loop.mp4`, cut from
-  `EO2025_VecinoTurbet_small.mp4` at 3:20 for 13 seconds. That window is
-  deliberate: the source is one locked-off two-shot for all 11m35s, but a
-  lower-third naming the interviewer appears around 3:35, and the cut ends
-  before it. Silent, so it is muted with no controls and there is no mute note.
-  Reduced motion pauses it and `stage-poster.jpg` stands in.
+- **The `/work/` backdrop is one of five, picked at random per visit**, from
+  `assets/bg/`. Each has a matching `.jpg` poster and its own phone focal
+  point. The pick runs in an inline script **immediately after the `<video>`,
+  not at the foot of the page**: poster and source must be set together and
+  before first paint, or the browser paints one clip's still and then loads
+  another's video under it. The element ships with **no `src` or `poster` at
+  all** for the same reason, so with scripting off there is no backdrop, which
+  the veil over the dark ground survives. Only the chosen clip is fetched.
+
+  | file | source | window | why that window |
+  |---|---|---|---|
+  | `sofa` | `EO2025_VecinoTurbet_small` | 3:20 +13s | One locked-off two-shot for all 11m35s, but a lower-third names the interviewer around 3:35. |
+  | `ojostage` | `ojo_long` | 10:12 +13s | Bottom 15% cropped: the source carries burned-in subtitles exactly where the copy sits. |
+  | `workwall` | `work2025` | all 20s | Already 2.37:1, so almost nothing is lost to the crop. |
+  | `nodes` | `comfyui` | all 15s | The darkest of the five, so the best type legibility. |
+  | `pods` | `pods_compressed` | 0:16 +13s | Only this window. Elsewhere the clip is a talking head and screen-shared slides whose text fights the headline. |
+
+  All are silent, so they are muted with no controls and carry no mute note.
+  Reduced motion pauses whichever was picked and its poster stands in.
+- **`assets/test.mp4` must never be a backdrop.** It is the most cinematic
+  clip in the repo and has **TONGYI WANX burned into every frame**, which is
+  Alibaba's video-model watermark. Fine as the artifact on `/work/test/`;
+  not as a full-bleed hero.
 - **A phone keeps about a quarter of a 16:9 backdrop.** At 390px wide, cover
-  crops a 960x540 clip to roughly 26% of its width; centred that quarter is
-  the gap between the two men, so below `48rem` `object-position` moves to
-  `64%`, which is him. The veil also turns vertical there, since a diagonal
-  built for a wide screen leaves the foot of a tall one too bright to read on.
+  crops a 960x540 clip to roughly 26% of its width, and the quarter worth
+  keeping differs per clip, so each carries its own `--focus-x` (on `sofa`,
+  centred lands on the gap between the two men; `64%` is him). Below `48rem`
+  the veil also turns vertical, since a diagonal built for a wide screen
+  leaves the foot of a tall one too bright to read on.
 - **Byte-range requests matter when a video is seeked.** GitHub Pages serves
   them, `python3 -m http.server` does not, so against a plain local server a
   seek silently does nothing. Check `video.seekable.end(0)`: the duration means
