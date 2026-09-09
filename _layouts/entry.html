@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+{% include analytics.html %}
 {%- assign src = page.link | split: "//" | last | split: "/" | first | remove: "www." -%}
 <title>{{ page.title_plain | escape }} — Juan (John) Tubert</title>
 <meta name="description" content="{{ page.summary | escape }}">

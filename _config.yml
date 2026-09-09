@@ -3,6 +3,11 @@ email: jtubert@gmail.com
 description: "Juan (John) Tubert is Chief Technology Officer at Tombras, working across creative technology, media and AI. Talks, interviews, awards and work since 2017."
 baseurl: ""
 url: https://www.jtubert.com
+
+# GA4. Read by _includes/analytics.html (the ordinary pages) and by
+# _layouts/default.html (the AMP story). The two surfaces need completely
+# different tags, so this is the only value they share.
+google_analytics: G-E3ESTKPCC8
 twitter_username: jtubert
 github_username:  jtubert
 

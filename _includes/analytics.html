@@ -1,0 +1,13 @@
+{%- comment -%}
+  GA4 for the ordinary HTML pages: /work/ and the 49 entry pages, which had no
+  analytics at all. The AMP story cannot use this. AMP forbids arbitrary
+  <script>, so it carries an <amp-analytics> block in _layouts/default.html
+  instead, pointed at the same property.
+{%- endcomment -%}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ site.google_analytics }}');
+</script>

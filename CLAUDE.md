@@ -198,6 +198,22 @@ correctly. It only generates for ids in `_data/selected.yml`.
   seek silently does nothing. Check `video.seekable.end(0)`: the duration means
   ranges work, `0` means the server, not the page, is what you are measuring.
   Nothing seeks right now, but the trap cost an hour once already.
+- **Analytics is one property behind two completely different tags.** The
+  measurement ID lives once, in `_config.yml` as `google_analytics`
+  (`G-E3ESTKPCC8`), because the two surfaces cannot share a tag: AMP forbids
+  arbitrary `<script>`, so the story carries `<amp-analytics type="gtag">` in
+  `_layouts/default.html` while `/work/` and the entry pages include the
+  ordinary gtag.js snippet from `_includes/analytics.html`. Putting the wrong
+  one on either surface fails: gtag.js breaks AMP validation, and
+  `amp-analytics` does nothing on a normal page.
+  The story's triggers previously sent `event_name: "custom"` with UA's
+  `event_action` / `event_category` / `event_label`. GA4 has no such fields, so
+  that reported every interaction as a single event called "custom"; the names
+  are now the events themselves (`story_progress`, `story_complete`,
+  `cta_click`, `story_click_through`, `story_link_focus`) and everything else
+  is an ordinary parameter, arriving as `ep.*`.
+  The old `UA-186073653-1` property it all pointed at had been dead since
+  Google shut Universal Analytics down in 2023.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
