@@ -1,8 +1,12 @@
 {%- comment -%}
-  GA4 for the ordinary HTML pages: /work/ and the 49 entry pages, which had no
-  analytics at all. The AMP story cannot use this. AMP forbids arbitrary
-  <script>, so it carries an <amp-analytics> block in _layouts/default.html
-  instead, pointed at the same property.
+  GA4 for the ordinary HTML pages: /work/ and the 49 entry pages. The AMP story
+  cannot use this. AMP forbids arbitrary <script>, so it carries an
+  <amp-analytics> block in _layouts/default.html pointed at the same property.
+
+  Enhanced measurement's "Outbound clicks" is enabled on the stream but was
+  observed NOT firing on the CTA, which is the single most important click on
+  the site. Everything below is explicit for that reason: nothing here depends
+  on GA detecting anything by itself.
 {%- endcomment -%}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
 <script>
@@ -10,4 +14,101 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', '{{ site.google_analytics }}');
+
+  // Every call goes through here so a blocked or failed gtag.js is a no-op
+  // rather than a TypeError that takes the rest of the page's script with it.
+  window.jtEvent = function (name, params) {
+    try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch (e) {}
+  };
+
+  (function () {
+    var here = location.hostname;
+
+    // What kind of link it is, by where it sits rather than where it points:
+    // a PDF of an article and a link to the article itself are different acts.
+    function kindOf(a) {
+      if (a.closest('.cta')) return 'cta';
+      if (a.closest('.media-link') || a.closest('.media')) return 'pdf';
+      if (a.closest('.picks')) return 'pick';
+      if (a.closest('.wnav-drawer')) return 'menu';
+      if (a.closest('.wnav-step') || a.closest('.pager-link')) return 'pager';
+      if (a.closest('.brandmark')) return 'brand';
+      if (a.closest('.body')) return 'body';
+      if (a.closest('.backlink') || a.closest('.alt')) return 'foot';
+      return 'other';
+    }
+
+    // A readable name for the thing that was clicked. The logo is an image
+    // with no text, and both a drawer row and a pick lead with a small span,
+    // the month and the category, which run straight into the title:
+    // "JunCreativity, Media..." and "BOOKYou Work for Your User".
+    function labelOf(a, kind) {
+      var t = '';
+      var strip = kind === 'menu' ? '.wnav-mo' : (kind === 'pick' ? '.pk' : null);
+      if (strip) {
+        var copy = a.cloneNode(true);
+        var lead = copy.querySelector(strip);
+        if (lead) lead.remove();
+        t = copy.textContent || '';
+      } else {
+        t = a.textContent || '';
+      }
+      t = t.replace(/\s+/g, ' ').trim();
+      if (!t) {
+        var img = a.querySelector('img');
+        t = a.getAttribute('aria-label') || a.getAttribute('title') ||
+            (img && img.getAttribute('alt')) || '';
+      }
+      return t.replace(/\s+/g, ' ').trim().slice(0, 100);
+    }
+
+    // Capture phase: some of these links sit inside handlers that stop
+    // propagation, and a bubbling listener would never hear them.
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+
+      var url;
+      try { url = new URL(a.href, location.href); } catch (err) { return; }
+      if (!/^https?:$/.test(url.protocol)) return;
+
+      var kind = kindOf(a);
+      var label = labelOf(a, kind);
+
+      if (url.hostname !== here) {
+        jtEvent('outbound_click', {
+          link_url: url.href,
+          link_domain: url.hostname,
+          link_text: label,
+          link_kind: kind
+        });
+        return;
+      }
+
+      // Same host, but a PDF is still someone leaving for a document.
+      if (/\.pdf$/i.test(url.pathname)) {
+        jtEvent('pdf_open', { file_name: decodeURIComponent(url.pathname.split('/').pop()), link_text: label });
+        return;
+      }
+
+      if (kind === 'menu')  jtEvent('menu_nav',  { to_path: url.pathname, link_text: label });
+      if (kind === 'pick')  jtEvent('pick_click',{ to_path: url.pathname, link_text: label });
+      if (kind === 'pager') jtEvent('pager_nav', { to_path: url.pathname, method: 'button' });
+    }, true);
+
+    // Is the side menu found at all? The lede points at it, so this is the
+    // line that says whether the pointing works.
+    document.addEventListener('click', function (e) {
+      var t = e.target && e.target.closest && e.target.closest('#wnav-toggle');
+      if (t && t.getAttribute('aria-expanded') !== 'true') jtEvent('menu_open', {});
+    }, true);
+
+    // play does not bubble, so this has to be captured on the document.
+    document.addEventListener('play', function (e) {
+      var el = e.target;
+      if (el && el.tagName === 'AUDIO') {
+        jtEvent('audio_play', { file_name: (el.currentSrc || '').split('/').pop() });
+      }
+    }, true);
+  })();
 </script>

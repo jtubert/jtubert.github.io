@@ -79,6 +79,7 @@ permalink: /work/
   v.setAttribute('aria-label', b.alt);
   v.style.setProperty('--focus-x', b.x);
   v.src = '/assets/bg/' + b.f + '.mp4';
+  if (window.jtEvent) jtEvent('backdrop_shown', { backdrop_id: b.f });
 })();
 </script>
 <div class="wrap wrap-index">

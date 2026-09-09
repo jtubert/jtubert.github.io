@@ -214,6 +214,21 @@ correctly. It only generates for ids in `_data/selected.yml`.
   is an ordinary parameter, arriving as `ep.*`.
   The old `UA-186073653-1` property it all pointed at had been dead since
   Google shut Universal Analytics down in 2023.
+- **Event tracking is explicit, not inherited.** Enhanced measurement's
+  "Outbound clicks" is enabled on the stream but was observed NOT firing on the
+  CTA, which is the most important click on the site, so nothing in
+  `_includes/analytics.html` relies on GA detecting anything by itself. It
+  emits `outbound_click` (any other host, with `link_kind` saying whether it
+  was the CTA, the logo, a body link and so on), `pdf_open`, `menu_open`,
+  `menu_nav`, `pick_click`, `pager_nav` and `audio_play`. Two of those cannot
+  be caught by a click listener and report from their own handlers instead:
+  `pager_nav` with `method` `key` or `swipe` from the script in
+  `_layouts/entry.html`, and `backdrop_shown` from the backdrop picker in
+  `work/index.html`, which is the only way to tell whether the clip on screen
+  changes what people do. Every call goes through `window.jtEvent`, so a
+  blocked gtag.js is a no-op rather than a TypeError that takes the rest of the
+  page's script with it. The AMP story cannot use any of this and has its own
+  triggers.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's

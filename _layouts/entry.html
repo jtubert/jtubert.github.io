@@ -309,8 +309,8 @@
     if (dt > 800) return;                                  // a slow drag is not a swipe
     if (Math.abs(dx) < 60) return;                         // too small to mean it
     if (Math.abs(dx) < Math.abs(dy) * 1.5) return;         // that was a scroll
-    if (dx < 0 && next) { location.href = next; }           // pull left, next comes in
-    else if (dx > 0 && prev) { location.href = prev; }
+    if (dx < 0 && next) { jtEvent('pager_nav', { to_path: next, method: 'swipe' }); location.href = next; }
+    else if (dx > 0 && prev) { jtEvent('pager_nav', { to_path: prev, method: 'swipe' }); location.href = prev; }
   }, { passive: true });
 
   document.addEventListener('keydown', function (e) {
@@ -320,8 +320,8 @@
     if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
     // while the list is open the arrows belong to it, not to the collection
     if (isOpen()) return;
-    if (e.key === 'ArrowLeft' && prev) { location.href = prev; }
-    else if (e.key === 'ArrowRight' && next) { location.href = next; }
+    if (e.key === 'ArrowLeft' && prev) { jtEvent('pager_nav', { to_path: prev, method: 'key' }); location.href = prev; }
+    else if (e.key === 'ArrowRight' && next) { jtEvent('pager_nav', { to_path: next, method: 'key' }); location.href = next; }
   });
 })();
 </script>
