@@ -4,14 +4,23 @@
     python3 tools/ga-report.py            # the last 7 days
     python3 tools/ga-report.py --days 1   # yesterday and today
 
-Auth deliberately does NOT use the machine's default credentials. Those belong
-to the Tombras account and live at a single fixed path; this site is personal
-and its property is owned by the gmail account, so the credential for it sits
-in its own CLOUDSDK_CONFIG directory and the two never collide. Set it up once:
+Auth runs as a service account, ga-reader@jtubert-analytics, for two reasons.
 
-    CLOUDSDK_CONFIG=~/.config/gcloud-personal gcloud auth application-default login \
-      --account=jtubert@gmail.com \
-      --scopes=https://www.googleapis.com/auth/analytics.readonly,https://www.googleapis.com/auth/cloud-platform
+The first is that the obvious route does not work: Google blocks the gcloud
+CLI's own OAuth client from requesting analytics.readonly ("This app is
+blocked"), because it is a sensitive scope and that client is not verified for
+it. A service account key skips OAuth consent altogether.
+
+The second is that this is a personal site. The machine's default credentials
+belong to the Tombras account and ADC lives at one fixed path, so authenticating
+there would overwrite the credential the Tombras SDKs rely on. This one is kept
+in its own CLOUDSDK_CONFIG directory and the two never collide.
+
+The key is at ~/.config/jtubert-analytics/ga-reader.json, mode 600, outside the
+repo. It is a real credential: never commit it or paste it anywhere.
+
+Access is granted in GA, not in GCP: the service account address is added as a
+Viewer under Admin -> Property access management.
 
 There is nothing to pip install. gcloud mints the token and urllib does the rest.
 """
@@ -25,25 +34,36 @@ import urllib.error
 import urllib.request
 
 PROPERTY = "257388699"
-QUOTA_PROJECT = "jtubert-analytics"
 CONFIG_DIR = os.path.expanduser("~/.config/gcloud-personal")
 API = "https://analyticsdata.googleapis.com/v1beta/properties/{}:runReport"
 
 
+SA_EMAIL = "ga-reader@jtubert-analytics.iam.gserviceaccount.com"
+KEY = os.path.expanduser("~/.config/jtubert-analytics/ga-reader.json")
+SCOPE = "https://www.googleapis.com/auth/analytics.readonly"
+
+
 def token():
-    if not os.path.isdir(CONFIG_DIR):
+    if not os.path.exists(KEY):
         sys.exit(
-            "No personal credential yet. Run this once:\n\n"
-            f"  CLOUDSDK_CONFIG={CONFIG_DIR} gcloud auth application-default login \\\n"
-            "    --account=jtubert@gmail.com \\\n"
-            "    --scopes=https://www.googleapis.com/auth/analytics.readonly,"
-            "https://www.googleapis.com/auth/cloud-platform\n"
+            f"No key at {KEY}.\nRecreate it with:\n\n"
+            "  gcloud iam service-accounts keys create ~/.config/jtubert-analytics/ga-reader.json \\\n"
+            f"    --iam-account={SA_EMAIL} --project=jtubert-analytics --account=jtubert@gmail.com\n"
         )
     env = dict(os.environ, CLOUDSDK_CONFIG=CONFIG_DIR)
-    r = subprocess.run(
-        ["gcloud", "auth", "application-default", "print-access-token"],
-        env=env, capture_output=True, text=True,
-    )
+
+    def mint():
+        return subprocess.run(
+            ["gcloud", "auth", "print-access-token", "--account", SA_EMAIL, "--scopes", SCOPE],
+            env=env, capture_output=True, text=True,
+        )
+
+    r = mint()
+    if r.returncode:
+        # first run on this machine, or the isolated config was cleared
+        subprocess.run(["gcloud", "auth", "activate-service-account", "--key-file", KEY],
+                       env=env, capture_output=True, text=True)
+        r = mint()
     if r.returncode:
         sys.exit(f"Could not get a token:\n{r.stderr.strip()}")
     return r.stdout.strip()
@@ -67,8 +87,6 @@ def report(tok, dimensions, metrics, days, limit=15, order_metric=None, dim_filt
         headers={
             "Authorization": f"Bearer {tok}",
             "Content-Type": "application/json",
-            # user credentials need a project to bill the quota to
-            "x-goog-user-project": QUOTA_PROJECT,
         },
     )
     try:
@@ -80,6 +98,12 @@ def report(tok, dimensions, metrics, days, limit=15, order_metric=None, dim_filt
         # error worth stopping for; the section just gets skipped.
         if e.code == 400 and "customEvent:" in detail:
             return None
+        if e.code == 403:
+            sys.exit(
+                f"\nGA denied access to property {PROPERTY}.\n\n"
+                f"Add {SA_EMAIL} as a Viewer:\n"
+                "  GA4 -> Admin -> Property access management -> + -> Add users\n"
+            )
         sys.exit(f"\nGA API returned {e.code}:\n{detail}\n")
 
 
