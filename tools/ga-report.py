@@ -3,6 +3,12 @@
 
     python3 tools/ga-report.py            # the last 7 days
     python3 tools/ga-report.py --days 1   # yesterday and today
+    python3 tools/ga-report.py --now      # the last 30 minutes
+
+--now exists because runReport reads PROCESSED data, and GA4 takes 24 to 48
+hours to process a new property's first data into standard reports. Until that
+catches up every dated section is legitimately empty while the site is being
+visited, which looks broken and is not. runRealtimeReport has no such lag.
 
 Auth runs as a service account, ga-reader@jtubert-analytics, for two reasons.
 
@@ -36,6 +42,7 @@ import urllib.request
 PROPERTY = "257388699"
 CONFIG_DIR = os.path.expanduser("~/.config/gcloud-personal")
 API = "https://analyticsdata.googleapis.com/v1beta/properties/{}:runReport"
+API_NOW = "https://analyticsdata.googleapis.com/v1beta/properties/{}:runRealtimeReport"
 
 
 SA_EMAIL = "ga-reader@jtubert-analytics.iam.gserviceaccount.com"
@@ -69,20 +76,22 @@ def token():
     return r.stdout.strip()
 
 
-def report(tok, dimensions, metrics, days, limit=15, order_metric=None, dim_filter=None):
+def report(tok, dimensions, metrics, days, limit=15, order_metric=None, dim_filter=None,
+           realtime=False):
     body = {
-        "dateRanges": [{"startDate": f"{days}daysAgo", "endDate": "today"}],
         "dimensions": [{"name": d} for d in dimensions],
         "metrics": [{"name": m} for m in metrics],
         "limit": limit,
     }
+    if not realtime:
+        body["dateRanges"] = [{"startDate": f"{days}daysAgo", "endDate": "today"}]
     if order_metric:
         body["orderBys"] = [{"metric": {"metricName": order_metric}, "desc": True}]
     if dim_filter:
         body["dimensionFilter"] = dim_filter
 
     req = urllib.request.Request(
-        API.format(PROPERTY),
+        (API_NOW if realtime else API).format(PROPERTY),
         data=json.dumps(body).encode(),
         headers={
             "Authorization": f"Bearer {tok}",
@@ -132,16 +141,39 @@ def table(title, res, headers, width=52, note=None):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", type=int, default=7)
+    ap.add_argument("--now", action="store_true", help="the last 30 minutes, with no processing lag")
     a = ap.parse_args()
     tok = token()
     d = a.days
 
+    if a.now:
+        print(f"\njtubert.com  ·  right now  ·  property {PROPERTY}")
+        live = report(tok, [], ["activeUsers"], d, realtime=True)
+        for _, m in rows(live):
+            print(f"\n  {m[0]} active user{'' if m[0] == '1' else 's'} in the last 30 minutes")
+        table("Pages being read",
+              report(tok, ["unifiedScreenName"], ["activeUsers"], d, realtime=True,
+                     order_metric="activeUsers"),
+              ["users"])
+        table("Events firing",
+              report(tok, ["eventName"], ["eventCount"], d, limit=25, realtime=True,
+                     order_metric="eventCount"),
+              ["count"])
+        print()
+        return
+
     print(f"\njtubert.com  ·  last {d} day{'s' if d != 1 else ''}  ·  property {PROPERTY}")
 
     tot = report(tok, [], ["activeUsers", "sessions", "screenPageViews", "averageSessionDuration"], d)
-    for _, m in rows(tot):
+    got = list(rows(tot))
+    for _, m in got:
         print(f"\n  {m[0]} users   {m[1]} sessions   {m[2]} views   "
               f"{float(m[3]):.0f}s average session")
+    if not got:
+        print("\n  No processed data in this range.\n"
+              "  GA4 takes 24 to 48 hours to process a new property's first data into\n"
+              "  standard reports, and this endpoint only reads processed data. If the\n"
+              "  site is being visited now, `--now` will show it.")
 
     table("Most visited pages",
           report(tok, ["pagePath"], ["screenPageViews", "activeUsers"], d, order_metric="screenPageViews"),
