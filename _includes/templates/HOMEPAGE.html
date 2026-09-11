@@ -12,4 +12,22 @@
     </div>
   </amp-story-grid-layer>
 
+  {%- comment -%}
+    The one link from the story into the rest of the site. Without it the
+    homepage, the only page Google had indexed, pointed at nothing but other
+    sites, so every /work/ page was reachable only through the sitemap, which
+    Google treats as a weak signal. One link is enough: /work/ carries the
+    drawer, which exposes all of them.
+
+    On the cover because it has no call to action of its own to displace; every
+    other page already spends its single outlink on the external article. The
+    whole story is one HTML document, so the page it sits on does not change
+    what Google sees, only what readers do. Absolute, because the story can be
+    served from an AMP cache on another host, where a root-relative href would
+    resolve against the cache.
+  {%- endcomment -%}
+  <amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#e0141d" cta-accent-element="background">
+    <a href="{{ site.url }}/work/" title="See all {{ site.data.nav.total }} posts" data-vars-ctalink="{{ site.url }}/work/">See all {{ site.data.nav.total }} posts</a>
+  </amp-story-page-outlink>
+
 </amp-story-page>

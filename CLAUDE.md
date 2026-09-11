@@ -229,6 +229,21 @@ correctly. It only generates for ids in `_data/selected.yml`.
   blocked gtag.js is a no-op rather than a TypeError that takes the rest of the
   page's script with it. The AMP story cannot use any of this and has its own
   triggers.
+- **The story cover links to `/work/`**, via its own `amp-story-page-outlink`
+  reading "See all N posts". It exists for crawling: before it, the homepage
+  (for a while the only page Google had indexed) linked to nothing but other
+  sites, so every `/work/` page was an orphan reachable only through the
+  sitemap. One link is enough, since `/work/` carries the drawer. It is on the
+  cover because every other page already spends its single outlink on the
+  external article, and the href is absolute because the story can be served
+  from an AMP cache on another host.
+- **Story CTA clicks were never tracked until September 2026.** The
+  `anchorClicks` trigger selected `a.cta-a`, a class left over from the retired
+  `amp-story-cta-layer` that matched none of the 42 outlink anchors, so it was
+  dead under UA and stayed dead through the move to GA4. It now selects
+  `amp-story-page-outlink a`. AMP sends these hits as image pixels, so an
+  in-page `fetch`/`sendBeacon` hook sees nothing; read the browser's network
+  log instead.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
@@ -286,6 +301,8 @@ check the actual bytes rather than assuming the deploy worked.
   hero. Deliberately left as is.
 - `robots.txt` still describes the site as "Single-page AMP Story site" and
   contains an em dash. Out of date since `/work/` pages exist.
-- Sitemap has not been submitted in Google Search Console.
+- Sitemap submitted Sep 7 2026, first read Sep 11: 51 discovered, 1 indexed. The
+  3 "Page with redirect" in the indexing report are the http and non-www
+  variants 301-ing to the canonical homepage, which is correct.
 - `assets/tombras_logo_rgb_vert.png` and `assets/tombras-logo-alpha.png` are
   unreferenced.
