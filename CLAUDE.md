@@ -307,9 +307,15 @@ correctly. It only generates for ids in `_data/selected.yml`.
     would have had the old HTML recorded as current and the change silently
     skipped until some later deploy. Nothing is recorded unless a run
     completes: an HTTP error, a network failure or a CDN that never catches up
-    all exit with a message and leave the fingerprints alone. `--urls` reads
-    and records only the pages it names; it once recorded every page, which
-    marked unrelated pending changes as already sent.
+    all exit with a message and leave the fingerprints alone, except that
+    during `--wait` a failed fetch counts as "not ready yet" and is retried
+    until the CDN window closes. Only the **newest** deploy run for the commit
+    decides, since the workflow can be started by hand and a commit can have a
+    cancelled run followed by a rerun. A page with no `Last-Modified` is
+    treated as fresh but warned about, so the check never hangs and never
+    silently stops happening. `--urls` reads and records only the pages it
+    names, refuses any URL not on the site before fetching it, and once
+    recorded every page, which marked unrelated pending changes as sent.
   - **GA4 already has an "AI Assistant" channel; do not build one.** Its
     default channel group includes it, and the rules there only match labels
     Google assigns upstream (`eachScopeDefaultChannelGroup` EXACT "AI

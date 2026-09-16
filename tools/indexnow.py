@@ -29,12 +29,15 @@ is. A fixed 20-second sleep stood in for that check before, and if the CDN had
 not caught up, the old HTML was fingerprinted, recorded as current, and the
 change went unsubmitted until some later deploy.
 
-Nothing is recorded unless the run completes. A page answering an HTTP error,
-an unreachable network, or a CDN that never catches up all exit with a message
-and leave the recorded fingerprints as they were.
+Nothing is recorded unless the run completes. Without --wait, a page answering
+an HTTP error or an unreachable network exits with a message and leaves the
+recorded fingerprints as they were. With --wait, the same failures during the
+CDN window count as "not ready yet" and are retried until the window closes,
+since a network blip then would otherwise end the run and leave the deploy
+unsubmitted until someone ran it again.
 """
 
-import argparse, email.utils, glob, hashlib, json, os, re, subprocess, sys, time, urllib.error, urllib.request
+import argparse, email.utils, glob, hashlib, json, os, re, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
 from datetime import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -62,39 +65,57 @@ def pages():
     urls = [f"{SITE}/", f"{SITE}/about/", f"{SITE}/work/"]
     for g in nav["years"]:
         urls += [f"{SITE}/work/{it['id']}/" for it in g["items"]]
-    return urls
+    return list(dict.fromkeys(urls))
+
+
+class FetchError(Exception):
+    """A page could not be read: an HTTP error status or a network failure."""
 
 
 def fetch(url):
-    """(status, body, Last-Modified as a datetime or None).
+    """(status, body, Last-Modified as a datetime or None), or FetchError.
 
     urlopen raises on an HTTP error status, so an error page is never returned,
-    and so never fingerprinted. Both that and a network failure exit with a
-    message instead of a traceback."""
+    and so never fingerprinted. This raises rather than exiting so a caller can
+    decide: retry while waiting on a deploy, give up otherwise, or say something
+    more specific (the key file). It used to exit here, which made the key
+    file's own message unreachable and a blip during --wait fatal."""
     req = urllib.request.Request(url, headers=HEADERS)
+    bare = url.split("?")[0]
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
             lm = r.headers.get("Last-Modified")
             return (r.status, r.read().decode("utf-8", "replace"),
                     email.utils.parsedate_to_datetime(lm) if lm else None)
     except urllib.error.HTTPError as e:
-        sys.exit(f"{url.split('?')[0]} answered HTTP {e.code}. Not submitting; nothing recorded.")
+        raise FetchError(f"{bare} answered HTTP {e.code}") from None
     except OSError as e:   # URLError, timeouts, DNS and TLS failures
-        sys.exit(f"Could not reach {url.split('?')[0]}: {getattr(e, 'reason', e)}. "
-                 "Not submitting; nothing recorded.")
+        raise FetchError(f"Could not reach {bare}: {getattr(e, 'reason', e)}") from None
+
+
+def cache_busted(url):
+    """The URL with a nocache parameter added properly, whatever query it has.
+    Concatenating "?nocache=" made a URL with two "?" when one already had one."""
+    parts = urllib.parse.urlsplit(url)
+    query = urllib.parse.parse_qsl(parts.query, keep_blank_values=True)
+    query.append(("nocache", str(int(time.time()))))
+    return urllib.parse.urlunsplit(parts._replace(query=urllib.parse.urlencode(query)))
 
 
 def fingerprint(url):
     """(sha256 of the page with whitespace collapsed, its Last-Modified)."""
-    _, html, lm = fetch(f"{url}?nocache={int(time.time())}")
+    _, html, lm = fetch(cache_busted(url))
     return hashlib.sha256(re.sub(r"\s+", " ", html).encode()).hexdigest(), lm
 
 
 def wait_for_deploy():
     """Wait for the Actions run deploying HEAD to succeed. Returns when it was
     created, which every page of that build will be newer than."""
-    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT,
-                          capture_output=True, text=True).stdout.strip()
+    git = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True)
+    head = git.stdout.strip()
+    if git.returncode or not head:
+        sys.exit(f"Could not read the current commit with git, so there is no deploy to wait for:\n"
+                 f"{git.stderr.strip()}")
     deadline = time.time() + 900
     seen = False
     while time.time() < deadline:
@@ -106,12 +127,16 @@ def wait_for_deploy():
         if runs:
             seen = True
             # This repo has one workflow, whose build and deploy are jobs in the
-            # same run, so a completed run means the site was deployed.
-            if all(x["status"] == "completed" for x in runs):
-                bad = [x for x in runs if x["conclusion"] != "success"]
-                if bad:
-                    sys.exit(f"The deploy for {head[:7]} finished as {bad[0]['conclusion']}. Not submitting.")
-                return min(datetime.fromisoformat(x["createdAt"].replace("Z", "+00:00")) for x in runs)
+            # same run, so a completed run means the site was deployed. The
+            # workflow can also be started by hand, so one commit can have
+            # several runs, such as a cancelled one and a later rerun. Only the
+            # newest decides; this used to exit if any run had not succeeded.
+            created = lambda x: datetime.fromisoformat(x["createdAt"].replace("Z", "+00:00"))
+            newest = max(runs, key=created)
+            if newest["status"] == "completed":
+                if newest["conclusion"] != "success":
+                    sys.exit(f"The latest deploy for {head[:7]} finished as {newest['conclusion']}. Not submitting.")
+                return created(newest)
         time.sleep(15)
     sys.exit(f"No successful deploy for {head[:7]} within 15 minutes"
              + ("" if seen else " (no run was ever started for it)") + ". Not submitting.")
@@ -123,23 +148,45 @@ def read_live(urls, since=None):
     build, so the set is re-read until none is, or the run gives up having
     recorded nothing."""
     deadline = time.time() + CDN_TIMEOUT
+    warned = False
     while True:
-        got = {u: fingerprint(u) for u in urls}
-        stale = [u for u, (_, lm) in got.items() if since and lm and lm < since]
-        if not stale:
+        got, stale, errors = {}, [], []
+        for u in urls:
+            try:
+                got[u] = fingerprint(u)
+            except FetchError as e:
+                if not since:
+                    sys.exit(f"{e}. Not submitting; nothing recorded.")
+                errors.append(str(e))       # during a deploy: not ready yet, retry
+        if since:
+            stale = [u for u, (_, lm) in got.items() if lm and lm < since]
+            unverifiable = [u for u, (_, lm) in got.items() if lm is None]
+            if unverifiable and not warned:
+                # Treated as fresh, so a missing header cannot hang the run, but
+                # not silently: without it the CDN check is not happening.
+                print(f"IndexNow: warning, {len(unverifiable)} page(s) sent no Last-Modified, so "
+                      f"the CDN could not be checked for them (for example {unverifiable[0]}).",
+                      file=sys.stderr)
+                warned = True
+        if not stale and not errors:
             return {u: h for u, (h, _) in got.items()}
         if time.time() > deadline:
-            sys.exit(f"{len(stale)} page(s) still served from before the deploy after "
-                     f"{CDN_TIMEOUT // 60} minutes, for example {stale[0]}. "
-                     "Not submitting; nothing recorded.")
+            why = errors[0] if errors else f"{stale[0]} still served from before the deploy"
+            sys.exit(f"{len(stale) + len(errors)} page(s) not ready after {CDN_TIMEOUT // 60} minutes "
+                     f"({why}). Not submitting; nothing recorded.")
         time.sleep(15)
 
 
 def load_state():
     if not os.path.exists(STATE):
         return {}
-    with open(STATE, encoding="utf-8") as f:
-        data = json.load(f)
+    try:
+        with open(STATE, encoding="utf-8") as f:
+            data = json.load(f)
+    except ValueError:
+        print(f"IndexNow: warning, {STATE} is not valid JSON; treating every page as unsent.",
+              file=sys.stderr)
+        return {}
     # the first format stored dates, which are not comparable to fingerprints
     return data.get("hashes", {}) if data.get("version") == 2 else {}
 
@@ -185,9 +232,13 @@ def main():
     k = key()
     since = wait_for_deploy() if a.wait else None
 
-    status, body, _ = fetch(f"{SITE}/{k}.txt")
+    try:
+        status, body, _ = fetch(f"{SITE}/{k}.txt")
+    except FetchError as e:
+        status, body = None, str(e)
     if status != 200 or body.strip() != k:
-        sys.exit(f"{SITE}/{k}.txt is not live with the right contents yet, so IndexNow would reject it.")
+        detail = f" ({body})" if status is None else ""
+        sys.exit(f"{SITE}/{k}.txt is not live with the right contents yet, so IndexNow would reject it{detail}.")
 
     old = load_state()
 
@@ -195,7 +246,10 @@ def main():
         # Read and record only the named pages. This used to read every page
         # and record them all, which marked changes on the pages not named as
         # already sent, so a later ordinary run would never have submitted them.
-        send = [u.strip() for u in a.urls.split(",") if u.strip()]
+        send = list(dict.fromkeys(u.strip() for u in a.urls.split(",") if u.strip()))
+        foreign = [u for u in send if not u.startswith(f"{SITE}/")]
+        if foreign:
+            sys.exit(f"--urls only accepts pages on {SITE}; not submitting {', '.join(foreign)}.")
         now = read_live(send, since)
         code = submit(k, send)
         old.update(now)
