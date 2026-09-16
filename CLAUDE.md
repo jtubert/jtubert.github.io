@@ -62,9 +62,9 @@ npm run indexnow              # tools/indexnow.py --wait: tell Bing what changed
 python3 tools/ga-report.py    # GA4 digest; --days N, or --now for the last 30 minutes
 ```
 
-`download_and_deploy` ends with `indexnow`, which polls the live sitemap until
-its dates match the ones just generated and only then submits, so Bing is never
-sent to the previous build.
+`download_and_deploy` ends with `indexnow`, which waits for the GitHub Actions
+run deploying that exact commit to succeed (through `gh`) and only then submits,
+so Bing is never sent to the previous build.
 
 Order matters: `generate_thumbs` reads `_data/featured.json`, which
 `generate_pages` writes. It exits non-zero if that file is missing.
@@ -288,8 +288,18 @@ correctly. It only generates for ids in `_data/selected.yml`.
     AI systems the site was "a single AMP Web Story" with "no separate URLs per
     entry", which had been false since `/work/` shipped.
   - **IndexNow's key is public by design**: it is the 32-character hex `.txt`
-    at the root, and IndexNow verifies ownership by fetching it. What was last
-    submitted is kept in `tools/.indexnow-sent.json`, gitignored and per machine.
+    at the root, and IndexNow verifies ownership by fetching it.
+  - **IndexNow submits pages whose live HTML changed**, fingerprinted with
+    whitespace collapsed and stored in `tools/.indexnow-sent.json` (gitignored,
+    per machine). The first version compared git-derived dates and missed real
+    changes: those dates follow the post bodies, so a same-day edit to
+    structured data or to `/about/` changed no date and sent nothing, and its
+    `--wait` returned before the deploy had finished because the dates already
+    matched. Built HTML is byte-identical across rebuilds with no content change
+    (only `feed.xml` has a timestamp and it is not submitted), which is what
+    makes fingerprinting sound. A second run straight after a submission must
+    report nothing changed; if it ever resubmits, a page has started varying
+    between requests.
   - **AI referrals** appear in `ga-report.py` under "Arrived from AI
     assistants", matched on `sessionSource`. It only sees click-throughs from a
     cited link; being mentioned without a click leaves no trace in GA.
