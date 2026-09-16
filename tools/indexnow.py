@@ -21,12 +21,21 @@ byte-identical across rebuilds with no content change (only feed.xml carries a
 timestamp, and it is not submitted), so a different fingerprint is a real change.
 
 --wait follows the GitHub Actions run that deploys this exact commit, through
-the gh CLI, and only continues once it has succeeded. The earlier version
-polled the live sitemap until its dates matched, which returned at once
-whenever the dates had not changed, before the deploy had even finished.
+the gh CLI, and only continues once it has succeeded. It then checks the CDN
+rather than trusting it: GitHub Pages stamps every file with the deploy's time
+in Last-Modified, so any page whose Last-Modified is older than the run's
+creation is still the previous build, and the whole set is re-read until none
+is. A fixed 20-second sleep stood in for that check before, and if the CDN had
+not caught up, the old HTML was fingerprinted, recorded as current, and the
+change went unsubmitted until some later deploy.
+
+Nothing is recorded unless the run completes. A page answering an HTTP error,
+an unreachable network, or a CDN that never catches up all exit with a message
+and leave the recorded fingerprints as they were.
 """
 
-import argparse, glob, hashlib, json, os, re, subprocess, sys, time, urllib.error, urllib.request
+import argparse, email.utils, glob, hashlib, json, os, re, subprocess, sys, time, urllib.error, urllib.request
+from datetime import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://www.jtubert.com"
@@ -34,6 +43,8 @@ HOST = "www.jtubert.com"
 REPO = "jtubert/jtubert.github.io"
 ENDPOINT = "https://api.indexnow.org/indexnow"
 STATE = os.path.join(ROOT, "tools", ".indexnow-sent.json")
+CDN_TIMEOUT = 600
+HEADERS = {"User-Agent": "jtubert-indexnow/1.0", "Cache-Control": "no-cache"}
 
 
 def key():
@@ -46,7 +57,8 @@ def key():
 
 def pages():
     """Every URL the sitemap lists, from the files the generator wrote."""
-    nav = json.load(open(os.path.join(ROOT, "_data", "nav.json"), encoding="utf-8"))
+    with open(os.path.join(ROOT, "_data", "nav.json"), encoding="utf-8") as f:
+        nav = json.load(f)
     urls = [f"{SITE}/", f"{SITE}/about/", f"{SITE}/work/"]
     for g in nav["years"]:
         urls += [f"{SITE}/work/{it['id']}/" for it in g["items"]]
@@ -54,51 +66,87 @@ def pages():
 
 
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "jtubert-indexnow/1.0",
-                                               "Cache-Control": "no-cache"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return r.status, r.read().decode("utf-8", "replace")
+    """(status, body, Last-Modified as a datetime or None).
+
+    urlopen raises on an HTTP error status, so an error page is never returned,
+    and so never fingerprinted. Both that and a network failure exit with a
+    message instead of a traceback."""
+    req = urllib.request.Request(url, headers=HEADERS)
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            lm = r.headers.get("Last-Modified")
+            return (r.status, r.read().decode("utf-8", "replace"),
+                    email.utils.parsedate_to_datetime(lm) if lm else None)
+    except urllib.error.HTTPError as e:
+        sys.exit(f"{url.split('?')[0]} answered HTTP {e.code}. Not submitting; nothing recorded.")
+    except OSError as e:   # URLError, timeouts, DNS and TLS failures
+        sys.exit(f"Could not reach {url.split('?')[0]}: {getattr(e, 'reason', e)}. "
+                 "Not submitting; nothing recorded.")
 
 
 def fingerprint(url):
-    _, html = fetch(f"{url}?nocache={int(time.time())}")
-    return hashlib.sha256(re.sub(r"\s+", " ", html).encode()).hexdigest()
+    """(sha256 of the page with whitespace collapsed, its Last-Modified)."""
+    _, html, lm = fetch(f"{url}?nocache={int(time.time())}")
+    return hashlib.sha256(re.sub(r"\s+", " ", html).encode()).hexdigest(), lm
 
 
 def wait_for_deploy():
+    """Wait for the Actions run deploying HEAD to succeed. Returns when it was
+    created, which every page of that build will be newer than."""
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT,
                           capture_output=True, text=True).stdout.strip()
     deadline = time.time() + 900
     seen = False
     while time.time() < deadline:
         r = subprocess.run(["gh", "run", "list", "--repo", REPO, "--commit", head,
-                            "--json", "status,conclusion"], capture_output=True, text=True)
+                            "--json", "status,conclusion,createdAt"], capture_output=True, text=True)
         if r.returncode:
             sys.exit(f"Could not read the deploy run through gh:\n{r.stderr.strip()}")
         runs = json.loads(r.stdout or "[]")
         if runs:
             seen = True
+            # This repo has one workflow, whose build and deploy are jobs in the
+            # same run, so a completed run means the site was deployed.
             if all(x["status"] == "completed" for x in runs):
                 bad = [x for x in runs if x["conclusion"] != "success"]
                 if bad:
                     sys.exit(f"The deploy for {head[:7]} finished as {bad[0]['conclusion']}. Not submitting.")
-                time.sleep(20)   # let the CDN pick up the new build
-                return
+                return min(datetime.fromisoformat(x["createdAt"].replace("Z", "+00:00")) for x in runs)
         time.sleep(15)
     sys.exit(f"No successful deploy for {head[:7]} within 15 minutes"
              + ("" if seen else " (no run was ever started for it)") + ". Not submitting.")
 
 
+def read_live(urls, since=None):
+    """Fingerprint each URL. Given `since`, the deploy run's creation time, a page
+    whose Last-Modified predates it is still the CDN's copy of the previous
+    build, so the set is re-read until none is, or the run gives up having
+    recorded nothing."""
+    deadline = time.time() + CDN_TIMEOUT
+    while True:
+        got = {u: fingerprint(u) for u in urls}
+        stale = [u for u, (_, lm) in got.items() if since and lm and lm < since]
+        if not stale:
+            return {u: h for u, (h, _) in got.items()}
+        if time.time() > deadline:
+            sys.exit(f"{len(stale)} page(s) still served from before the deploy after "
+                     f"{CDN_TIMEOUT // 60} minutes, for example {stale[0]}. "
+                     "Not submitting; nothing recorded.")
+        time.sleep(15)
+
+
 def load_state():
     if not os.path.exists(STATE):
         return {}
-    data = json.load(open(STATE, encoding="utf-8"))
+    with open(STATE, encoding="utf-8") as f:
+        data = json.load(f)
     # the first format stored dates, which are not comparable to fingerprints
     return data.get("hashes", {}) if data.get("version") == 2 else {}
 
 
 def save_state(hashes):
-    json.dump({"version": 2, "hashes": hashes}, open(STATE, "w", encoding="utf-8"), indent=1)
+    with open(STATE, "w", encoding="utf-8") as f:
+        json.dump({"version": 2, "hashes": hashes}, f, indent=1)
 
 
 def submit(k, urls):
@@ -111,9 +159,19 @@ def submit(k, urls):
             code = r.status
     except urllib.error.HTTPError as e:
         sys.exit(f"IndexNow refused the submission: HTTP {e.code} {e.read().decode(errors='replace')[:300]}")
+    except OSError as e:
+        sys.exit(f"Could not reach IndexNow: {getattr(e, 'reason', e)}. Nothing submitted or recorded.")
     if code not in (200, 202):
         sys.exit(f"IndexNow returned HTTP {code}.")
     return code
+
+
+def report(code, send):
+    print(f"IndexNow: submitted {len(send)} URL{'s' if len(send) != 1 else ''} (HTTP {code}):")
+    for u in send[:12]:
+        print(f"  {u}")
+    if len(send) > 12:
+        print(f"  ... and {len(send) - 12} more")
 
 
 def main():
@@ -125,32 +183,35 @@ def main():
     a = ap.parse_args()
 
     k = key()
-    if a.wait:
-        wait_for_deploy()
+    since = wait_for_deploy() if a.wait else None
 
-    try:
-        status, body = fetch(f"{SITE}/{k}.txt")
-        if status != 200 or body.strip() != k:
-            raise ValueError
-    except Exception:
+    status, body, _ = fetch(f"{SITE}/{k}.txt")
+    if status != 200 or body.strip() != k:
         sys.exit(f"{SITE}/{k}.txt is not live with the right contents yet, so IndexNow would reject it.")
 
-    urls = pages()
     old = load_state()
-    now = {u: fingerprint(u) for u in urls}
+
+    if a.urls:
+        # Read and record only the named pages. This used to read every page
+        # and record them all, which marked changes on the pages not named as
+        # already sent, so a later ordinary run would never have submitted them.
+        send = [u.strip() for u in a.urls.split(",") if u.strip()]
+        now = read_live(send, since)
+        code = submit(k, send)
+        old.update(now)
+        save_state(old)
+        report(code, send)
+        return
+
+    urls = pages()
+    now = read_live(urls, since)
 
     if a.seed:
         save_state(now)
         print(f"IndexNow: recorded {len(now)} live pages, submitted nothing.")
         return
 
-    if a.urls:
-        send = [u.strip() for u in a.urls.split(",") if u.strip()]
-    elif a.all or not old:
-        send = urls
-    else:
-        send = [u for u in urls if old.get(u) != now[u]]
-
+    send = urls if (a.all or not old) else [u for u in urls if old.get(u) != now[u]]
     if not send:
         save_state(now)
         print("IndexNow: no page changed since the last submission.")
@@ -158,11 +219,7 @@ def main():
 
     code = submit(k, send)
     save_state(now)
-    print(f"IndexNow: submitted {len(send)} URL{'s' if len(send) != 1 else ''} (HTTP {code}):")
-    for u in send[:12]:
-        print(f"  {u}")
-    if len(send) > 12:
-        print(f"  ... and {len(send) - 12} more")
+    report(code, send)
 
 
 if __name__ == "__main__":

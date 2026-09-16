@@ -300,6 +300,16 @@ correctly. It only generates for ids in `_data/selected.yml`.
     makes fingerprinting sound. A second run straight after a submission must
     report nothing changed; if it ever resubmits, a page has started varying
     between requests.
+  - **`--wait` checks the CDN rather than sleeping.** GitHub Pages stamps every
+    file with the deploy's time in `Last-Modified`, so a page older than the
+    deploy run's `createdAt` is still the previous build, and the set is re-read
+    until none is. A fixed 20-second sleep did this job before, and a slow CDN
+    would have had the old HTML recorded as current and the change silently
+    skipped until some later deploy. Nothing is recorded unless a run
+    completes: an HTTP error, a network failure or a CDN that never catches up
+    all exit with a message and leave the fingerprints alone. `--urls` reads
+    and records only the pages it names; it once recorded every page, which
+    marked unrelated pending changes as already sent.
   - **GA4 already has an "AI Assistant" channel; do not build one.** Its
     default channel group includes it, and the rules there only match labels
     Google assigns upstream (`eachScopeDefaultChannelGroup` EXACT "AI
