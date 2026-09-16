@@ -1,0 +1,9 @@
+# Entries that are something more specific than a CreativeWork, keyed by id.
+# The layout reads this, so a type is added here rather than hardcoded there.
+# Only claim what the entry's own page says.
+
+book:
+  type: Book
+  co_authors:            # besides Juan; /work/book/
+    - Brian Hanley
+    - Rick Barber

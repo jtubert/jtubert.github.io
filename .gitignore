@@ -19,3 +19,6 @@ IMG_7532.JPG
 
 # uncompressed audio masters; the web encode is assets/podcast.mp3
 mp3/
+
+# what tools/indexnow.py last submitted, per machine
+tools/.indexnow-sent.json

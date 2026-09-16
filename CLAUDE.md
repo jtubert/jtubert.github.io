@@ -18,6 +18,11 @@ Everything is driven from one Google Sheet, and every entry appears twice:
    carries. The drawer is
    rendered server-side from `_data/nav.json`, so all 49 links are in the
    markup of every page either way.
+3. **`/about/`** is the answer to "who is Juan Tubert?", built for answer
+   engines: a 40 to 80 word third-person answer directly under the name, then
+   question-shaped headings, each with a direct answer, then lists, tables and a
+   link to the post it came from. It is generated entirely from
+   `_data/person.yml` and `_data/about.yml`.
 
 ## Content pipeline
 
@@ -38,9 +43,12 @@ survive a download lives in the repo instead:
 | `assets/thumbs-src/<id>.jpg` | Hand-made card art that overrides the derived thumbnail. |
 | `_data/media_links.yml` | Entries whose hero opens a PDF. `id: <url> | <optional caption>`. |
 | `_data/audio.yml` | Entries with an episode to play. Same `id: <url> | <caption>` format. |
+| `_data/person.yml` | **The facts about him, stated once.** Every Person node in the structured data, `/about/` and `llms.txt` read it. Change a fact here and nowhere else. |
+| `_data/about.yml` | The `/about/` questions. `lead` is both the visible answer and the FAQPage text, so they cannot drift. |
+| `_data/schema_types.yml` | Entries more specific than CreativeWork, keyed by id. Currently only `book` (Book, with its two co-authors). |
 
 Generated, do not edit by hand: `work/*.md`, `_data/featured.json`,
-`_data/years.yml`, `assets/thumbs/*`.
+`_data/years.yml`, `_data/lastmod.json`, `assets/thumbs/*`.
 
 ## Commands
 
@@ -50,7 +58,13 @@ npm run local                 # generate, then jekyll serve
 npm run build                 # generate, then jekyll build
 npm run generate_pages        # tools/generate-entry-pages.py
 npm run generate_thumbs       # tools/generate-thumbs.py  (must run AFTER generate_pages)
+npm run indexnow              # tools/indexnow.py --wait: tell Bing what changed, once Pages is live
+python3 tools/ga-report.py    # GA4 digest; --days N, or --now for the last 30 minutes
 ```
+
+`download_and_deploy` ends with `indexnow`, which polls the live sitemap until
+its dates match the ones just generated and only then submits, so Bing is never
+sent to the previous build.
 
 Order matters: `generate_thumbs` reads `_data/featured.json`, which
 `generate_pages` writes. It exits non-zero if that file is missing.
@@ -86,6 +100,8 @@ which means something else entirely (quoted in someone else's article).
   Restructure the sentence instead of substituting another dash. The only
   remaining ones are the `<title>` separators (`Work — Juan (John) Tubert`) and
   the homepage's `sr-only` h1, which are deliberate and unresolved.
+- `/about/` and `llms.txt` are **third person**, unlike the bodies: they exist
+  to be quoted by something else, and a quoted "I" loses its subject.
 - Bodies are one or two paragraphs, roughly 60 to 150 words, first person, plain.
   Ground them in the linked source. Where the link is a LinkedIn post or there is
   none, stay short and claim only what the entry itself supports.
@@ -244,6 +260,39 @@ correctly. It only generates for ids in `_data/selected.yml`.
   `amp-story-page-outlink a`. AMP sends these hits as image pixels, so an
   in-page `fetch`/`sendBeacon` hook sees nothing; read the browser's network
   log instead.
+- **Answer-engine basics, and why each is the way it is.**
+  - **One entity.** Every page's JSON-LD is a `@graph` holding the same
+    `Person` (`https://www.jtubert.com/#person`) and `WebSite` nodes from
+    `_includes/jsonld/`, with the page's own node pointing at them by `@id`. The
+    homepage used to carry a second Person that disagreed with the rest (homepage
+    as his URL, a story poster as his photo, only LinkedIn as identity) and an
+    Article naming him as an Organization. Conflicting facts are exactly what
+    lowers an answer engine's confidence. A check that all 52 pages emit a
+    byte-identical Person node is the fastest way to catch a regression.
+  - **Dates are real.** `last_modified_at`, `dateModified`, "Page updated" and
+    sitemap `lastmod` all come from `git_date()` in the generator: the last
+    commit touching the file, or today if it has uncommitted changes. They used
+    to be the build clock, on two URLs, and absent on the other 49. An entry's
+    date follows its `_work_bodies` file, not the CSV, because a download
+    rewrites the whole CSV and would stamp all 49 as changed.
+  - **The source is a `citation`, not `sameAs`.** `sameAs` asserts two URLs are
+    the same thing; an entry page is a write-up of an article, not the article.
+  - **`robots.txt` names the AI crawlers in one shared group** with `*`. A
+    crawler matching a named group ignores `*` entirely, so separate groups
+    would each have needed `/test/` repeated. **`Disallow` precedes `Allow`**:
+    Google takes the longest match so order is irrelevant to it, but a parser
+    taking the first match reads `Allow: /` and never reaches `/test/`. The old
+    file had that order and blocked nothing for such parsers. Check with
+    Python's `urllib.robotparser`, which is first-match, as the strict case.
+  - **`llms.txt` is generated** from the same data. The hand-written one told
+    AI systems the site was "a single AMP Web Story" with "no separate URLs per
+    entry", which had been false since `/work/` shipped.
+  - **IndexNow's key is public by design**: it is the 32-character hex `.txt`
+    at the root, and IndexNow verifies ownership by fetching it. What was last
+    submitted is kept in `tools/.indexnow-sent.json`, gitignored and per machine.
+  - **AI referrals** appear in `ga-report.py` under "Arrived from AI
+    assistants", matched on `sessionSource`. It only sees click-throughs from a
+    cited link; being mentioned without a click leaves no trace in GA.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
@@ -299,10 +348,17 @@ check the actual bytes rather than assuming the deploy worked.
   corrected title and summary were handed over for pasting.
 - `/work/ojo3/` has a portrait 9:16 video that renders about 1100px tall in the
   hero. Deliberately left as is.
-- `robots.txt` still describes the site as "Single-page AMP Story site" and
-  contains an em dash. Out of date since `/work/` pages exist.
 - Sitemap submitted Sep 7 2026, first read Sep 11: 51 discovered, 1 indexed. The
   3 "Page with redirect" in the indexing report are the http and non-www
   variants 301-ing to the canonical homepage, which is correct.
 - `assets/tombras_logo_rgb_vert.png` and `assets/tombras-logo-alpha.png` are
   unreferenced.
+- **The book subtitle disagrees with the cover.** The site says "How to
+  **Design** User-Centric Products"; the printed cover reads "How to **Build**".
+  Answer engines will also see retailer and publisher listings, so whichever is
+  right should be used everywhere.
+- Answer-engine work that has to happen off this site: submit the sitemap in
+  Bing Webmaster Tools (it can import from Search Console), add an "AI
+  assistants" channel group in GA4 (the service account is Viewer only, so it
+  cannot), and make LinkedIn, GitHub and any directory profiles use the wording
+  in `_data/person.yml`.

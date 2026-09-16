@@ -1,0 +1,23 @@
+{%- comment -%}
+  The one Person node. Every page that describes Juan links to this @id instead
+  of restating him, so answer engines see a single entity with a single set of
+  facts. The facts come from _data/person.yml. Emits a bare JSON object, for use
+  inside a @graph or as a property value.
+{%- endcomment -%}
+{%- assign p = site.data.person -%}
+{
+  "@type": "Person",
+  "@id": {{ p.id | jsonify }},
+  "name": {{ p.name | jsonify }},
+  "alternateName": {{ p.alternate_names | jsonify }},
+  "description": {{ p.answer_html | strip_html | normalize_whitespace | jsonify }},
+  "jobTitle": {{ p.job_title | jsonify }},
+  "worksFor": { "@type": "Organization", "name": {{ p.employer.name | jsonify }}, "url": {{ p.employer.url | jsonify }} },
+  "memberOf": { "@type": "Organization", "name": {{ p.member_of | jsonify }} },
+  "award": {{ p.award | jsonify }},
+  "knowsAbout": {{ p.knows_about | jsonify }},
+  "image": "{{ site.url }}{{ p.image }}",
+  "url": "{{ site.url }}/about/",
+  "mainEntityOfPage": "{{ site.url }}/about/",
+  "sameAs": {{ p.same_as | jsonify }}
+}

@@ -44,51 +44,43 @@
 		<meta name="twitter:image" content="{{ site.url }}/assets/story-poster-landscape.jpg">
 		<meta name="twitter:image:alt" content="Juan (John) Tubert">
 
+		{%- comment -%}
+		  The story as an Article, written and published by the same Person node every
+		  other page uses. This used to be two blocks that contradicted the rest of
+		  the site: a separate Person with the homepage as his URL, a story poster as
+		  his photo and only LinkedIn to identify him, and an Article naming him as an
+		  Organization. dateModified was the build clock, so it claimed a change on
+		  every deploy; it now comes from git, like everywhere else.
+		{%- endcomment -%}
 		<script type="application/ld+json">
 		{
 		  "@context": "https://schema.org",
-		  "@type": "Person",
-		  "name": "Juan Tubert",
-		  "alternateName": ["John Tubert", "Juan (John) Tubert"],
-		  "url": "{{ site.url }}/",
-		  "image": "{{ site.url }}/assets/story-poster-square.jpg",
-		  "jobTitle": "Chief Technology Officer",
-		  "description": {{ site.description | jsonify }},
-		  "worksFor": {
-		    "@type": "Organization",
-		    "name": "Tombras",
-		    "url": "https://www.tombras.com/"
-		  },
-		  "sameAs": ["https://www.linkedin.com/in/jtubert/"]
-		}
-		</script>
-		<script type="application/ld+json">
-		{
-		  "@context": "https://schema.org",
-		  "@type": "Article",
-		  "headline": "{{ site.title }}",
-		  "description": {{ site.description | jsonify }},
-		  "image": [
-		    "{{ site.url }}/assets/story-poster-square.jpg",
-		    "{{ site.url }}/assets/story-poster-portrait.jpg",
-		    "{{ site.url }}/assets/story-poster-landscape.jpg"
-		  ],
-		  "author": { "@type": "Person", "name": "Juan Tubert", "url": "{{ site.url }}/" },
-		  "publisher": {
-		    "@type": "Organization",
-		    "name": "Juan (John) Tubert",
-		    "logo": {
-		      "@type": "ImageObject",
-		      "url": "{{ site.url }}/assets/story-publisher-logo.jpg",
-		      "width": 256,
-		      "height": 256
+		  "@graph": [
+		    {% include jsonld/website.html %},
+		    {% include jsonld/person.html %},
+		    {
+		      "@type": "Article",
+		      "@id": "{{ site.url }}/#story",
+		      "url": "{{ site.url }}/",
+		      "headline": {{ site.title | jsonify }},
+		      "description": {{ site.description | jsonify }},
+		      "image": [
+		        "{{ site.url }}/assets/story-poster-square.jpg",
+		        "{{ site.url }}/assets/story-poster-portrait.jpg",
+		        "{{ site.url }}/assets/story-poster-landscape.jpg"
+		      ],
+		      "author": { "@id": {{ site.data.person.id | jsonify }} },
+		      "publisher": { "@id": {{ site.data.person.id | jsonify }} },
+		      "about": { "@id": {{ site.data.person.id | jsonify }} },
+		      "datePublished": "2021-01-01",
+		      {% if site.data.lastmod.home %}"dateModified": "{{ site.data.lastmod.home }}",
+		      {% endif %}"isPartOf": { "@id": "{{ site.url }}/#website" },
+		      "mainEntityOfPage": "{{ site.url }}/"
 		    }
-		  },
-		  "datePublished": "2021-01-01",
-		  "dateModified": "{{ site.time | date: '%Y-%m-%d' }}",
-		  "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ site.url }}/" }
+		  ]
 		}
 		</script>
+		{% include favicons.html %}
 		<style amp-custom>
 			{% include css/head.css %}
 		</style> 

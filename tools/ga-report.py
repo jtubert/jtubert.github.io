@@ -42,6 +42,9 @@ import urllib.request
 PROPERTY = "257388699"
 CONFIG_DIR = os.path.expanduser("~/.config/gcloud-personal")
 API = "https://analyticsdata.googleapis.com/v1beta/properties/{}:runReport"
+# The same list belongs in the GA4 "AI assistants" channel group, so the two agree.
+AI_SOURCES = (r"chatgpt\.com|chat\.openai\.com|perplexity\.ai|gemini\.google\.com|"
+              r"claude\.ai|copilot\.microsoft\.com|you\.com|meta\.ai")
 API_NOW = "https://analyticsdata.googleapis.com/v1beta/properties/{}:runRealtimeReport"
 
 
@@ -186,6 +189,16 @@ def main():
     table("Events",
           report(tok, ["eventName"], ["eventCount"], d, limit=25, order_metric="eventCount"),
           ["count"])
+
+    # People who arrived from an AI answer. It only catches clicks through a
+    # cited link: an answer that mentions him without a click leaves no trace
+    # here, which is why citations have to be checked in the assistants too.
+    table("Arrived from AI assistants",
+          report(tok, ["sessionSource", "landingPage"], ["sessions"], d, limit=20,
+                 order_metric="sessions",
+                 dim_filter={"filter": {"fieldName": "sessionSource", "stringFilter": {
+                     "matchType": "PARTIAL_REGEXP", "value": AI_SOURCES}}}),
+          ["sessions"])
 
     # These three read event parameters, which the Data API can only return once
     # they are registered as custom dimensions in GA4. Until then they skip.

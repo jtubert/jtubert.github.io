@@ -1,0 +1,115 @@
+---
+layout: null
+permalink: /about/
+---
+{%- assign p = site.data.person -%}
+{%- assign updated = site.data.lastmod.about -%}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+{% include analytics.html %}
+<title>About {{ p.display_name }}, {{ p.job_title }} at {{ p.employer.name }}</title>
+<meta name="description" content="{{ p.summary | strip_newlines | escape }}">
+<link rel="canonical" href="{{ site.url }}/about/">
+{% include favicons.html %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>{% include css/entry.css %}</style>
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="{{ site.url }}/about/">
+<meta property="og:title" content="About {{ p.display_name }}">
+<meta property="og:description" content="{{ p.summary | strip_newlines | escape }}">
+<meta property="og:image" content="{{ site.url }}{{ p.image }}">
+<meta property="profile:first_name" content="Juan">
+<meta property="profile:last_name" content="Tubert">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@{{ site.twitter_username }}">
+
+{%- comment -%}
+  Three things on one page, joined by @id. The Person is the entity itself,
+  shared with every other page. ProfilePage says this URL is about that Person.
+  FAQPage carries the questions below, word for word from _data/about.yml, so
+  the markup can only say what the page visibly says.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {% include jsonld/website.html %},
+    {% include jsonld/person.html %},
+    {
+      "@type": "ProfilePage",
+      "@id": "{{ site.url }}/about/#profile",
+      "url": "{{ site.url }}/about/",
+      "name": "About {{ p.display_name }}",
+      "isPartOf": { "@id": "{{ site.url }}/#website" },
+      "mainEntity": { "@id": {{ p.id | jsonify }} },
+      {% if updated %}"dateModified": "{{ updated }}",
+      {% endif %}"inLanguage": "en"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "{{ site.url }}/about/#faq",
+      "url": "{{ site.url }}/about/",
+      "mainEntity": [
+        {%- for item in site.data.about %}
+        {
+          "@type": "Question",
+          "name": {{ item.q | jsonify }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ item.lead | strip_html | normalize_whitespace | jsonify }} }
+        }{% unless forloop.last %},{% endunless %}
+        {%- endfor %}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a class="whoami" href="/">Juan Tubert, CTO @</a>
+    <a class="brandmark" href="https://www.tombras.com/" target="_blank" rel="noopener" aria-label="Tombras">
+      <picture>
+        <source media="(min-width: 48rem)" srcset="/assets/tombras-logo.png">
+        <img src="/assets/tombras-mark.png" alt="Tombras" width="76" height="91">
+      </picture>
+    </a>
+  </header>
+
+  <nav class="about-nav" aria-label="Site">
+    <a href="/work/">All {{ site.data.nav.total }} posts</a>
+  </nav>
+
+  <main class="about">
+    {%- comment -%}
+      The answer comes first, directly under the name, and has to stand on its
+      own when quoted, because answer engines lift exactly this paragraph.
+    {%- endcomment -%}
+    <div class="about-head">
+      <img class="about-photo" src="{{ p.image }}" alt="{{ p.display_name }}" width="96" height="96">
+      <h1>{{ p.display_name }}</h1>
+    </div>
+    <p class="about-answer">{{ p.answer_html }}</p>
+    {% if updated %}<p class="about-updated">Page updated <time datetime="{{ updated }}">{{ updated | date: "%B %-d, %Y" }}</time></p>{% endif %}
+
+    {%- for item in site.data.about %}
+    <section class="qa">
+      <h2>{{ item.q }}</h2>
+      <p class="lead">{{ item.lead }}</p>
+      {{ item.more }}
+    </section>
+    {%- endfor %}
+
+    <p class="backlink">
+      <a href="/work/">All {{ site.data.nav.total }} posts</a>
+      &middot; <a href="/">the story</a>
+    </p>
+  </main>
+</div>
+</body>
+</html>

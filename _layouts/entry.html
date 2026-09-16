@@ -8,6 +8,7 @@
 <title>{{ page.title_plain | escape }} — Juan (John) Tubert</title>
 <meta name="description" content="{{ page.summary | escape }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+{% include favicons.html %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
@@ -25,28 +26,45 @@
 <meta name="twitter:description" content="{{ page.summary | escape }}">
 <meta name="twitter:image" content="{{ site.url }}/{{ page.image }}">
 
+{%- comment -%}
+  One @graph per page. The Person and WebSite nodes are the same everywhere,
+  from _includes/jsonld, so every entry reinforces a single entity instead of
+  restating him slightly differently 49 times. The entry is a CreativeWork
+  unless _data/schema_types.yml says it is something more specific.
+
+  The source link is a citation, not sameAs: sameAs says two URLs are the same
+  thing, and this page is a write-up of the article, not the article.
+{%- endcomment -%}
+{%- assign stype = site.data.schema_types[page.entry_id] -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "CreativeWork",
-  "name": {{ page.title_plain | jsonify }},
-  "headline": {{ page.title_plain | jsonify }},
-  "description": {{ page.summary | jsonify }},
-  "url": "{{ site.url }}{{ page.url }}",
-  "image": "{{ site.url }}/{{ page.image }}",
-  "genre": {{ page.category | jsonify }},
-  {% if page.iso_date != "" %}"datePublished": "{{ page.iso_date }}",
-  {% endif %}  {% if page.link != "" %}"sameAs": {{ page.link | jsonify }},
-  {% endif %}"author": {
-    "@type": "Person",
-    "name": "Juan Tubert",
-    "alternateName": "John Tubert",
-    "jobTitle": "Chief Technology Officer",
-    "worksFor": { "@type": "Organization", "name": "Tombras" },
-    "url": "{{ site.url }}/",
-    "sameAs": ["https://www.linkedin.com/in/jtubert/"]
-  },
-  "isPartOf": { "@type": "WebSite", "name": "jtubert.com", "url": "{{ site.url }}/" }
+  "@graph": [
+    {% include jsonld/website.html %},
+    {% include jsonld/person.html %},
+    {
+      "@type": {{ stype.type | default: "CreativeWork" | jsonify }},
+      "@id": "{{ site.url }}{{ page.url }}#work",
+      "url": "{{ site.url }}{{ page.url }}",
+      "name": {{ page.title_plain | jsonify }},
+      "headline": {{ page.title_plain | jsonify }},
+      "description": {{ page.summary | jsonify }},
+      "image": "{{ site.url }}/{{ page.image }}",
+      "genre": {{ page.category | jsonify }},
+      "inLanguage": "en",
+      {% if page.iso_date != "" %}"datePublished": "{{ page.iso_date }}",
+      {% endif %}{% if page.last_modified_at != "" %}"dateModified": "{{ page.last_modified_at }}",
+      {% endif %}{% if page.link != "" %}"citation": {{ page.link | jsonify }},
+      {% endif %}"author": [
+        { "@id": {{ site.data.person.id | jsonify }} }
+        {%- for co in stype.co_authors %},
+        { "@type": "Person", "name": {{ co | jsonify }} }
+        {%- endfor %}
+      ],
+      "isPartOf": { "@id": "{{ site.url }}/#website" },
+      "mainEntityOfPage": "{{ site.url }}{{ page.url }}"
+    }
+  ]
 }
 </script>
 </head>
@@ -129,6 +147,7 @@
       <div class="meta">
         {%- if page.link != "" %}<span>{{ src }}</span><span class="meta-sep"></span>{% endif -%}
         <span>{{ page.date_label }}</span>
+        {%- if page.last_modified_at != "" %}<span class="meta-sep"></span><span>Page updated <time datetime="{{ page.last_modified_at }}">{{ page.last_modified_at | date: "%b %Y" }}</time></span>{% endif %}
       </div>
     </div>
 
@@ -221,7 +240,7 @@
     <a href="/work/">All {{ page.total }} posts</a>
     &middot; <a href="/#page={{ page.entry_id }}">see this in the story</a>
     <br>
-    Juan (John) Tubert is Chief Technology Officer at Tombras.
+    <a href="/about/">Juan (John) Tubert</a> is Chief Technology Officer at Tombras.
     </p>
   </main>
 

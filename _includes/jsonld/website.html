@@ -1,0 +1,10 @@
+{%- comment -%} The site itself, authored and published by the Person node. {%- endcomment -%}
+{
+  "@type": "WebSite",
+  "@id": "{{ site.url }}/#website",
+  "url": "{{ site.url }}/",
+  "name": {{ site.data.person.display_name | jsonify }},
+  "inLanguage": "en",
+  "author": { "@id": {{ site.data.person.id | jsonify }} },
+  "publisher": { "@id": {{ site.data.person.id | jsonify }} }
+}

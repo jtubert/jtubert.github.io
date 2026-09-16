@@ -1,26 +1,36 @@
-# Juan (John) Tubert
+---
+layout: null
+permalink: /llms.txt
+---
+{%- assign p = site.data.person -%}
+# {{ p.display_name }}
 
-> Chief Technology Officer at Tombras. Juan (also known as John) Tubert works
-> across creative technology, media and AI. This site is a running record of
-> his talks, interviews, awards, published articles and work.
+> {{ p.answer_html | strip_html | normalize_whitespace }}
 
-jtubert.com is a single AMP Web Story. All 52 entries live in the HTML of the
-one page at https://www.jtubert.com/ — there are no separate URLs per entry.
+This site is a record of his talks, interviews, awards, writing and work since
+2017. Every entry has its own page at https://www.jtubert.com/work/<id>/ with a
+written summary, the date, and a link to the original source. The homepage
+presents the same entries as a single AMP Web Story.
 
 ## Facts
 
-- Name: Juan Tubert. Also written as John Tubert or Juan (John) Tubert.
-- Role: Chief Technology Officer at Tombras (https://www.tombras.com/).
-- LinkedIn: https://www.linkedin.com/in/jtubert/
-- Entries span 2017 to the present.
+- Name: {{ p.name }}. Also written {{ p.alternate_names | join: " or " }}.
+- Role: {{ p.job_title }} at {{ p.employer.name }} ({{ p.employer.url }}), since {{ p.role_since }}.
+{%- for item in site.data.about %}
+- {{ item.q }} {{ item.lead | strip_html | normalize_whitespace }}
+{%- endfor %}
+- Profiles: {{ p.same_as | join: ", " }}
 
-## What the entries cover
+## Key pages
 
-Each entry carries a category, a headline, a date and usually a link to the
-source. Categories in use: Article, Speaker, Work, Interview, Award, Panelist,
-Judge, AI Test, Certification, Book, Video, Quote, Game, Podcast.
+- [About {{ p.display_name }}]({{ site.url }}/about/): who he is, answered question by question, with a source for each answer.
+- [All posts]({{ site.url }}/work/): every entry, newest first.
+- [Sitemap]({{ site.url }}/sitemap.xml)
 
-## Pages
-
-- [Home](https://www.jtubert.com/): the full story — every entry, in order.
-- [Sitemap](https://www.jtubert.com/sitemap.xml)
+## Posts
+{% for g in site.data.nav.years %}
+### {{ g.year }}
+{% for it in g.items %}
+- [{{ it.title | normalize_whitespace }}]({{ site.url }}/work/{{ it.id }}/)
+{%- endfor %}
+{% endfor %}

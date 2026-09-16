@@ -1,0 +1,54 @@
+# Who this site is about, stated once.
+#
+# Every Person block in the structured data, the About page and llms.txt read
+# from here. AI answer engines combine sources and lose confidence when the
+# same facts disagree, so a fact changes in this file and nowhere else.
+#
+# Each claim is already published elsewhere on the site, in his own words.
+# The /work/ page it comes from is noted beside it, so it can be checked.
+
+id: https://www.jtubert.com/#person
+name: Juan Tubert
+display_name: Juan (John) Tubert
+alternate_names:
+  - John Tubert
+  - Juan (John) Tubert
+job_title: Chief Technology Officer
+employer:
+  name: Tombras
+  url: https://www.tombras.com/
+role_since: June 2022                               # /work/tombras/
+image: /assets/juan-tubert.jpg
+
+# For <meta name="description">: the first sentence of the answer, under 160.
+summary: >-
+  Juan (John) Tubert is Chief Technology Officer at Tombras, an independent
+  advertising agency, a role he has held since June 2022 after seventeen years
+  at R/GA.
+
+# The direct answer to "who is Juan Tubert?". 40 to 80 words, third person, and
+# it has to make sense quoted on its own, because that is how it gets used.
+answer_html: >-
+  Juan (John) Tubert is Chief Technology Officer at Tombras, an independent
+  advertising agency, a role he has held since June 2022 after seventeen years
+  at R/GA. He co-wrote <cite>You Work for Your User: How to Design User-Centric
+  Products in the Age of AI</cite> with Brian Hanley and Rick Barber, has judged
+  the Webby Awards, the AICP Awards and The FWA, and speaks about AI at events
+  including SXSW and El Ojo de Iberoamérica.
+
+same_as:
+  - https://www.linkedin.com/in/jtubert/                  # linked across the site
+  - https://github.com/jtubert                             # profile: "Juan (John) Tubert, CTO @ Tombras"
+  - https://x.com/jtubert                                  # twitter_username in _config.yml
+
+knows_about:
+  - Artificial intelligence
+  - Generative AI
+  - AI agents
+  - Bias in artificial intelligence                        # /work/sxsw/
+  - Creative technology
+  - Advertising technology
+  - Voice assistants                                       # /work/adweek/, /work/certification/
+
+member_of: International Academy of Digital Arts and Sciences   # /work/judge/
+award: Campaign US 40 Over 40, 2023                            # /work/forty/

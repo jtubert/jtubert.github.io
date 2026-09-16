@@ -8,10 +8,11 @@
     "deploy": "git add . && git commit -m \"deploying Jekyll site! on $(date '+%Y-%m-%d %H:%M:%S')\" && git push",
     "download": "sh script.sh",
     "generate_thumbs": "python3 tools/generate-thumbs.py",
-    "download_and_deploy": "npm run download && npm run generate_pages && npm run generate_thumbs && npm run deploy",
+    "download_and_deploy": "npm run download && npm run generate_pages && npm run generate_thumbs && npm run deploy && npm run indexnow",
     "build": "npm run generate_pages && npm run generate_thumbs && PATH=\"$HOME/.gem/ruby/2.6.0/bin:$PATH\" BUNDLE_GEMFILE=Gemfile.local bundle exec jekyll build",
     "generate_pages": "python3 tools/generate-entry-pages.py",
-    "unquarantine": "xattr -dr com.apple.quarantine vendor/bundle 2>/dev/null || true"
+    "unquarantine": "xattr -dr com.apple.quarantine vendor/bundle 2>/dev/null || true",
+    "indexnow": "python3 tools/indexnow.py --wait"
   },
   "files": [
     "build"

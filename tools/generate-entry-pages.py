@@ -6,7 +6,7 @@ The AMP story is a single URL, so all 52 entries share one title, one
 description and one canonical. These pages give each entry its own.
 Run after editing the spreadsheet; wired into `npm run generate_pages`.
 """
-import csv, json, os, re, subprocess, sys
+import csv, datetime, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT  = os.path.join(ROOT, 'work')
@@ -38,6 +38,41 @@ def iso_date(label):
         return ''
     mon = MONTHS.get(m.group(1).lower())
     return f"{m.group(2)}-{mon:02d}-01" if mon else ''
+
+def git_date(*paths):
+    """When a set of files last changed, as YYYY-MM-DD, from git.
+
+    Feeds "Page updated", dateModified and the sitemap's lastmod. It used to be
+    the build clock, which stamped every URL as modified on every deploy; Google
+    learns to ignore a lastmod that always says now, and answer engines weight
+    recency, so the date has to mean something. A path with uncommitted changes
+    counts as today, because that change is about to ship.
+    """
+    rel = [os.path.relpath(x, ROOT) for x in paths if os.path.exists(x)]
+    if not rel:
+        return ''
+    def git(*args):
+        return subprocess.run(['git', *args, '--', *rel], cwd=ROOT,
+                              capture_output=True, text=True).stdout.strip()
+    try:
+        if git('status', '--porcelain'):
+            return datetime.date.today().isoformat()
+        return git('log', '-1', '--format=%cs')
+    except Exception:
+        return ''
+
+def write_lastmod(entries):
+    """Dates for the pages the generator does not write itself."""
+    j = lambda *p: os.path.join(ROOT, *p)
+    data = {
+        'home':  git_date(CSV, j('index.markdown'), j('_includes', 'templates')),
+        'work':  git_date(CSV, j('work', 'index.html'), j('_data', 'selected.yml')),
+        'about': git_date(j('about', 'index.html'), j('_data', 'about.yml'), j('_data', 'person.yml')),
+        'entries': entries,
+    }
+    with open(j('_data', 'lastmod.json'), 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=1)
+    return data
 
 def yaml_str(v):
     """Double-quoted YAML scalar - safe for apostrophes, colons, quotes."""
@@ -400,6 +435,9 @@ def main():
             'is_quote': 'yes' if (r.get('template') or '').strip().upper() == 'QUOTE' else '',
             'summary': pick_summary(eid, r, title, cat, date_label),
             'sitemap_lastmod': iso_date(date_label),
+            # when the written piece was last revised, not when the sheet row
+            # was: a download rewrites the whole CSV, which would stamp all 49
+            'last_modified_at': git_date(os.path.join(ROOT, '_work_bodies', f'{eid}.md')),
             'prev_id': prev_r['id'].strip() if prev_r else '',
             'prev_title': prev_r['title'].strip() if prev_r else '',
             'next_id': next_r['id'].strip() if next_r else '',
@@ -428,10 +466,15 @@ def main():
     # keep the order given in selected.yml rather than sheet order
     featured_items.sort(key=lambda i: SELECTED.index(i['id']))
     featured = write_featured(featured_items)
+    lastmod = write_lastmod({r['id'].strip(): git_date(os.path.join(ROOT, '_work_bodies', f"{r['id'].strip()}.md"))
+                             for r in eligible})
     order, counts, year_of = write_year_index(eligible, featured)
     nav = write_nav(eligible, year_of)
     print(f"generated {written} entry pages in work/")
     print(f"  featured: {featured}")
+    dated = sum(1 for v in lastmod['entries'].values() if v)
+    print(f"  lastmod: {dated}/{len(lastmod['entries'])} entries dated, "
+          f"home {lastmod['home']}, work {lastmod['work']}, about {lastmod['about']}")
     print("  years: " + ", ".join(f"{y} ({counts[y]})" for y in order))
     for eid, why in skipped:
         print(f"  skipped {eid}: {why}")

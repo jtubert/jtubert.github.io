@@ -1,0 +1,112 @@
+# The questions on /about/, in the words people actually ask them.
+#
+# `lead` is the direct answer and comes first. It is also what the FAQPage
+# structured data says, so the markup can never claim something the page does
+# not show. `more` is the supporting detail: lists, tables, links to the source.
+#
+# Every fact is already published on the /work/ page it links to. Nothing here
+# is new information, only a different arrangement of it.
+
+- q: What does Juan Tubert do at Tombras?
+  lead: >-
+    He is Chief Technology Officer at Tombras, and has been since June 2022. He
+    joined to be somewhere independent, where technology sits close enough to
+    the creative work to change what gets made rather than only how it gets
+    delivered.
+  more: >-
+    <ul>
+    <li>He built an <a href="/work/tombrasai/">internal AI platform</a> of
+    specialised agents, each aimed at one task and switched on only when a job
+    needs it, and presented it to the whole agency.</li>
+    <li>He built the API and cloud system behind the
+    <a href="/work/googlepods/">PODS campaign with Google Gemini</a>, a moving
+    billboard whose message changed with its location as it drove through New
+    York City. It won a <a href="/work/webby/">2025 Webby for Best Experiential
+    Design</a>.</li>
+    </ul>
+    <p class="src">Source: <a href="/work/tombras/">New position as Chief Technology Officer at Tombras</a></p>
+
+- q: Where did Juan Tubert work before Tombras?
+  lead: >-
+    At R/GA, for seventeen years, until 2022. He joined when Flash was how
+    interesting work was built on the web and left when the interesting problems
+    had moved to machine learning.
+  more: >-
+    <p>The work changed underneath him the whole time: Flash, then mobile, then
+    connected products, then voice, then AI. His roles there included Executive
+    Technology Director, when he <a href="/work/sxsw/">spoke at SXSW in 2019</a>,
+    and SVP and head of technology in New York, when he
+    <a href="/work/podcast/">discussed GPT-3 on R/GA's FutureVision podcast</a>
+    in 2020.</p>
+    <p class="src">Source: <a href="/work/rga_flash/">After 17 years at R/GA</a></p>
+
+- q: What book did Juan Tubert write?
+  lead: >-
+    <cite>You Work for Your User: How to Design User-Centric Products in the
+    Age of AI</cite>, published in February 2026 and co-written with Brian Hanley
+    and Rick Barber.
+  more: >-
+    <table>
+    <tr><th scope="row">Title</th><td><cite>You Work for Your User: How to Design User-Centric Products in the Age of AI</cite></td></tr>
+    <tr><th scope="row">Authors</th><td>Juan Tubert; Brian Hanley, who leads product management at Comcast; Rick Barber, CTO and co-founder of Addition</td></tr>
+    <tr><th scope="row">Published</th><td>February 2026</td></tr>
+    <tr><th scope="row">Argument</th><td>AI is an amplifier, not a replacement. A model can produce a thousand variations and cannot tell you which one will land.</td></tr>
+    </table>
+    <p class="src">Source: <a href="/work/book/">You Work for Your User</a></p>
+
+- q: Which awards has Juan Tubert judged?
+  lead: >-
+    The Webby Awards, as an Executive Judge; the AICP Awards; and The FWA.
+  more: >-
+    <table>
+    <thead><tr><th scope="col">Awards</th><th scope="col">Role</th><th scope="col">Since</th></tr></thead>
+    <tbody>
+    <tr><td><a href="/work/judge/">The Webby Awards</a></td><td>Executive Judge, and a member of the International Academy of Digital Arts and Sciences</td><td>2023</td></tr>
+    <tr><td><a href="/work/aicp/">AICP Awards</a></td><td>Judge</td><td>2023</td></tr>
+    <tr><td><a href="/work/fwa/">The FWA</a></td><td>Jury member</td><td>2025</td></tr>
+    </tbody>
+    </table>
+
+- q: What recognition has Juan Tubert received?
+  lead: >-
+    Campaign US named him one of its 40 Over 40 honorees for 2023, and a
+    campaign he built the technology for won a 2025 Webby.
+  more: >-
+    <ul>
+    <li><a href="/work/forty/">Campaign US 40 Over 40</a>, 2023</li>
+    <li><a href="/work/webby/">2025 Webby for Best Experiential Design</a>, in
+    the AI, Immersive and Games category, for the PODS campaign with Google
+    Gemini</li>
+    <li><a href="/work/certification/">AWS Alexa Skill Builder certification</a>, 2019</li>
+    </ul>
+
+- q: What does Juan Tubert speak and write about?
+  lead: >-
+    Mostly AI: how it changes the way an agency operates rather than only what
+    it produces, and what it costs, from bias to energy use.
+  more: >-
+    <ul>
+    <li><a href="/work/sxsw/">The danger of bias in AI</a>, SXSW, 2019</li>
+    <li><a href="/work/ojo3/">How to use AI to build a more efficient agency</a>,
+    El Ojo de Iberoamérica, Buenos Aires, 2025, with Gonzalo Vecino</li>
+    <li><a href="/work/adweek/">Why voice assistants failed people with accents</a>,
+    Adweek, 2017</li>
+    <li><a href="/work/podcast/">GPT-3</a>, R/GA's FutureVision podcast, 2020</li>
+    </ul>
+
+- q: Where is Juan Tubert from?
+  lead: >-
+    Buenos Aires, Argentina.
+  more: >-
+    <p>That became part of the job in August 2024, when Tombras acquired Niña,
+    an independent creative agency in Buenos Aires, which now operates as
+    TombrasNiña. Several of his talks and interviews since then have been in
+    Spanish, including <a href="/work/ojo3/">El Ojo de Iberoamérica</a>.</p>
+    <p class="src">Source: <a href="/work/argentina/">Tombras expands globally with acquisition of Argentine agency</a></p>
+
+- q: How can I contact Juan Tubert?
+  lead: >-
+    Through LinkedIn, at linkedin.com/in/jtubert.
+  more: >-
+    <p><a href="https://www.linkedin.com/in/jtubert/">LinkedIn</a> ·
+    <a href="https://github.com/jtubert">GitHub</a></p>

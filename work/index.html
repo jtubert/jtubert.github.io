@@ -11,6 +11,7 @@ permalink: /work/
 <title>Posts — Juan (John) Tubert, CTO at Tombras</title>
 <meta name="description" content="Talks, interviews, press, awards and work by Juan (John) Tubert, Chief Technology Officer at Tombras, from 2017 to today.">
 <link rel="canonical" href="/work/">
+{% include favicons.html %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
@@ -24,18 +25,31 @@ permalink: /work/
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Posts — Juan (John) Tubert",
-  "url": "{{ site.url }}/work/",
-  "about": {
-    "@type": "Person",
-    "name": "Juan Tubert",
-    "alternateName": "John Tubert",
-    "jobTitle": "Chief Technology Officer",
-    "worksFor": { "@type": "Organization", "name": "Tombras" },
-    "url": "{{ site.url }}/",
-    "sameAs": ["https://www.linkedin.com/in/jtubert/"]
-  }
+  "@graph": [
+    {% include jsonld/website.html %},
+    {% include jsonld/person.html %},
+    {
+      "@type": "CollectionPage",
+      "@id": "{{ site.url }}/work/#collection",
+      "url": "{{ site.url }}/work/",
+      "name": "Posts by {{ site.data.person.display_name }}",
+      "about": { "@id": {{ site.data.person.id | jsonify }} },
+      "author": { "@id": {{ site.data.person.id | jsonify }} },
+      "isPartOf": { "@id": "{{ site.url }}/#website" },
+      {% if site.data.lastmod.work %}"dateModified": "{{ site.data.lastmod.work }}",
+      {% endif %}"mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": {{ site.data.nav.total }},
+        "itemListElement": [
+          {%- assign n = 0 -%}
+          {%- for g in site.data.nav.years -%}{%- for it in g.items -%}
+          {%- assign n = n | plus: 1 %}
+          { "@type": "ListItem", "position": {{ n }}, "url": "{{ site.url }}/work/{{ it.id }}/", "name": {{ it.title | jsonify }} }{% unless n == site.data.nav.total %},{% endunless %}
+          {%- endfor -%}{%- endfor %}
+        ]
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -165,7 +179,7 @@ permalink: /work/
     {%- endfor %}
     </ul>
 
-    <p class="alt">The same material runs as an <a href="/">AMP story</a>.</p>
+    <p class="alt"><a href="/about/">About Juan</a> &middot; the same material runs as an <a href="/">AMP story</a>.</p>
   </main>
 
   <div class="wnav-scrim" id="wnav-scrim" hidden></div>

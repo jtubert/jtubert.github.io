@@ -2,27 +2,34 @@
 layout: null
 sitemap: false
 ---
+{%- comment -%}
+  lastmod is a real date from git, written by tools/generate-entry-pages.py into
+  _data/lastmod.json. It used to be the build clock on two URLs and absent on the
+  other 49: a lastmod that always says "now" is one Google learns to ignore.
+{%- endcomment -%}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>{{ site.url }}/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>weekly</changefreq>
+    {% if site.data.lastmod.home %}<lastmod>{{ site.data.lastmod.home }}</lastmod>{% endif %}
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>{{ site.url }}/work/</loc>
-    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>{{ site.url }}/about/</loc>
+    {% if site.data.lastmod.about %}<lastmod>{{ site.data.lastmod.about }}</lastmod>{% endif %}
     <priority>0.9</priority>
   </url>
-{%- for s in site.data.stories -%}
-{%- if s.id and s.id != "homepage" and s.title and s.title != "N/A" and s.title != "" %}
   <url>
-    <loc>{{ site.url }}/work/{{ s.id }}/</loc>
-    <changefreq>yearly</changefreq>
+    <loc>{{ site.url }}/work/</loc>
+    {% if site.data.lastmod.work %}<lastmod>{{ site.data.lastmod.work }}</lastmod>{% endif %}
+    <priority>0.9</priority>
+  </url>
+{%- for g in site.data.nav.years -%}{%- for it in g.items %}
+  <url>
+    <loc>{{ site.url }}/work/{{ it.id }}/</loc>
+    {%- assign lm = site.data.lastmod.entries[it.id] %}
+    {% if lm %}<lastmod>{{ lm }}</lastmod>{% endif %}
     <priority>0.6</priority>
   </url>
-{%- endif -%}
-{%- endfor %}
+{%- endfor -%}{%- endfor %}
 </urlset>
