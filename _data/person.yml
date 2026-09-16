@@ -6,6 +6,7 @@
 #
 # Each claim is already published elsewhere on the site, in his own words.
 # The /work/ page it comes from is noted beside it, so it can be checked.
+# He reviewed and confirmed all of it in September 2026.
 
 id: https://www.jtubert.com/#person
 name: Juan Tubert
@@ -39,7 +40,7 @@ answer_html: >-
 same_as:
   - https://www.linkedin.com/in/jtubert/                  # linked across the site
   - https://github.com/jtubert                             # profile: "Juan (John) Tubert, CTO @ Tombras"
-  - https://x.com/jtubert                                  # twitter_username in _config.yml
+  - https://x.com/jtubert                                  # confirmed his, Sep 2026
 
 knows_about:
   - Artificial intelligence

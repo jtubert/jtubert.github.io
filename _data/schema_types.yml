@@ -1,9 +1,15 @@
 # Entries that are something more specific than a CreativeWork, keyed by id.
 # The layout reads this, so a type is added here rather than hardcoded there.
-# Only claim what the entry's own page says.
+# Only claim what the entry's own page, or the authoritative listing, says.
 
 book:
   type: Book
-  co_authors:            # besides Juan; /work/book/
+  # From the Amazon listing, https://www.amazon.com/dp/B0GK86JBSR, which is
+  # the version retailers and answer engines index. The ISBN-13 check digit
+  # was verified. Authors are in the order the listing gives them; the entry
+  # matching _data/person.yml becomes a reference to the shared Person node.
+  isbn: "9798245898667"
+  authors:
     - Brian Hanley
+    - Juan Tubert
     - Rick Barber

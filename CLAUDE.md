@@ -293,6 +293,17 @@ correctly. It only generates for ids in `_data/selected.yml`.
   - **AI referrals** appear in `ga-report.py` under "Arrived from AI
     assistants", matched on `sessionSource`. It only sees click-throughs from a
     cited link; being mentioned without a click leaves no trace in GA.
+- **The book's title is "How to Design", and the cover image says "Build" on
+  purpose.** Checked against the Amazon listing (`B0GK86JBSR`), which is what
+  retailers and answer engines index: *You Work for Your User: How to Design
+  User-Centric Products in the Age of AI*, by Brian Hanley, Juan Tubert and Rick
+  Barber in that order, ISBN 9798245898667 (check digit verified). The site
+  text already matched it. `assets/book.png` is a styled mockup reading "How to
+  Build"; the user chose to keep it in September 2026. Do not "fix" the text to
+  match the image, and do not raise the mismatch again.
+- **About page facts were confirmed by the user in September 2026**: Tombras as
+  "an independent advertising agency", "Buenos Aires, Argentina" as where he is
+  from, `x.com/jtubert` as his, and both R/GA titles.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
@@ -353,10 +364,6 @@ check the actual bytes rather than assuming the deploy worked.
   variants 301-ing to the canonical homepage, which is correct.
 - `assets/tombras_logo_rgb_vert.png` and `assets/tombras-logo-alpha.png` are
   unreferenced.
-- **The book subtitle disagrees with the cover.** The site says "How to
-  **Design** User-Centric Products"; the printed cover reads "How to **Build**".
-  Answer engines will also see retailer and publisher listings, so whichever is
-  right should be used everywhere.
 - Answer-engine work that has to happen off this site: submit the sitemap in
   Bing Webmaster Tools (it can import from Search Console), add an "AI
   assistants" channel group in GA4 (the service account is Viewer only, so it
