@@ -42,7 +42,7 @@ import urllib.request
 PROPERTY = "257388699"
 CONFIG_DIR = os.path.expanduser("~/.config/gcloud-personal")
 API = "https://analyticsdata.googleapis.com/v1beta/properties/{}:runReport"
-# The same list belongs in the GA4 "AI assistants" channel group, so the two agree.
+# Backup to GA4's built-in "AI Assistant" channel, for assistants it does not know yet.
 AI_SOURCES = (r"chatgpt\.com|chat\.openai\.com|perplexity\.ai|gemini\.google\.com|"
               r"claude\.ai|copilot\.microsoft\.com|you\.com|meta\.ai")
 API_NOW = "https://analyticsdata.googleapis.com/v1beta/properties/{}:runRealtimeReport"
@@ -190,14 +190,21 @@ def main():
           report(tok, ["eventName"], ["eventCount"], d, limit=25, order_metric="eventCount"),
           ["count"])
 
-    # People who arrived from an AI answer. It only catches clicks through a
+    # People who arrived from an AI answer. GA4's default channel group has its
+    # own "AI Assistant" channel, classified by Google upstream, so that label is
+    # the primary test; the source list is kept as a backup for any assistant
+    # Google does not recognise yet. Either way it only sees click-throughs from a
     # cited link: an answer that mentions him without a click leaves no trace
-    # here, which is why citations have to be checked in the assistants too.
+    # here, which is what Bing Webmaster Tools' AI Performance report is for.
     table("Arrived from AI assistants",
-          report(tok, ["sessionSource", "landingPage"], ["sessions"], d, limit=20,
-                 order_metric="sessions",
-                 dim_filter={"filter": {"fieldName": "sessionSource", "stringFilter": {
-                     "matchType": "PARTIAL_REGEXP", "value": AI_SOURCES}}}),
+          report(tok, ["sessionDefaultChannelGroup", "sessionSource", "landingPage"], ["sessions"], d,
+                 limit=20, order_metric="sessions",
+                 dim_filter={"orGroup": {"expressions": [
+                     {"filter": {"fieldName": "sessionDefaultChannelGroup",
+                                 "stringFilter": {"matchType": "EXACT", "value": "AI Assistant"}}},
+                     {"filter": {"fieldName": "sessionSource", "stringFilter": {
+                         "matchType": "PARTIAL_REGEXP", "value": AI_SOURCES}}},
+                 ]}}),
           ["sessions"])
 
     # These three read event parameters, which the Data API can only return once

@@ -300,9 +300,17 @@ correctly. It only generates for ids in `_data/selected.yml`.
     makes fingerprinting sound. A second run straight after a submission must
     report nothing changed; if it ever resubmits, a page has started varying
     between requests.
-  - **AI referrals** appear in `ga-report.py` under "Arrived from AI
-    assistants", matched on `sessionSource`. It only sees click-throughs from a
-    cited link; being mentioned without a click leaves no trace in GA.
+  - **GA4 already has an "AI Assistant" channel; do not build one.** Its
+    default channel group includes it, and the rules there only match labels
+    Google assigns upstream (`eachScopeDefaultChannelGroup` EXACT "AI
+    Assistant", likewise "Referral"), so a session carries one label or the
+    other and the channels' order in the list is irrelevant, even though AI
+    Assistant is listed after Referral. A custom channel group was attempted in
+    September 2026 before this was found, and is unnecessary. `ga-report.py`'s
+    "Arrived from AI assistants" uses that label, with a source regex as a
+    backup. It only sees click-throughs from a cited link; being mentioned
+    without a click leaves no trace in GA. Bing Webmaster Tools' **AI
+    Performance** report is what covers citations.
 - **The book's title is "How to Design", and the cover image says "Build" on
   purpose.** Checked against the Amazon listing (`B0GK86JBSR`), which is what
   retailers and answer engines index: *You Work for Your User: How to Design
@@ -372,10 +380,12 @@ check the actual bytes rather than assuming the deploy worked.
 - Sitemap submitted Sep 7 2026, first read Sep 11: 51 discovered, 1 indexed. The
   3 "Page with redirect" in the indexing report are the http and non-www
   variants 301-ing to the canonical homepage, which is correct.
+- **Bing Webmaster Tools** is set up (imported from Search Console, September
+  2026). The property covers `www`. A fresh `/about/` showed "Indexing allowed?
+  No" in the Bing Index tab while the Live URL test said indexable, with no
+  canonical recorded yet; nothing on the page blocks indexing. Recheck that tab;
+  if it persists after a newer crawl, it is a Bing-side issue.
 - `assets/tombras_logo_rgb_vert.png` and `assets/tombras-logo-alpha.png` are
   unreferenced.
-- Answer-engine work that has to happen off this site: submit the sitemap in
-  Bing Webmaster Tools (it can import from Search Console), add an "AI
-  assistants" channel group in GA4 (the service account is Viewer only, so it
-  cannot), and make LinkedIn, GitHub and any directory profiles use the wording
-  in `_data/person.yml`.
+- Answer-engine work that has to happen off this site: make LinkedIn, GitHub
+  and any directory profiles use the wording in `_data/person.yml`.
