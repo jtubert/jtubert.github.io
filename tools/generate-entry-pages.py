@@ -73,8 +73,17 @@ def git_date(*paths):
         # silently drop the date
         if stamp.endswith('Z'):
             stamp = stamp[:-1] + '+00:00'
-        return day_start(datetime.datetime.fromisoformat(stamp)) if stamp else ''
-    except Exception:
+        if not stamp:
+            # a file that exists but has no commit and no uncommitted change:
+            # not in a git repository, or ignored. Say so rather than dropping
+            # the date without a word.
+            print(f"  warning: git has no date for {', '.join(rel)}; that page gets no last-modified date")
+            return ''
+        return day_start(datetime.datetime.fromisoformat(stamp))
+    except Exception as e:
+        # never invent a date: the page omits one, but not silently
+        print(f"  warning: could not read the git date for {', '.join(rel)} ({e}); "
+              f"that page gets no last-modified date")
         return ''
 
 def write_lastmod(entries):
