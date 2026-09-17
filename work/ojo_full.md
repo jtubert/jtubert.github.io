@@ -24,7 +24,7 @@ summary: "Full video of Juan Tubert's talk at El Ojo de Iberoamérica, now on Yo
 sitemap_lastmod: "2026-03-01"
 last_modified_at: "2026-08-30T00:00:00-04:00"
 prev_id: "mirren"
-prev_title: "Will be speaking at a panel at Mirren live in May 13 and 14"
+prev_title: "Spoke on a panel at Mirren Live"
 next_id: "book"
 next_title: "You Work for Your User: How to Design User-Centric Products in the Age of AI"
 position: "3"
