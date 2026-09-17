@@ -68,6 +68,11 @@ def git_date(*paths):
         if git('status', '--porcelain'):
             return day_start(datetime.datetime.now().astimezone())
         stamp = git('log', '-1', '--format=%cI')
+        # git writes a UTC commit as ...Z, which fromisoformat only accepts
+        # from Python 3.11; older ones raise, and the except below would then
+        # silently drop the date
+        if stamp.endswith('Z'):
+            stamp = stamp[:-1] + '+00:00'
         return day_start(datetime.datetime.fromisoformat(stamp)) if stamp else ''
     except Exception:
         return ''
@@ -109,7 +114,10 @@ def seo_title(eid, title):
     short = SHORT_TITLES.get(eid)
     base = title
     if short:
-        if short.get('for') == title:
+        if not isinstance(short, dict) or not isinstance(short.get('short'), str) or not short['short'].strip():
+            # a hand-edited entry missing "short" used to crash the whole build
+            print(f"  warning: _data/titles.json entry for {eid} has no usable \"short\"; ignoring it")
+        elif short.get('for') == title:
             base = short['short']
         else:
             print(f"  warning: _data/titles.json has a short title for {eid} written for a different "

@@ -8,9 +8,11 @@
 {%- comment -%}
   seo_title is chosen by the generator to fit 65 characters: the full title with
   the longest name suffix that fits, or a hand-written short form. Bing flagged
-  titles over 71 characters. The h1 and og:title keep the full title.
+  titles over 71 characters. The h1 and og:title keep the full title. Falls back
+  to the full title for a page the generator did not write, which would
+  otherwise get an empty <title>.
 {%- endcomment -%}
-<title>{{ page.seo_title | escape }}</title>
+<title>{{ page.seo_title | default: page.title_plain | escape }}</title>
 <meta name="description" content="{{ page.summary | escape }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 {% include favicons.html %}
