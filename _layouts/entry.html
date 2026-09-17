@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 {% include analytics.html %}
 {%- assign src = page.link | split: "//" | last | split: "/" | first | remove: "www." -%}
-<title>{{ page.title_plain | escape }} — Juan (John) Tubert</title>
+{%- comment -%}
+  seo_title is chosen by the generator to fit 65 characters: the full title with
+  the longest name suffix that fits, or a hand-written short form. Bing flagged
+  titles over 71 characters. The h1 and og:title keep the full title.
+{%- endcomment -%}
+<title>{{ page.seo_title | escape }}</title>
 <meta name="description" content="{{ page.summary | escape }}">
 <link rel="canonical" href="{{ site.url }}{{ page.url }}">
 {% include favicons.html %}

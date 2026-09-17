@@ -164,7 +164,7 @@ permalink: /work/
     {%- for f in site.data.featured.items %}
       <li>
         <a href="/work/{{ f.id }}/">
-          <img src="/assets/thumbs/{{ f.id }}.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+          <img src="/assets/thumbs/{{ f.id }}.jpg" alt="{{ site.data.thumb_alt[f.id] | default: f.title | escape }}" width="52" height="52" loading="lazy" decoding="async">
           <span class="txt">
             <span class="pk">{{ f.category }}</span>
             {%- comment -%}

@@ -1,0 +1,12 @@
+# Alt text for the pick thumbnails on /work/, keyed by entry id.
+#
+# Each describes what is in the image, not the post's title: the title is
+# already the link's visible text beside the thumbnail, so repeating it would
+# make a screen reader read it twice. The thumbnails used to carry alt="", which
+# is correct for a decorative image but which Bing Site Scan reports as a
+# missing alt attribute. A pick with no entry here falls back to its title, so
+# no thumbnail is ever left without one.
+
+book: The red cover of the book, standing on a table
+ojo3: Juan Tubert speaking on stage
+pods: A PODS truck carrying a billboard, with the New York skyline behind it

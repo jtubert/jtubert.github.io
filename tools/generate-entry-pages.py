@@ -40,7 +40,15 @@ def iso_date(label):
     return f"{m.group(2)}-{mon:02d}-01" if mon else ''
 
 def git_date(*paths):
-    """When a set of files last changed, as YYYY-MM-DD, from git.
+    """When a set of files last changed, from git, as an ISO 8601 datetime at the
+    start of that day in the commit's own timezone: 2026-09-16T00:00:00-04:00.
+
+    A full datetime because Google's Profile page markup rejects a bare date in
+    dateModified ("Invalid datetime value"); it was YYYY-MM-DD until September
+    2026. Pinned to the start of the day rather than the exact commit time so the
+    value stays stable: an uncommitted change has to be dated before its commit
+    exists, and an exact time would then change once more on the next run after
+    committing, churning every generated page and resubmitting it to IndexNow.
 
     Feeds "Page updated", dateModified and the sitemap's lastmod. It used to be
     the build clock, which stamped every URL as modified on every deploy; Google
@@ -54,10 +62,13 @@ def git_date(*paths):
     def git(*args):
         return subprocess.run(['git', *args, '--', *rel], cwd=ROOT,
                               capture_output=True, text=True).stdout.strip()
+    def day_start(dt):
+        return dt.replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
     try:
         if git('status', '--porcelain'):
-            return datetime.date.today().isoformat()
-        return git('log', '-1', '--format=%cs')
+            return day_start(datetime.datetime.now().astimezone())
+        stamp = git('log', '-1', '--format=%cI')
+        return day_start(datetime.datetime.fromisoformat(stamp)) if stamp else ''
     except Exception:
         return ''
 
@@ -73,6 +84,44 @@ def write_lastmod(entries):
     with open(j('_data', 'lastmod.json'), 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=1)
     return data
+
+TITLE_LIMIT = 65
+TITLE_SUFFIXES = (' — Juan (John) Tubert', ' — Juan Tubert', '')
+
+
+def load_short_titles():
+    path = os.path.join(ROOT, '_data', 'titles.json')
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding='utf-8') as f:
+        data = json.load(f)
+    return {k: v for k, v in data.items() if not k.startswith('_')}
+
+
+def seo_title(eid, title):
+    """The <title> text: the longest form that fits TITLE_LIMIT.
+
+    Bing Site Scan flagged 22 pages for "Title too long", exactly the ones over 71
+    characters, and the cause was mostly the 21-character " — Juan (John) Tubert"
+    added to every post. So each post gets the fullest name suffix that fits, and
+    a post too long even without one uses its hand-written short form from
+    _data/titles.json. The h1, og:title and structured data keep the full title."""
+    short = SHORT_TITLES.get(eid)
+    base = title
+    if short:
+        if short.get('for') == title:
+            base = short['short']
+        else:
+            print(f"  warning: _data/titles.json has a short title for {eid} written for a different "
+                  f"sheet title; ignoring it until it is updated")
+    for suffix in TITLE_SUFFIXES:
+        if len(base + suffix) <= TITLE_LIMIT:
+            return base + suffix
+    cut = base[:TITLE_LIMIT - 1].rsplit(' ', 1)[0].rstrip(' ,:;')
+    print(f"  warning: title for {eid} is {len(base)} characters with no short form in "
+          f"_data/titles.json; truncated to {cut}…")
+    return cut + '…'
+
 
 def yaml_str(v):
     """Double-quoted YAML scalar - safe for apostrophes, colons, quotes."""
@@ -355,6 +404,7 @@ def pick_summary(eid, row, title, cat, date_label):
     return build_summary(title, cat, date_label)
 
 SELECTED = load_selected()
+SHORT_TITLES = load_short_titles()
 MEDIA_LINKS = load_media_links()
 AUDIO = load_audio()
 
@@ -415,6 +465,7 @@ def main():
             'entry_id': eid,
             'title': title,
             'title_plain': strip_tags(title),
+            'seo_title': seo_title(eid, strip_tags(title)),
             'category': cat,
             'date_label': date_label,
             'iso_date': iso_date(date_label),

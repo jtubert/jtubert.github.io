@@ -1,0 +1,41 @@
+{
+  "_about": [
+    "Short forms for the <title> tag only, for entries whose title is too long even without the name suffix.",
+    "The limit is 65 characters: Bing Site Scan flagged titles over 71 as too long, and Google truncates near 60.",
+    "The h1, og:title and structured data keep the full title from the sheet.",
+    "'for' is the sheet title each was written for. If the sheet title changes, the short form is ignored with",
+    "a warning from tools/generate-entry-pages.py, rather than silently titling the page with stale words."
+  ],
+  "butterfly": {
+    "for": "Spoke about Creativity and AI (using MCPs and AI personas) at a Los Angeles-based private equity firm",
+    "short": "Creativity and AI talk at an LA private equity firm"
+  },
+  "adweek": {
+    "for": "ADWEEK: Tech Companies Need to Improve Their Voice Assistants to Make Them Inclusive",
+    "short": "Adweek: voice assistants need to be inclusive"
+  },
+  "ojoquote": {
+    "for": "Test every model that comes out, but be selective about what you put in production.",
+    "short": "Test every model that comes out, but be selective"
+  },
+  "webby": {
+    "for": "2025 Webby for Best Experiential Design in the AI, Immersive & Games category!",
+    "short": "2025 Webby for Best Experiential Design"
+  },
+  "book": {
+    "for": "You Work for Your User: How to Design User-Centric Products in the Age of AI",
+    "short": "You Work for Your User"
+  },
+  "latinspot": {
+    "for": "Creativity, Media, Technology and AI: Tombras' Evolution from Buenos Aires",
+    "short": "Tombras' Evolution from Buenos Aires"
+  },
+  "fwa": {
+    "for": "Excited to share that I’ve been selected as a judge for the The FWA!",
+    "short": "Selected as a judge for The FWA"
+  },
+  "ojo_full": {
+    "for": "Full video with my talk from the Ojo de Iberoamerica now available",
+    "short": "Full video of my talk at El Ojo de Iberoamérica"
+  }
+}

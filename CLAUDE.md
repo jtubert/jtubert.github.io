@@ -46,6 +46,8 @@ survive a download lives in the repo instead:
 | `_data/person.yml` | **The facts about him, stated once.** Every Person node in the structured data, `/about/` and `llms.txt` read it. Change a fact here and nowhere else. |
 | `_data/about.yml` | The `/about/` questions. `lead` is both the visible answer and the FAQPage text, so they cannot drift. |
 | `_data/schema_types.yml` | Entries more specific than CreativeWork, keyed by id. Currently only `book` (Book, with its two co-authors). |
+| `_data/titles.json` | Hand-written short `<title>` forms for posts too long even without the name suffix. Each records the sheet title it was written for, and is ignored with a warning once that changes. |
+| `_data/thumb_alt.yml` | Alt text for the `/work/` pick thumbnails, describing the image rather than repeating the title beside it. |
 
 Generated, do not edit by hand: `work/*.md`, `_data/featured.json`,
 `_data/years.yml`, `_data/lastmod.json`, `assets/thumbs/*`.
@@ -269,6 +271,22 @@ correctly. It only generates for ids in `_data/selected.yml`.
     Article naming him as an Organization. Conflicting facts are exactly what
     lowers an answer engine's confidence. A check that all 52 pages emit a
     byte-identical Person node is the fastest way to catch a regression.
+  - **Dates are full ISO 8601 datetimes at the start of the day**, e.g.
+    `2026-09-16T00:00:00-04:00`. Google's Profile page markup rejected the bare
+    `YYYY-MM-DD` as an "Invalid datetime value for dateModified". Start of day
+    rather than the exact commit time keeps them stable: an uncommitted change is
+    dated before its commit exists, and an exact time would change again on the
+    next run, churning every page and resubmitting it to IndexNow.
+  - **`<title>` is at most 65 characters.** Bing Site Scan flagged "Title too
+    long" on exactly the 22 pages over 71, mostly from the 21-character
+    " — Juan (John) Tubert" suffix. The generator's `seo_title()` uses the full
+    suffix if it fits, then " — Juan Tubert", then the title alone, and posts
+    too long even alone use `_data/titles.json`. **14 posts carry no name in
+    their title, by the user's choice (September 2026)**; do not add short forms
+    for them. The h1, og:title and structured data keep the full sheet title.
+  - **Every image has real alt text.** Bing reports `alt=""` as missing even
+    though it is correct for a decorative image, so the `/work/` thumbnails
+    describe their pictures from `_data/thumb_alt.yml`.
   - **Dates are real.** `last_modified_at`, `dateModified`, "Page updated" and
     sitemap `lastmod` all come from `git_date()` in the generator: the last
     commit touching the file, or today if it has uncommitted changes. They used
