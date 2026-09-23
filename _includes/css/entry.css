@@ -401,6 +401,45 @@ body.wnav-open{overflow:hidden}
 	.wnav-drawer,.wnav-drawer:not([hidden]),
 	.wnav-scrim,.wnav-scrim:not([hidden]){transition:none}
 }
+
+/* The drawer is the only way to the other 49 posts and an edge tab is easy to
+   miss, so /work/ shows it once on load: the panel slides in and straight back
+   out, and afterwards the tab nudges every 30s until the drawer has been
+   opened. Both are scoped to .stage-page, which is /work/ alone, so the entry
+   pages sharing this stylesheet carry neither.
+
+   The peek keeps [hidden] set, so :not([hidden]) never matches and the real
+   open state is untouched; this rule outranks the base .wnav-drawer instead.
+   That also keeps the scrim out of it, and the script keeps focus and body
+   scroll where they were: it is a picture of the drawer, not the drawer. */
+.stage-page .wnav-drawer.wnav-peek{
+	transform:none;visibility:visible;
+	transition:transform .34s cubic-bezier(.22,.61,.36,1),visibility 0s;
+}
+@keyframes wnav-nudge{
+	0%,100%{transform:translateX(0)}
+	28%{transform:translateX(-6px)}
+	58%{transform:translateX(-2px)}
+}
+.stage-page .wnav-tab.wnav-nudge{animation:wnav-nudge .62s ease-out}
+@media (min-width:48rem){
+	/* Above this the tab is centred on the edge with translateY(-50%), which the
+	   keyframes have to carry or it jumps to the top of the window for as long
+	   as the animation runs. */
+	@keyframes wnav-nudge-edge{
+		0%,100%{transform:translateY(-50%) translateX(0)}
+		28%{transform:translateY(-50%) translateX(-6px)}
+		58%{transform:translateY(-50%) translateX(-2px)}
+	}
+	.stage-page .wnav-tab.wnav-nudge{animation-name:wnav-nudge-edge}
+}
+/* After both, and more specific than the block above, which the peek rule
+   would otherwise outrank. The script already declines to hint at all here;
+   this is the belt to that pair of braces. */
+@media (prefers-reduced-motion:reduce){
+	.stage-page .wnav-drawer.wnav-peek{transition:none}
+	.stage-page .wnav-tab.wnav-nudge{animation:none}
+}
 .wnav-dhead{
 	display:flex;align-items:center;justify-content:space-between;
 	padding-bottom:.85rem;border-bottom:1px solid var(--hair);margin-bottom:.4rem;flex:0 0 auto;

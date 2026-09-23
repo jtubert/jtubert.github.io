@@ -211,6 +211,7 @@ permalink: /work/
 
   function open() {
     if (!list) return;
+    stopHint();
     list.hidden = false;
     if (scrim) scrim.hidden = false;
     document.body.classList.add('wnav-open');
@@ -238,6 +239,87 @@ permalink: /work/
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && isOpen()) shut(true);
   });
+
+  // Nobody reaches the other 49 posts without this drawer, and an edge tab is
+  // easy to miss, so the page shows it: the panel slides in and back out once
+  // on load, then the tab nudges every 30s until the drawer has been opened,
+  // which is the point at which the hint has done its job.
+  //
+  // The peek is a picture of the drawer rather than the drawer. It leaves
+  // [hidden] set and drives the slide from a class instead, moves no focus,
+  // locks no body scroll, raises no scrim and never touches aria-expanded, so
+  // the open/shut state is exactly where it was and analytics.html reports no
+  // menu_open for it. While it shows, the panel is inert and aria-hidden, so
+  // it is not in the tab order or the accessibility tree either.
+  //
+  // Nothing hints under prefers-reduced-motion: a panel that moves by itself
+  // and a tab that moves every 30 seconds are the two things it asks for less
+  // of. Any move the visitor makes ends the peek early, and the nudge holds
+  // off while the drawer is open or the tab is in the background.
+  var PEEK_AT = 700, PEEK_HOLD = 1300, PEEK_SLIDE = 360, NUDGE_EVERY = 30000;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timers = [], nudgeTimer = null, peeking = false;
+
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  function showPanel(on) {
+    peeking = on;
+    list.classList.toggle('wnav-peek', on);
+    if (on) {
+      list.setAttribute('aria-hidden', 'true');
+      if ('inert' in list) list.inert = true;
+    } else {
+      list.removeAttribute('aria-hidden');
+      if ('inert' in list) list.inert = false;
+    }
+  }
+
+  function nudge() {
+    if (isOpen() || document.hidden) return;
+    toggle.classList.remove('wnav-nudge');
+    void toggle.offsetWidth;            // reflow, or a second nudge never runs
+    toggle.classList.add('wnav-nudge');
+  }
+
+  // End the peek and move on to the reminder. Called both when the peek runs
+  // its course and when the visitor cuts it short, which are the same thing.
+  function endPeek() {
+    clearTimers();
+    if (peeking) {
+      peeking = false;
+      list.classList.remove('wnav-peek');
+      // hold the panel out of reach until it has slid away again
+      later(function () { if (!peeking) showPanel(false); }, PEEK_SLIDE);
+    }
+    if (!nudgeTimer) nudgeTimer = setInterval(nudge, NUDGE_EVERY);
+  }
+
+  // Stop hinting for good, and hand the panel straight back: open() calls this
+  // before it takes focus, so a click landing mid-peek cannot focus into a
+  // panel that is still inert.
+  function stopHint() {
+    clearTimers();
+    if (nudgeTimer) { clearInterval(nudgeTimer); nudgeTimer = null; }
+    if (toggle) toggle.classList.remove('wnav-nudge');
+    if (peeking) showPanel(false);
+  }
+
+  if (toggle && list && !reduced) {
+    later(function () {
+      if (isOpen()) return;
+      showPanel(true);
+      later(endPeek, PEEK_HOLD);
+    }, PEEK_AT);
+
+    toggle.addEventListener('animationend', function () {
+      toggle.classList.remove('wnav-nudge');
+    });
+
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
+      document.addEventListener(ev, endPeek, { once: true, passive: true });
+    });
+  }
 
   // Autoplay is an attribute, so the only way to honour a reduced-motion
   // preference is to stop the clip once it exists. The poster stands in.
