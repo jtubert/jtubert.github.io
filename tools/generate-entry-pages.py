@@ -307,6 +307,11 @@ def on_disk(path):
 
 VIDEO_HOSTS = ('youtube.com', 'youtu.be', 'vimeo.com', 'instagram.com')
 
+# A broadcaster's own page for a segment. The piece there is watched, not read,
+# so the category's usual "Read the ..." verb is wrong however the sheet
+# classifies it. Kept apart from VIDEO_HOSTS, which are video sites outright.
+BROADCAST_HOSTS = ('telemundo47.com',)
+
 # Proper brand names per host, with the preposition that reads correctly:
 # "in" for publications, "on" for platforms.
 OUTLETS = {
@@ -382,7 +387,13 @@ def cta_label(link, category, override=''):
         if bare == h and (needle is None or needle in path.lower()):
             return label
     name, prep = OUTLETS.get(bare, (None, 'on'))
-    verb = 'Watch' if any(v in bare for v in VIDEO_HOSTS) else VERBS.get((category or '').upper(), 'Read more')
+    cat = (category or '').upper()
+    if any(v in bare for v in VIDEO_HOSTS):
+        verb = 'Watch'
+    elif any(v in bare for v in BROADCAST_HOSTS):
+        verb = VERBS.get(cat, 'Watch').replace('Read the', 'Watch the')
+    else:
+        verb = VERBS.get(cat, 'Read more')
     if not name:
         return verb
     if verb == 'Watch':
