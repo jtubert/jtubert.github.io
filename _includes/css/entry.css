@@ -416,20 +416,34 @@ body.wnav-open{overflow:hidden}
 	transform:none;visibility:visible;
 	transition:transform .34s cubic-bezier(.22,.61,.36,1),visibility 0s;
 }
+/* A decaying bounce, not a twitch. The first version travelled 6px over
+   430ms, which measured as real movement and still went unnoticed: the tab
+   sits on the far right margin while the reader is on the headline at the
+   left, so peripheral vision is all it gets. 18px over 1.1s, hopping three
+   times, is what reads from across the page. The phone's hamburger is inside
+   the masthead the eye is already near, so it travels less. */
 @keyframes wnav-nudge{
 	0%,100%{transform:translateX(0)}
-	28%{transform:translateX(-6px)}
-	58%{transform:translateX(-2px)}
+	14%{transform:translateX(-11px)}
+	30%{transform:translateX(0)}
+	44%{transform:translateX(-7px)}
+	58%{transform:translateX(0)}
+	72%{transform:translateX(-3px)}
+	86%{transform:translateX(0)}
 }
-.stage-page .wnav-tab.wnav-nudge{animation:wnav-nudge .62s ease-out}
+.stage-page .wnav-tab.wnav-nudge{animation:wnav-nudge 1.1s cubic-bezier(.3,.7,.4,1)}
 @media (min-width:48rem){
 	/* Above this the tab is centred on the edge with translateY(-50%), which the
 	   keyframes have to carry or it jumps to the top of the window for as long
 	   as the animation runs. */
 	@keyframes wnav-nudge-edge{
 		0%,100%{transform:translateY(-50%) translateX(0)}
-		28%{transform:translateY(-50%) translateX(-6px)}
-		58%{transform:translateY(-50%) translateX(-2px)}
+		14%{transform:translateY(-50%) translateX(-18px)}
+		30%{transform:translateY(-50%) translateX(0)}
+		44%{transform:translateY(-50%) translateX(-11px)}
+		58%{transform:translateY(-50%) translateX(0)}
+		72%{transform:translateY(-50%) translateX(-5px)}
+		86%{transform:translateY(-50%) translateX(0)}
 	}
 	.stage-page .wnav-tab.wnav-nudge{animation-name:wnav-nudge-edge}
 }
