@@ -1,0 +1,10 @@
+<!-- The drawer's keyword filter. Shared by /work/ and every entry page, so the
+     two drawers cannot drift apart. The logic is _includes/js/wnav-search.js. -->
+<div class="wnav-qwrap">
+  <svg class="wnav-qicon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.3" y1="16.3" x2="21" y2="21"></line></svg>
+  <input type="text" class="wnav-q" id="wnav-q" placeholder="Search posts" aria-label="Search posts" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <button type="button" class="wnav-qclear" id="wnav-qclear" aria-label="Clear search" hidden>
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+  </button>
+</div>
+<p class="wnav-qnote" id="wnav-qnote" role="status" aria-live="polite" hidden></p>

@@ -190,6 +190,7 @@ permalink: /work/
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
       </button>
     </div>
+    {% include wnav-search.html %}
     <div class="wnav-scroll" id="wnav-scroll">
       {%- for g in site.data.nav.years %}
       <div class="wnav-yhead">{{ g.year }} &middot; {{ g.count }}</div>
@@ -209,6 +210,8 @@ permalink: /work/
 
   function isOpen() { return list && !list.hidden; }
 
+  {% include js/wnav-search.js %}
+
   function open() {
     if (!list) return;
     stopHint();
@@ -217,11 +220,14 @@ permalink: /work/
     document.body.classList.add('wnav-open');
     toggle.setAttribute('aria-expanded', 'true');
     // after a frame, so the panel is laid out and focusable before focus moves
-    requestAnimationFrame(function () { (close || list).focus({ preventScroll: true }); });
+    requestAnimationFrame(function () {
+      if (!wnavFocusSearch()) (close || list).focus({ preventScroll: true });
+    });
   }
 
   function shut(refocus) {
     if (!list) return;
+    wnavReset();            // reopening never shows the last visit's filter
     list.hidden = true;
     if (scrim) scrim.hidden = true;
     document.body.classList.remove('wnav-open');

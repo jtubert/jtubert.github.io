@@ -263,6 +263,7 @@
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
       </button>
     </div>
+    {% include wnav-search.html %}
     <div class="wnav-scroll" id="wnav-scroll">
       {%- for g in site.data.nav.years %}
       <div class="wnav-yhead">{{ g.year }} &middot; {{ g.count }}</div>
@@ -286,6 +287,8 @@
 
   function isOpen() { return list && !list.hidden; }
 
+  {% include js/wnav-search.js %}
+
   function open() {
     if (!list) return;
     list.hidden = false;
@@ -300,12 +303,13 @@
       if (here && box) {
         box.scrollTop = Math.max(0, here.offsetTop - box.clientHeight / 2 + here.offsetHeight / 2);
       }
-      (here || close || list).focus({ preventScroll: true });
+      if (!wnavFocusSearch()) (here || close || list).focus({ preventScroll: true });
     });
   }
 
   function shut(refocus) {
     if (!list) return;
+    wnavReset();            // reopening never shows the last visit's filter
     list.hidden = true;
     if (scrim) scrim.hidden = true;
     document.body.classList.remove('wnav-open');

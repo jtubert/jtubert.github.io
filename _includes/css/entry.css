@@ -461,6 +461,33 @@ body.wnav-open{overflow:hidden}
 .wnav-dtitle{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
 .wnav-close{border:0;background:none;padding:.2rem;cursor:pointer;color:var(--ink-2);line-height:0}
 .wnav-close:hover{color:var(--accent)}
+/* The keyword filter at the top of the list. appearance:none is what stops
+   iOS rounding the field into something that is not the rest of the drawer;
+   it also removes WebKit's own clear button, which is why there is one here. */
+.wnav-qwrap{position:relative;flex:0 0 auto;margin:.75rem 0 0}
+.wnav-qicon{position:absolute;left:.62rem;top:50%;transform:translateY(-50%);color:var(--ink-3);pointer-events:none}
+.wnav-q{
+	width:100%;box-sizing:border-box;
+	padding:.52rem 2.1rem .52rem 2.05rem;
+	border:1px solid var(--hair);border-radius:8px;
+	background:transparent;color:var(--ink);
+	font:inherit;font-size:.86rem;
+	-webkit-appearance:none;appearance:none;
+}
+.wnav-q::placeholder{color:var(--ink-3);opacity:1}
+.wnav-q:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.wnav-qclear{
+	position:absolute;right:.3rem;top:50%;transform:translateY(-50%);
+	display:inline-flex;align-items:center;justify-content:center;
+	width:28px;height:28px;border:0;border-radius:6px;
+	background:none;color:var(--ink-3);cursor:pointer;line-height:0;
+}
+.wnav-qclear:hover{color:var(--accent)}
+.wnav-qnote{margin:.55rem 0 0;font-size:.72rem;color:var(--ink-3);flex:0 0 auto}
+/* Scoped to the drawer to outrank .wnav-row's own display:flex, which sits
+   three lines below this and would otherwise win on source order at equal
+   specificity: the class went on, the row stayed on screen. */
+.wnav-drawer .wnav-hide{display:none}
 .wnav-scroll{overflow-y:auto;flex:1 1 auto;-webkit-overflow-scrolling:touch}
 .wnav-yhead{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:.95rem 0 .4rem}
 .wnav-row{
