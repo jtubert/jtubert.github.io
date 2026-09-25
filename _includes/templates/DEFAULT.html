@@ -9,7 +9,7 @@
 
       <div class="media">
         {% if include.type == "image" %}
-        <amp-img layout="fill" src="{{ include.asset }}" alt="{{ include.title }}"></amp-img>
+        <amp-img layout="fill" src="{{ include.asset }}" alt="{{ include.title | escape }}"></amp-img>
         {% else %}
         <amp-video layout="fill" poster="{{ include.poster }}" autoplay id="hgajlbldbp">
           <source src="{{ include.asset }}" type="video/mp4">
