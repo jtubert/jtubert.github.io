@@ -37,5 +37,9 @@
   "ojo_full": {
     "for": "Full video with my talk from the Ojo de Iberoamerica now available",
     "short": "Full video of my talk at El Ojo de Iberoamérica"
+  },
+  "agenciasargentinas": {
+    "for": "Talk: \"If your client has the same AI subscription, why do they need you?\"",
+    "short": "If clients have the same AI subscription, why do they need you?"
   }
 }

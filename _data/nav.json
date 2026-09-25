@@ -2,11 +2,16 @@
  "years": [
   {
    "year": "2026",
-   "count": 7,
+   "count": 8,
    "items": [
     {
+     "id": "agenciasargentinas",
+     "title": "Talk: \"If your client has the same AI subscription, why do they need you?\"",
+     "month": "Oct"
+    },
+    {
      "id": "telemundo",
-     "title": "Interview with Telemundo, channel 47 about AI and it's dangers.",
+     "title": "Interview with Telemundo, channel 47 about AI and its dangers.",
      "month": "Sep"
     },
     {
@@ -305,5 +310,5 @@
    ]
   }
  ],
- "total": 50
+ "total": 51
 }
