@@ -1,0 +1,12 @@
+# Short titles for the picks on /work/, keyed by entry id.
+#
+# A pick sits in a third of a 44rem column beside a 52px thumbnail, which fits
+# about two lines. With no entry here the template takes the sheet title up to
+# its first colon, which names the thing for "You Work for Your User: How to
+# Design..." but not for "Talk: \"If your client...\"", where the half before the
+# colon is only a label, and not for a title with no colon at all, which then
+# runs to four lines and leaves the row ragged. The category is already printed
+# above the title, so these do not repeat it.
+
+telemundo: Telemundo 47 on AI and its dangers
+agenciasargentinas: 10 things Tombras built with AI

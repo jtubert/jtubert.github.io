@@ -1,11 +1,11 @@
 {
   "items": [
     {
-      "id": "book",
-      "title": "You Work for Your User: How to Design User-Centric Products in the Age of AI",
-      "category": "BOOK",
-      "blurb": "You Work for Your User, written with Brian Hanley and Rick Barber: how to design user-centric products in the age of AI, and what that actually costs.",
-      "date": "February 2026"
+      "id": "telemundo",
+      "title": "Interview with Telemundo, channel 47 about AI and its dangers.",
+      "category": "INTERVIEW",
+      "blurb": "I sat down with Telemundo 47 to talk about artificial intelligence, and the first question was the one everyone is really asking: can you trust it?",
+      "date": "September 2026"
     },
     {
       "id": "ojo3",
@@ -15,11 +15,11 @@
       "date": "November 2025"
     },
     {
-      "id": "pods",
-      "title": "Google Gemini AI Campaign for Pods Storage",
-      "category": "VIDEO",
-      "blurb": "A Google Gemini AI campaign built for PODS storage, featured by Google.",
-      "date": "Dec 2024"
+      "id": "agenciasargentinas",
+      "title": "Talk: \"If your client has the same AI subscription, why do they need you?\"",
+      "category": "TALK",
+      "blurb": "On October 7th I'll be sharing real AI use cases already in production at Tombras: synthetic audiences, campaign briefs in minutes, campaigns where AI is the idea, and what all of this means for the role of the engineer.",
+      "date": "October 2026"
     }
   ]
 }

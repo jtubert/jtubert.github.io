@@ -168,11 +168,14 @@ permalink: /work/
           <span class="txt">
             <span class="pk">{{ f.category }}</span>
             {%- comment -%}
-              Titles run long enough to be a subtitle. In a third of a 44rem
-              column only the part before the colon fits, and it is the half
-              that names the thing.
+              Titles run long enough to be a subtitle, and a third of a 44rem
+              column fits about two lines. _data/pick_titles.yml says what to
+              show; without an entry, the part before the first colon, which is
+              the half that names the thing for most of the sheet's titles.
             {%- endcomment -%}
-            <span class="pt">{{ f.title | split: ":" | first }}</span>
+            {%- assign pt = site.data.pick_titles[f.id] -%}
+            {%- unless pt -%}{%- assign pt = f.title | split: ":" | first -%}{%- endunless -%}
+            <span class="pt">{{ pt }}</span>
           </span>
         </a>
       </li>

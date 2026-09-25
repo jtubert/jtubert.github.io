@@ -38,7 +38,8 @@ survive a download lives in the repo instead:
 | Repo-side, survives download | What it is |
 |---|---|
 | `_work_bodies/<id>.md` | The long-form body for an entry. One per entry; all 49 have one. |
-| `_data/selected.yml` | The hand-picked ids that lead `/work/` as cards. Currently `book`, `ojo3`, `pods`. |
+| `_data/selected.yml` | The hand-picked ids that lead `/work/` as cards. Currently `telemundo`, `ojo3`, `agenciasargentinas`. |
+| `_data/pick_titles.yml` | Short titles for those cards, keyed by id. Without one a card shows the sheet title up to its first colon, which is wrong when the colon follows a label ("Talk: ...") or there is none. |
 | `_data/summaries.yml` | Fallback summaries, used only when the sheet column is empty. |
 | `assets/thumbs-src/<id>.jpg` | Hand-made card art that overrides the derived thumbnail. |
 | `_data/media_links.yml` | Entries whose hero opens a PDF. `id: <url> | <optional caption>`. |
