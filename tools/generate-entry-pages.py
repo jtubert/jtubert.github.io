@@ -201,6 +201,11 @@ def load_audio():
     return load_pairs('audio.yml', 'Listen to the full episode')
 
 
+def load_extra_images():
+    """Entries with a second picture under the hero, with its alt text."""
+    return load_pairs('extra_images.yml', '')
+
+
 def load_selected():
     """The ids that lead /work/, from _data/selected.yml. A repo-side file, so
     it survives `npm run download` overwriting the sheet."""
@@ -436,6 +441,7 @@ SELECTED = load_selected()
 SHORT_TITLES = load_short_titles()
 MEDIA_LINKS = load_media_links()
 AUDIO = load_audio()
+EXTRA_IMAGES = load_extra_images()
 
 
 def main():
@@ -507,6 +513,8 @@ def main():
             'media_link_label': MEDIA_LINKS.get(eid, ('', ''))[1],
             'audio_file': AUDIO.get(eid, ('', ''))[0],
             'audio_label': AUDIO.get(eid, ('', ''))[1],
+            'extra_image': EXTRA_IMAGES.get(eid, ('', ''))[0],
+            'extra_image_alt': EXTRA_IMAGES.get(eid, ('', ''))[1],
             'has_audio': 'yes' if (mtype == 'video' and has_asset
                                    and has_audio(asset)) else '',
             'cta_label': cta_label(link, cat, r.get('cta') or r.get('cta_label') or ''),

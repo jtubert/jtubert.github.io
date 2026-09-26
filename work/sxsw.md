@@ -17,6 +17,8 @@ media_link: "/pdfs/SXSW%20Extreme%20danger%20of%20bias%20in%20Artificial%20Intel
 media_link_label: "See the slides as a PDF"
 audio_file: ""
 audio_label: ""
+extra_image: "/assets/sxsw2.jpg"
+extra_image_alt: "Juan Tubert speaking into a microphone in front of the SXSW 2019 backdrop"
 has_audio: "yes"
 cta_label: "Watch on YouTube"
 is_quote: ""

@@ -1,0 +1,4 @@
+# Entries with a second picture under the hero. Repo-side, so npm run download
+# cannot overwrite it. Format: id: <url> | <alt text>
+# The alt text describes the picture, not the entry: the title is right beside it.
+sxsw: /assets/sxsw2.jpg | Juan Tubert speaking into a microphone in front of the SXSW 2019 backdrop

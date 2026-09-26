@@ -221,6 +221,7 @@ h1{
 /* the hero image links to a PDF on a couple of entries; say so, since a
    clickable image with no affordance is a link nobody finds */
 .media a{display:block}
+.media-extra{margin-top:.75rem}
 .media-audio{margin:.75rem 0 0}
 .media-audio audio{width:100%;display:block}
 .media-audio .media-note{margin-top:.4rem}

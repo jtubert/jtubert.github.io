@@ -216,6 +216,15 @@
         </a>
       </p>
       {% endif %}
+      {%- comment -%}
+        A second picture, from _data/extra_images.yml. After the captions, so
+        the mute note and the PDF link stay attached to the media they describe.
+      {%- endcomment -%}
+      {% if page.extra_image != "" %}
+      <div class="media media-extra">
+        <img src="{{ page.extra_image }}" alt="{{ page.extra_image_alt | escape }}" loading="lazy">
+      </div>
+      {% endif %}
     </div>
     {% endif %}
     {% if page.link != "" %}
