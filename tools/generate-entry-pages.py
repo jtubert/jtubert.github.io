@@ -327,6 +327,7 @@ OUTLETS = {
     'dailydooh.com':            ('DailyDOOH', 'in'),
     'afrotech.com':             ('AfroTech', 'in'),
     'spectrumnoticias.com':     ('Spectrum Noticias', 'on'),
+    'telemundo47.com':          ('Telemundo', 'on'),
     'youtube.com':              ('YouTube', 'on'),
     'youtu.be':                 ('YouTube', 'on'),
     'instagram.com':            ('Instagram', 'on'),
