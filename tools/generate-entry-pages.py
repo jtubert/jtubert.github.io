@@ -206,6 +206,12 @@ def load_extra_images():
     return load_pairs('extra_images.yml', '')
 
 
+def load_embeds():
+    """Entries whose entry-page hero is a broadcaster's player, with its title.
+    The story keeps the sheet's asset, since AMP cannot frame the player."""
+    return load_pairs('embeds.yml', 'Video player')
+
+
 def load_selected():
     """The ids that lead /work/, from _data/selected.yml. A repo-side file, so
     it survives `npm run download` overwriting the sheet."""
@@ -442,6 +448,7 @@ SHORT_TITLES = load_short_titles()
 MEDIA_LINKS = load_media_links()
 AUDIO = load_audio()
 EXTRA_IMAGES = load_extra_images()
+EMBEDS = load_embeds()
 
 
 def main():
@@ -515,7 +522,11 @@ def main():
             'audio_label': AUDIO.get(eid, ('', ''))[1],
             'extra_image': EXTRA_IMAGES.get(eid, ('', ''))[0],
             'extra_image_alt': EXTRA_IMAGES.get(eid, ('', ''))[1],
+            'embed': EMBEDS.get(eid, ('', ''))[0],
+            'embed_title': EMBEDS.get(eid, ('', ''))[1],
+            # the mute note describes our own autoplaying clip, not an embed
             'has_audio': 'yes' if (mtype == 'video' and has_asset
+                                   and eid not in EMBEDS
                                    and has_audio(asset)) else '',
             'cta_label': cta_label(link, cat, r.get('cta') or r.get('cta_label') or ''),
             # template QUOTE means the title IS the quotation. Note `category`

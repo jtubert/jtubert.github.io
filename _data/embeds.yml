@@ -1,0 +1,11 @@
+# Entries whose hero is a broadcaster's own player, replacing the sheet's
+# asset on the entry page only: the AMP story cannot frame a third-party
+# player, so it keeps the sheet's asset. Repo-side, so npm run download cannot
+# overwrite it. Format: id: <iframe src> | <iframe title>
+# Jekyll parses this file as YAML too, so a title must not contain ": ".
+#
+# telemundo: the src is what telemundo47.com/portableplayer/ builds at run time,
+# written out so the page runs none of its script. That script only creates
+# this iframe at 16:9; turl/ourl are the embedding page, which it reads from
+# location, and it adds a random cache-buster, left out here.
+telemundo: https://www.telemundo47.com/video-layout/amp_video/?noid=1:25:2657083&videoID=2515522115534&origin=telemundo47.com&fullWidth=y&autoplay=true&turl=https%3A%2F%2Fwww.jtubert.com%2Fwork%2Ftelemundo%2F&ourl=https%3A%2F%2Fwww.jtubert.com&lp=5&callletters=wnju&embedded=true | La inteligencia artificial y sus aplicaciones en la sociedad, Telemundo 47

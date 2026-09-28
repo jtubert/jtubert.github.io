@@ -164,7 +164,16 @@
 
     {% if page.asset != "" %}
     <div class="hero-media">
-      {% if page.media_type == "video" %}
+      {%- comment -%}
+        A broadcaster's own player, from _data/embeds.yml, in place of the
+        sheet's asset. Written as the iframe their embed script would build,
+        so the page runs none of their script.
+      {%- endcomment -%}
+      {% if page.embed != "" %}
+      <div class="media media-embed">
+        <iframe src="{{ page.embed | escape }}" title="{{ page.embed_title | escape }}" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" scrolling="no"></iframe>
+      </div>
+      {% elsif page.media_type == "video" %}
       <div class="media">
         <video autoplay muted loop playsinline controls preload="metadata"{% if page.poster != "" %} poster="/{{ page.poster }}"{% endif %}>
           <source src="/{{ page.asset }}" type="video/mp4">

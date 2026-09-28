@@ -222,6 +222,8 @@ h1{
    clickable image with no affordance is a link nobody finds */
 .media a{display:block}
 .media-extra{margin-top:.75rem}
+.media-embed{aspect-ratio:16/9}
+.media-embed iframe{width:100%;height:100%;border:0;display:block}
 .media-audio{margin:.75rem 0 0}
 .media-audio audio{width:100%;display:block}
 .media-audio .media-note{margin-top:.4rem}
