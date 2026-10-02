@@ -332,6 +332,7 @@ OUTLETS = {
     'forbes.com':               ('Forbes', 'in'),
     'adlatina.com':             ('Adlatina', 'in'),
     'latinspots.com':           ('Latinspots', 'in'),
+    'lanacion.com.ar':          ('La Nación', 'in'),
     'commarts.com':             ('Communication Arts', 'in'),
     'cioapplications.com':      ('CIO Applications', 'in'),
     'musebyclios.com':          ('Muse by Clios', 'in'),

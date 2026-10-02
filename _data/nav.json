@@ -2,8 +2,13 @@
  "years": [
   {
    "year": "2026",
-   "count": 8,
+   "count": 9,
    "items": [
+    {
+     "id": "lanacion",
+     "title": "Quoted in La Nación on AI reinventing ad production",
+     "month": "Oct"
+    },
     {
      "id": "agenciasargentinas",
      "title": "Talk: \"If your client has the same AI subscription, why do they need you?\"",
@@ -310,5 +315,5 @@
    ]
   }
  ],
- "total": 51
+ "total": 52
 }
