@@ -22,3 +22,6 @@ mp3/
 
 # what tools/indexnow.py last submitted, per machine
 tools/.indexnow-sent.json
+
+# local credentials (Google Sheets OAuth) - never commit
+.env

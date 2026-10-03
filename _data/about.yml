@@ -84,16 +84,36 @@
 - q: What does Juan Tubert speak and write about?
   lead: >-
     Mostly AI: how it changes the way an agency operates rather than only what
-    it produces, and what it costs, from bias to energy use.
+    it produces, where it can and cannot be trusted, and what it costs, from
+    bias to the water that data centres consume.
   more: >-
     <ul>
-    <li><a href="/work/sxsw/">The danger of bias in AI</a>, SXSW, 2019</li>
+    <li><a href="/work/mirren/">What an agency should build for itself when
+    the AI companies ship new features every week</a>, Mirren Live, 2026</li>
     <li><a href="/work/ojo3/">How to use AI to build a more efficient agency</a>,
     El Ojo de Iberoamérica, Buenos Aires, 2025, with Gonzalo Vecino</li>
+    <li><a href="/work/podcast/">GPT-3</a>, R/GA's FutureVision podcast, 2020</li>
+    <li><a href="/work/sxsw/">The danger of bias in AI</a>, SXSW, 2019</li>
     <li><a href="/work/adweek/">Why voice assistants failed people with accents</a>,
     Adweek, 2017</li>
-    <li><a href="/work/podcast/">GPT-3</a>, R/GA's FutureVision podcast, 2020</li>
     </ul>
+
+- q: Where has Juan Tubert been interviewed about AI?
+  lead: >-
+    Most recently by Telemundo 47 and La Nación, both in September 2026 and
+    both in Spanish: on whether AI can be trusted, and on how it is changing
+    advertising production in Argentina.
+  more: >-
+    <table>
+    <thead><tr><th scope="col">Outlet</th><th scope="col">Topic</th><th scope="col">Date</th></tr></thead>
+    <tbody>
+    <tr><td><a href="/work/telemundo/">Telemundo 47</a></td><td>Where AI can be trusted, and why it needs control</td><td>September 2026</td></tr>
+    <tr><td><a href="/work/lanacion/">La Nación</a></td><td>What AI changes in advertising production, and what it does not</td><td>September 2026</td></tr>
+    <tr><td><a href="/work/latinspot/">LatinSpots</a></td><td>How Tombras has evolved across creativity, media, technology and AI, seen from Buenos Aires</td><td>June 2026</td></tr>
+    <tr><td><a href="/work/ny1/">NY1 and Spectrum Noticias</a></td><td>Quili.AI, on the water cost of AI data centres</td><td>January 2026</td></tr>
+    <tr><td><a href="/work/human/">Adlatina</a></td><td>Why human creativity is irreplaceable, even with AI</td><td>November 2024</td></tr>
+    </tbody>
+    </table>
 
 - q: Where is Juan Tubert from?
   lead: >-
@@ -102,7 +122,9 @@
     <p>That became part of the job in August 2024, when Tombras acquired Niña,
     an independent creative agency in Buenos Aires, which now operates as
     TombrasNiña. Several of his talks and interviews since then have been in
-    Spanish, including <a href="/work/ojo3/">El Ojo de Iberoamérica</a>.</p>
+    Spanish, including <a href="/work/ojo3/">El Ojo de Iberoamérica</a>,
+    <a href="/work/telemundo/">Telemundo 47</a> and
+    <a href="/work/lanacion/">La Nación</a>.</p>
     <p class="src">Source: <a href="/work/argentina/">Tombras expands globally with acquisition of Argentine agency</a></p>
 
 - q: How can I contact Juan Tubert?

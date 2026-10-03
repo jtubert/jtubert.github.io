@@ -382,6 +382,15 @@ correctly. It only generates for ids in `_data/selected.yml`.
 - **Git identity**: this is a GitHub repo, so the global noreply email is
   correct. The `jtubert@tombras.com` rule in the global CLAUDE.md applies only to
   Bitbucket remotes.
+- **Writing to the sheet.** `.env` (gitignored, never commit it: the repo is
+  public and `npm run deploy` is `git add .`) holds an OAuth client and refresh
+  token with the Sheets scope. The tab is **`CMS`**, not `Sheet1`: the gviz
+  export in `script.sh` silently falls back to the first tab, so `Sheet1` only
+  works there. The `date` column holds **real dates** formatted `mmmm yyyy`,
+  and the gviz CSV **drops any cell whose type differs from the column's**: a
+  `date` written as the text "May 2026" downloads as blank and the entry loses
+  its date. Write dates as a serial number (days since 1899-12-30, first of the
+  month) with that number format, and diff the next download against HEAD.
 - **`pbcopy` mangles accents** unless `LANG=en_US.UTF-8` is set. Always set it
   when putting text on the clipboard for the sheet, and verify the round trip.
 
@@ -409,9 +418,11 @@ check the actual bytes rather than assuming the deploy worked.
 - `_data/featured.json` still carries a `blurb` per entry. The picks show only
   the category and the title now, so the blurb goes nowhere.
 
-- Six sheet cells had em dashes and were fixed by hand. The `mirren` title still
-  reads "Will be speaking..." in future tense while the body is past tense; the
-  corrected title and summary were handed over for pasting.
+- Six sheet cells had em dashes and were fixed by hand.
+- **Mirren Live was May 13 and 14, 2026**, confirmed by the user in October
+  2026. The sheet had dated it March 2026 while the body said May; the sheet's
+  `date` is now `May 2026`. The agenda page renders client-side, so a plain
+  fetch cannot confirm dates from it.
 - `/work/ojo3/` has a portrait 9:16 video that renders about 1100px tall in the
   hero. Deliberately left as is.
 - Sitemap submitted Sep 7 2026, first read Sep 11: 51 discovered, 1 indexed. The
