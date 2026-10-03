@@ -34,7 +34,7 @@ next_title: "Creativity, Media, Technology and AI: Tombras' Evolution from Bueno
 position: "3"
 total: "52"
 has_body: "yes"
-word_count: "235"
+word_count: "247"
 ---
 
 Telemundo 47's *Enfoque* had me on to explain artificial intelligence to a
@@ -49,11 +49,11 @@ The fear, as I see it, is less about what AI does today than about what we give
 it access to, and about systems autonomous enough to do things nobody asked them
 to. In the clip promoting the segment I put it plainly: I trust it in some areas
 and not at all in others, and I would not give it access, because it has already
-wiped databases and deleted email.
+wiped databases and deleted email. It is the same reason I tell people to test every model
+but [be selective about what goes into production](/work/ojoquote/).
 
 Control has to start with government regulation that makes companies train and
 test their models properly, then the companies themselves, then training the
 people who write the code to understand the harms. My worry is that the rules
 will reach OpenAI, Google and Anthropic but not smaller companies, or companies
 in other countries. Even so, I try to stay optimistic.
-[Be deliberate about what you put into production](/work/ojoquote/).
