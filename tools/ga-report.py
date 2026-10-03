@@ -208,18 +208,27 @@ def main():
           ["sessions"])
 
     # These three read event parameters, which the Data API can only return once
-    # they are registered as custom dimensions in GA4. Until then they skip.
-    hint = "register link_kind as a custom dimension in GA4"
+    # they are registered as custom dimensions in GA4 (all three were, October
+    # 2026); unregistered, a section skips. Each counts only the event that
+    # carries its parameter: unfiltered, every page_view and scroll lands in
+    # "(not set)" and buries the real values. Events from before registration
+    # also read "(not set)", since a dimension does not apply retroactively.
+    def only(event):
+        return {"filter": {"fieldName": "eventName", "stringFilter": {"value": event}}}
+
     table("Outbound clicks by kind",
-          report(tok, ["customEvent:link_kind"], ["eventCount"], d, limit=10, order_metric="eventCount"),
-          ["count"], note=hint)
+          report(tok, ["customEvent:link_kind"], ["eventCount"], d, limit=10, order_metric="eventCount",
+                 dim_filter=only("outbound_click")),
+          ["count"], note="register link_kind as a custom dimension in GA4")
 
     table("How people moved between posts",
-          report(tok, ["customEvent:method"], ["eventCount"], d, limit=10, order_metric="eventCount"),
+          report(tok, ["customEvent:method"], ["eventCount"], d, limit=10, order_metric="eventCount",
+                 dim_filter=only("pager_nav")),
           ["count"], note="register method as a custom dimension in GA4")
 
     table("Backdrop shown",
-          report(tok, ["customEvent:backdrop_id"], ["eventCount"], d, limit=10, order_metric="eventCount"),
+          report(tok, ["customEvent:backdrop_id"], ["eventCount"], d, limit=10, order_metric="eventCount",
+                 dim_filter=only("backdrop_shown")),
           ["count"], note="register backdrop_id as a custom dimension in GA4")
 
     print()
