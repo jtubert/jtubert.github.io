@@ -284,7 +284,7 @@
     {% include wnav-search.html %}
     <div class="wnav-scroll" id="wnav-scroll">
       {%- for g in site.data.nav.years %}
-      <div class="wnav-yhead">{{ g.year }} &middot; {{ g.count }}</div>
+      <div class="wnav-yhead">{{ g.year }}</div>
       {%- for it in g.items %}
       <a class="wnav-row{% if it.id == page.entry_id %} on{% endif %}" href="/work/{{ it.id }}/"{% if it.id == page.entry_id %} aria-current="page" id="wnav-current"{% endif %}><span class="wnav-mo">{{ it.month }}</span>{{ it.title }}</a>
       {%- endfor %}

@@ -196,7 +196,7 @@ permalink: /work/
     {% include wnav-search.html %}
     <div class="wnav-scroll" id="wnav-scroll">
       {%- for g in site.data.nav.years %}
-      <div class="wnav-yhead">{{ g.year }} &middot; {{ g.count }}</div>
+      <div class="wnav-yhead">{{ g.year }}</div>
       {%- for it in g.items %}
       <a class="wnav-row" href="/work/{{ it.id }}/"><span class="wnav-mo">{{ it.month }}</span>{{ it.title }}</a>
       {%- endfor %}
