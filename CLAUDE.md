@@ -65,7 +65,12 @@ npm run generate_pages        # tools/generate-entry-pages.py
 npm run generate_thumbs       # tools/generate-thumbs.py  (must run AFTER generate_pages)
 npm run indexnow              # tools/indexnow.py --wait: tell Bing what changed, once Pages is live
 python3 tools/ga-report.py    # GA4 digest; --days N, or --now for the last 30 minutes
+python3 tools/sheet.py show|get|set <id> [column] [value] [--dry-run]   # edit the sheet itself
 ```
+
+`sheet.py set` writes in the column's own type and then re-downloads the CSV
+to confirm the cell survived; it exits non-zero if the download disagrees, and
+refuses an em dash. Run `npm run download_and_deploy` afterwards as usual.
 
 `download_and_deploy` ends with `indexnow`, which waits for the GitHub Actions
 run deploying that exact commit to succeed (through `gh`) and only then submits,
@@ -389,8 +394,8 @@ correctly. It only generates for ids in `_data/selected.yml`.
   works there. The `date` column holds **real dates** formatted `mmmm yyyy`,
   and the gviz CSV **drops any cell whose type differs from the column's**: a
   `date` written as the text "May 2026" downloads as blank and the entry loses
-  its date. Write dates as a serial number (days since 1899-12-30, first of the
-  month) with that number format, and diff the next download against HEAD.
+  its date. `tools/sheet.py` handles both, so use it rather than raw API
+  calls; whatever writes, diff the next download against HEAD.
 - **`pbcopy` mangles accents** unless `LANG=en_US.UTF-8` is set. Always set it
   when putting text on the clipboard for the sheet, and verify the round trip.
 

@@ -26,4 +26,7 @@ exclude:
    - Gemfile.lock   
    - Gemfile.local   
    - Gemfile.local.lock   
+   # repo notes and build scripts: in the public GitHub repo, not pages of the site
+   - CLAUDE.md
+   - tools
 
