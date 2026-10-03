@@ -1,5 +1,5 @@
 Agencias Argentinas and Interact Argentina invited me to close their Lab IA
-series, and I split the hour in two. The first half is the question in the
+series, and I am splitting the hour in two. The first half is the question in the
 title. If a client can buy the same AI subscription I can, what are they still
 paying an agency for? My answer is that the subscription is not the work. What
 matters is what you ground the models in and which few you actually put into

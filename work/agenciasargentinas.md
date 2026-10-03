@@ -26,7 +26,7 @@ cta_label: "Read more"
 is_quote: ""
 summary: "On October 7th I'll be sharing real AI use cases already in production at Tombras: synthetic audiences, campaign briefs in minutes, campaigns where AI is the idea, and what all of this means for the role of the engineer."
 sitemap_lastmod: "2026-10-01"
-last_modified_at: "2026-09-25T00:00:00-04:00"
+last_modified_at: "2026-10-03T00:00:00-04:00"
 prev_id: "lanacion"
 prev_title: "Quoted in La Nación on AI reinventing ad production"
 next_id: "telemundo"
@@ -34,11 +34,11 @@ next_title: "Interview with Telemundo, channel 47 about AI and its dangers."
 position: "2"
 total: "52"
 has_body: "yes"
-word_count: "224"
+word_count: "225"
 ---
 
 Agencias Argentinas and Interact Argentina invited me to close their Lab IA
-series, and I split the hour in two. The first half is the question in the
+series, and I am splitting the hour in two. The first half is the question in the
 title. If a client can buy the same AI subscription I can, what are they still
 paying an agency for? My answer is that the subscription is not the work. What
 matters is what you ground the models in and which few you actually put into

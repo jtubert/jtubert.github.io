@@ -9,6 +9,13 @@
   <amp-story-grid-layer template="vertical">
     <div class="frame">
       <h1 class="sr-only">Juan Tubert — Chief Technology Officer at Tombras</h1>
+      {%- comment -%}
+        The cover is a video whose words are pixels, so a crawler reading the
+        story found only headlines and no way to /about/. This states who he is,
+        from person.yml like every other Person summary, and links the page
+        that answers it. Visually hidden, like the h1, so the cover is unchanged.
+      {%- endcomment -%}
+      <p class="sr-only">{{ site.data.person.summary }} <a href="{{ site.url }}/about/">About {{ site.data.person.display_name }}</a>.</p>
     </div>
   </amp-story-grid-layer>
 

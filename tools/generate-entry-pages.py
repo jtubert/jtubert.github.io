@@ -39,6 +39,19 @@ def iso_date(label):
     mon = MONTHS.get(m.group(1).lower())
     return f"{m.group(2)}-{mon:02d}-01" if mon else ''
 
+def not_before(modified, published):
+    """dateModified, raised to datePublished when it falls earlier.
+
+    datePublished is the first of the sheet's month, so a page written ahead of
+    an event in a later month (the Agencias Argentinas talk, written September 25
+    for October 7) came out modified a week before it was published, which reads
+    as bad data. Both are kept at the start of the day, in modified's timezone.
+    """
+    if not modified or not published or modified[:10] >= published:
+        return modified
+    return published + modified[10:]
+
+
 def git_date(*paths):
     """When a set of files last changed, from git, as an ISO 8601 datetime at the
     start of that day in the commit's own timezone: 2026-09-16T00:00:00-04:00.
@@ -537,7 +550,8 @@ def main():
             'sitemap_lastmod': iso_date(date_label),
             # when the written piece was last revised, not when the sheet row
             # was: a download rewrites the whole CSV, which would stamp all 49
-            'last_modified_at': git_date(os.path.join(ROOT, '_work_bodies', f'{eid}.md')),
+            'last_modified_at': not_before(git_date(os.path.join(ROOT, '_work_bodies', f'{eid}.md')),
+                                           iso_date(date_label)),
             'prev_id': prev_r['id'].strip() if prev_r else '',
             'prev_title': prev_r['title'].strip() if prev_r else '',
             'next_id': next_r['id'].strip() if next_r else '',
