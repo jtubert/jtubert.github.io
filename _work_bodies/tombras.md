@@ -1,4 +1,4 @@
-In June 2022 I became Chief Technology Officer at Tombras.
+In April 2022 I became Chief Technology Officer at Tombras.
 
 The move was the point rather than the title. I had spent
 [seventeen years at R/GA](/work/rga_flash/) and wanted to be somewhere

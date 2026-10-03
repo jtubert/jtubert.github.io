@@ -158,6 +158,8 @@ h1{
 }
 .stage-page .lede{margin:0 0 2rem;font-size:1.02rem;max-width:32rem;color:rgba(255,255,255,.82)}
 .lede-narrow{display:none}
+/* the phone wording is generated, so a crawler reading the HTML gets one instruction, not both */
+.lede-narrow::before{content:attr(data-text)}
 
 .picks{
 	list-style:none;margin:0;padding:0;

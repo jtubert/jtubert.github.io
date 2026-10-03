@@ -6,8 +6,8 @@ title: "New position as Chief Technology Officer at Tombras."
 title_plain: "New position as Chief Technology Officer at Tombras."
 seo_title: "New position as Chief Technology Officer at Tombras."
 category: "WORK"
-date_label: "Jun 2022"
-iso_date: "2022-06-01"
+date_label: "April 2022"
+iso_date: "2022-04-01"
 link: "https://www.linkedin.com/feed/update/urn:li:activity:6921795039677267968"
 asset: "assets/tombras.jpg"
 poster: ""
@@ -25,8 +25,8 @@ has_audio: ""
 cta_label: "See the post on LinkedIn"
 is_quote: ""
 summary: "Juan Tubert announced his move to Tombras as Chief Technology Officer."
-sitemap_lastmod: "2022-06-01"
-last_modified_at: "2026-08-30T00:00:00-04:00"
+sitemap_lastmod: "2022-04-01"
+last_modified_at: "2026-10-03T00:00:00-04:00"
 prev_id: "meataversity"
 prev_title: "Meataversity<br>Decentraland<br>experience"
 next_id: "rga_flash"
@@ -37,7 +37,7 @@ has_body: "yes"
 word_count: "69"
 ---
 
-In June 2022 I became Chief Technology Officer at Tombras.
+In April 2022 I became Chief Technology Officer at Tombras.
 
 The move was the point rather than the title. I had spent
 [seventeen years at R/GA](/work/rga_flash/) and wanted to be somewhere

@@ -6,7 +6,9 @@
 #
 # Each claim is already published elsewhere on the site, in his own words.
 # The /work/ page it comes from is noted beside it, so it can be checked.
-# He reviewed and confirmed all of it in September 2026.
+# He reviewed and confirmed all of it in September 2026. In October 2026 he
+# corrected the Tombras start date from June to April 2022 (his LinkedIn post
+# announcing the role is dated April 18, 2022), matching Crunchbase and The Org.
 
 id: https://www.jtubert.com/#person
 name: Juan Tubert
@@ -18,20 +20,20 @@ job_title: Chief Technology Officer
 employer:
   name: Tombras
   url: https://www.tombras.com/
-role_since: June 2022                               # /work/tombras/
+role_since: April 2022                              # /work/tombras/; LinkedIn post of April 18, 2022
 image: /assets/juan-tubert.jpg
 
 # For <meta name="description">: the first sentence of the answer, under 160.
 summary: >-
   Juan (John) Tubert is Chief Technology Officer at Tombras, an independent
-  advertising agency, a role he has held since June 2022 after seventeen years
+  advertising agency, a role he has held since April 2022 after seventeen years
   at R/GA.
 
 # The direct answer to "who is Juan Tubert?". 40 to 80 words, third person, and
 # it has to make sense quoted on its own, because that is how it gets used.
 answer_html: >-
   Juan (John) Tubert is Chief Technology Officer at Tombras, an independent
-  advertising agency, a role he has held since June 2022 after seventeen years
+  advertising agency, a role he has held since April 2022 after seventeen years
   at R/GA. He co-wrote <cite>You Work for Your User: How to Design User-Centric
   Products in the Age of AI</cite> with Brian Hanley and Rick Barber, has judged
   the Webby Awards, the AICP Awards and The FWA, and speaks about AI at SXSW

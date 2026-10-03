@@ -364,6 +364,11 @@ correctly. It only generates for ids in `_data/selected.yml`.
 - **About page facts were confirmed by the user in September 2026**: Tombras as
   "an independent advertising agency", "Buenos Aires, Argentina" as where he is
   from, `x.com/jtubert` as his, and both R/GA titles.
+- **He started at Tombras in April 2022**, not June: his LinkedIn post announcing
+  the role is dated April 18, 2022 (the "leaving R/GA" post, April 8), which is
+  what Crunchbase and The Org say. Corrected in October 2026 in `person.yml`,
+  `/about/`, the `tombras` body and the `tombras` and `rga_flash` sheet dates.
+  LinkedIn activity ids encode their timestamp: `id >> 22` is epoch milliseconds.
 - **`amp-story-cta-layer` is dead** in amp-story 1.0. Use
   `amp-story-page-outlink`.
 - **Story CTAs cannot open in a new tab.** The runtime overwrites the anchor's
