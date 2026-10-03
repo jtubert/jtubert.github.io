@@ -1,16 +1,20 @@
-I sat down with Telemundo 47 to talk about artificial intelligence, and the
-first question was the one everyone is really asking: can you trust it? My
-honest answer is that it depends entirely on what you are asking it to do.
-There are areas where I trust it completely, and areas where I don't trust it
-at all. We have all seen the cases where it went wrong, entire databases wiped,
-inboxes deleted. I would not hand any AI system full access to my computer
-today, and I don't think you should either.
+Telemundo 47's *Enfoque* had me on to explain artificial intelligence to a
+general audience, so I started from the beginning. The field goes back to 1956;
+what changed is that ChatGPT put it in everyone's hands. The simplest way I know
+to describe it is that AI learns from patterns, not rules, the way a child
+learns what a dog is by seeing a lot of dogs rather than memorising that dogs
+have four legs and bark. And it moves fast: a year ago generated video gave
+people six fingers, and today it gets them right.
 
-But that same technology is already reading X-rays and catching diseases
-earlier than we used to catch them, seeing things in an image that the human eye
-simply cannot. That is not a someday promise, it is happening in medicine right
-now. The question I got asked last was whether AI needs control, and the answer
-is 100%. Without it, these systems can do anything. The reason I stay optimistic
-is that we are having this conversation now, writing the rules now, setting the
-limits now, while it still matters. Play with everything.
+The fear, as I see it, is less about what AI does today than about what we give
+it access to, and about systems autonomous enough to do things nobody asked them
+to. In the clip promoting the segment I put it plainly: I trust it in some areas
+and not at all in others, and I would not give it access, because it has already
+wiped databases and deleted email.
+
+Control has to start with government regulation that makes companies train and
+test their models properly, then the companies themselves, then training the
+people who write the code to understand the harms. My worry is that the rules
+will reach OpenAI, Google and Anthropic but not smaller companies, or companies
+in other countries. Even so, I try to stay optimistic.
 [Be deliberate about what you put into production](/work/ojoquote/).
