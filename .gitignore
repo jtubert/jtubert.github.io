@@ -25,3 +25,7 @@ tools/.indexnow-sent.json
 
 # local credentials (Google Sheets OAuth) - never commit
 .env
+
+# private transcripts and subtitles: npm run deploy is git add ., so ignore rather than leave untracked
+*.srt
+*.vtt
