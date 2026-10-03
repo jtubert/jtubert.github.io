@@ -135,6 +135,11 @@ spanning the real rows, stretches them and opens gaps under the meta, CTA and
 body. `ojoquote` has no media and falls back to a centred column via
 `.no-media`.
 
+**Below `48rem` the masthead is sticky** on entry pages and `/about/`, since it
+holds the phone's only menu button. It bleeds past the wrap's gutters, sits at
+z-index 6 under the scrim and drawer, and is excluded from `/work/` with
+`body:not(.stage-page)`, whose one-screen dark layout it would cover.
+
 **`/work/` landing** (`.wrap-index`, `.index-hero`). Full-bleed footage with
 the copy at its foot: `.stage-bg` is `position:fixed` at `z-index:-1`, and the
 wrap is a `100svh` flex column so `.index-hero` can sit on `margin-top:auto`.

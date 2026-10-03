@@ -371,6 +371,19 @@ h1{
 		overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
 	}
 	.wnav-tab-list{width:18px;height:18px}
+
+	/* The header holds the only route to the menu on a phone, so it stays put.
+	   Its bleed runs past the wrap's 1.25rem gutters so text does not scroll
+	   by in them, and it is tighter than at rest, so it costs about 64px rather
+	   than 85. Under the scrim (8) and drawer (9). Not on /work/: that page fits
+	   one screen over a dark backdrop the cream ground would cover. */
+	body:not(.stage-page) .masthead{
+		position:sticky;top:0;z-index:6;
+		margin:0 -1.25rem 2.2rem;padding:.55rem 1.25rem;
+		background:var(--ground);
+	}
+	/* in-page anchors land below the bar instead of under it */
+	html{scroll-padding-top:5rem}
 }
 
 
