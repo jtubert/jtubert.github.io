@@ -2,9 +2,9 @@
 layout: "entry"
 permalink: "/work/aiagent/"
 entry_id: "aiagent"
-title: "New certification: AI Agents Fundamentals from Hugging Face!"
-title_plain: "New certification: AI Agents Fundamentals from Hugging Face!"
-seo_title: "New certification: AI Agents Fundamentals from Hugging Face!"
+title: "AI Agents Fundamentals certification from Hugging Face"
+title_plain: "AI Agents Fundamentals certification from Hugging Face"
+seo_title: "AI Agents Fundamentals certification from Hugging Face"
 category: "CERTIFICATION"
 date_label: "April 2025"
 iso_date: "2025-04-01"
@@ -26,7 +26,7 @@ cta_label: "View the certification on Hugging Face"
 is_quote: ""
 summary: "AI Agents Fundamentals certification from Hugging Face."
 sitemap_lastmod: "2025-04-01"
-last_modified_at: "2026-08-30T00:00:00-04:00"
+last_modified_at: "2026-10-04T00:00:00-04:00"
 prev_id: "adage"
 prev_title: "AdAge named Tombras Agency of the year!!"
 next_id: "freezerflag"
@@ -34,7 +34,7 @@ next_title: "Steak-umm Freezer Flag: Smart Kitchen Innovation"
 position: "24"
 total: "52"
 has_body: "yes"
-word_count: "66"
+word_count: "94"
 ---
 
 I completed the AI Agents Fundamentals course from Hugging Face and Unit 0 of
@@ -44,4 +44,7 @@ I keep doing these. Reading about agent frameworks and actually building one tha
 has to call tools, handle failures and stay within a budget are different
 activities, and the second one is where you find out what the abstractions
 actually cost. The same instinct is behind the
-[ComfyUI experiments](/work/comfyui/).
+[ComfyUI experiments](/work/comfyui/). I later put it to work building
+[the agent platform we use at Tombras](/work/tombrasai/), and at
+[Mirren Live](/work/mirren/) I talked about what an agency should build for
+itself.

@@ -28,7 +28,7 @@ summary: "Steak-umm's Freezer Flag, a smart kitchen innovation, covered by Ad Ag
 sitemap_lastmod: "2025-04-01"
 last_modified_at: "2026-08-30T00:00:00-04:00"
 prev_id: "aiagent"
-prev_title: "New certification: AI Agents Fundamentals from Hugging Face!"
+prev_title: "AI Agents Fundamentals certification from Hugging Face"
 next_id: "test"
 next_title: "Innovation Through Creativity and Technology"
 position: "25"
