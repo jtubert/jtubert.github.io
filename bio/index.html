@@ -1,0 +1,94 @@
+---
+layout: null
+permalink: /bio/
+---
+{%- assign p = site.data.person -%}
+{%- assign b = site.data.bio -%}
+{%- assign updated = site.data.lastmod.bio -%}
+{%- assign lede = b.paragraphs | first | split: ". " | first | append: "." -%}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+{% include analytics.html %}
+<title>Bio of {{ p.display_name }}, CTO at {{ p.employer.name }}</title>
+<meta name="description" content="{{ lede | strip_newlines | escape }}">
+<link rel="canonical" href="{{ site.url }}/bio/">
+{% include favicons.html %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>{% include css/entry.css %}</style>
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="{{ site.url }}/bio/">
+<meta property="og:title" content="Bio of {{ p.display_name }}">
+<meta property="og:description" content="{{ lede | strip_newlines | escape }}">
+<meta property="og:image" content="{{ site.url }}{{ p.image }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@{{ site.twitter_username }}">
+
+{%- comment -%}
+  The shared Person and WebSite nodes, and this page as a WebPage about that
+  Person. /about/ is the ProfilePage; two would compete to be the canonical
+  profile, so this one only points at the entity.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {% include jsonld/website.html %},
+    {% include jsonld/person.html %},
+    {
+      "@type": "WebPage",
+      "@id": "{{ site.url }}/bio/#page",
+      "url": "{{ site.url }}/bio/",
+      "name": "Bio of {{ p.display_name }}",
+      "isPartOf": { "@id": "{{ site.url }}/#website" },
+      "about": { "@id": {{ p.id | jsonify }} },
+      "description": {{ lede | strip_newlines | jsonify }},
+      {% if updated %}"dateModified": "{{ updated }}",
+      {% endif %}"inLanguage": "en"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <a class="whoami" href="/">Juan Tubert, CTO @</a>
+    <a class="brandmark" href="https://www.tombras.com/" target="_blank" rel="noopener" aria-label="Tombras">
+      <picture>
+        <source media="(min-width: 48rem)" srcset="/assets/tombras-logo.png">
+        <img src="/assets/tombras-mark.png" alt="Tombras" width="76" height="91">
+      </picture>
+    </a>
+  </header>
+
+  <nav class="about-nav" aria-label="Site">
+    <a href="/about/">About</a> &middot; <a href="/work/">All {{ site.data.nav.total }} posts</a>
+  </nav>
+
+  <main class="about">
+    <div class="about-head">
+      <img class="about-photo" src="{{ p.image }}" alt="{{ p.display_name }}" width="96" height="96">
+      <h1>{{ p.display_name }}</h1>
+    </div>
+    {% if updated %}<p class="about-updated">Bio &middot; updated <time datetime="{{ updated }}">{{ updated | date: "%B %-d, %Y" }}</time></p>{% endif %}
+
+    <div class="bio">
+    {%- for para in b.paragraphs %}
+      <p>{{ para }}</p>
+    {%- endfor %}
+    </div>
+
+    <p class="backlink">
+      <a href="/about/">Questions about him, answered with sources</a>
+      &middot; <a href="/work/">All {{ site.data.nav.total }} posts</a>
+    </p>
+  </main>
+</div>
+</body>
+</html>

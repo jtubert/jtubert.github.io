@@ -23,6 +23,11 @@ Everything is driven from one Google Sheet, and every entry appears twice:
    question-shaped headings, each with a direct answer, then lists, tables and a
    link to the post it came from. It is generated entirely from
    `_data/person.yml` and `_data/about.yml`.
+4. **`/bio/`** is his own third-person biography, verbatim from him (October
+   2026), from `_data/bio.yml`, one entry per paragraph. It states facts
+   `/about/` does not carry (R/GA Buenos Aires, PayWithaTweet, Nike+, the Clio
+   AI Specialty Award for PODS). A WebPage `about` the Person, not a second
+   ProfilePage. `llms.txt` repeats the text.
 
 ## Content pipeline
 
@@ -47,6 +52,7 @@ survive a download lives in the repo instead:
 | `_data/extra_images.yml` | Entries with a second picture under the hero, after its captions. `id: <url> | <alt text>`. Currently only `sxsw`. |
 | `_data/embeds.yml` | Entries whose entry-page hero is a broadcaster's player iframe instead of the sheet's asset. `id: <iframe src> | <iframe title>`. The story keeps the sheet's asset, since AMP cannot frame the player. Jekyll parses it as YAML, so no `: ` in a title. Currently only `telemundo`. |
 | `_data/person.yml` | **The facts about him, stated once.** Every Person node in the structured data, `/about/` and `llms.txt` read it. Change a fact here and nowhere else. |
+| `_data/bio.yml` | The `/bio/` text, his own words. Edit the wording here, not in the page. |
 | `_data/about.yml` | The `/about/` questions. `lead` is both the visible answer and the FAQPage text, so they cannot drift. |
 | `_data/schema_types.yml` | Entries more specific than CreativeWork, keyed by id. Currently only `book` (Book, with its two co-authors). |
 | `_data/titles.json` | Hand-written short `<title>` forms for posts too long even without the name suffix. Each records the sheet title it was written for, and is ignored with a warning once that changes. |

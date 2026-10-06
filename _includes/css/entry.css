@@ -248,6 +248,9 @@ h1{
 .about-photo{width:84px;height:84px;flex:0 0 auto;border-radius:50%;object-fit:cover;object-position:68% 38%;border:1px solid var(--accent);background:var(--surface)}
 .about-answer{font-size:1.14rem;line-height:1.6;margin:0 0 .7rem;text-wrap:pretty}
 .about-answer cite,.qa cite{font-style:italic}
+/* /bio/: prose, sized like the about answer and an entry body */
+.bio p{margin:0 0 1.15rem;font-size:1.06rem;line-height:1.65;color:var(--ink-2);text-wrap:pretty}
+.bio p:first-child{font-size:1.14rem;color:var(--ink)}
 .about-updated{font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin:0 0 1.2rem}
 .qa{border-top:1px solid var(--hair);padding-top:1.5rem;margin-top:1.5rem}
 .qa h2{font-size:1.18rem;font-weight:800;letter-spacing:-.015em;line-height:1.3;margin:0 0 .55rem;text-wrap:pretty}

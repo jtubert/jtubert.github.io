@@ -1,0 +1,29 @@
+# The /bio/ page: his own third-person biography, in his words (October 2026).
+# One entry per paragraph. llms.txt carries the same text.
+#
+# It states facts /about/ does not yet carry (co-founding R/GA Buenos Aires,
+# PayWithaTweet, Nike+, the Clio AI Specialty Award for PODS). They come from
+# him, not from a /work/ page.
+paragraphs:
+  - >-
+    Juan Tubert is the Chief Technology Officer at Tombras, where he has served
+    since April 2022 as the agency’s first-ever CTO. Prior to Tombras, Juan spent
+    17 years at R/GA, where he led the U.S. technology team and played a pivotal
+    role in expanding the agency’s global footprint by co-founding R/GA Buenos
+    Aires and launching its near-shoring practice in Argentina.
+  - >-
+    He was instrumental in developing a new model of collaboration with major
+    tech clients, embedding cross-functional teams to support companies like
+    Google and Airbnb from within. Over the years, Juan also led the tech
+    practice at R/GA San Francisco before returning to the New York
+    headquarters in 2020.
+  - >-
+    Juan’s career is marked by numerous award-winning initiatives, including the
+    Cannes Grand Prix-winning PayWithaTweet and the Grand Andy-recognized Nike+.
+    Most recently, in 2025, he helped lead Tombras to win a Clio AI Specialty
+    Award (Presented by Google) for their groundbreaking campaign for PODS.
+  - >-
+    In addition to his hands-on work, Juan is a recognized thought leader in
+    artificial intelligence, having written articles for industry publications
+    and spoken at global conferences including SXSW in Austin and El Ojo de
+    Iberoamérica in Buenos Aires.

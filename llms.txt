@@ -21,9 +21,16 @@ presents the same entries as a single AMP Web Story.
 {%- endfor %}
 - Profiles: {{ p.same_as | join: ", " }}
 
+## Bio
+
+In his own words, from {{ site.url }}/bio/:
+{% for para in site.data.bio.paragraphs %}
+{{ para | normalize_whitespace }}
+{% endfor %}
 ## Key pages
 
 - [About {{ p.display_name }}]({{ site.url }}/about/): who he is, answered question by question, with a source for each answer.
+- [Bio of {{ p.display_name }}]({{ site.url }}/bio/): his own third-person biography.
 - [All posts]({{ site.url }}/work/): every entry, newest first.
 - [Sitemap]({{ site.url }}/sitemap.xml)
 

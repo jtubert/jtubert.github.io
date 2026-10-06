@@ -106,6 +106,7 @@ def write_lastmod(entries):
         'home':  git_date(CSV, j('index.markdown'), j('_includes', 'templates')),
         'work':  git_date(CSV, j('work', 'index.html'), j('_data', 'selected.yml')),
         'about': git_date(j('about', 'index.html'), j('_data', 'about.yml'), j('_data', 'person.yml')),
+        'bio': git_date(j('bio', 'index.html'), j('_data', 'bio.yml'), j('_data', 'person.yml')),
         'entries': entries,
     }
     with open(j('_data', 'lastmod.json'), 'w', encoding='utf-8') as f:
