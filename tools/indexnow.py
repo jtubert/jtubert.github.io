@@ -62,7 +62,9 @@ def pages():
     """Every URL the sitemap lists, from the files the generator wrote."""
     with open(os.path.join(ROOT, "_data", "nav.json"), encoding="utf-8") as f:
         nav = json.load(f)
-    urls = [f"{SITE}/", f"{SITE}/about/", f"{SITE}/work/"]
+    # keep in step with the fixed <url> entries at the top of sitemap.xml: /bio/
+    # shipped without being added here and went unsubmitted until it was
+    urls = [f"{SITE}/", f"{SITE}/about/", f"{SITE}/bio/", f"{SITE}/work/"]
     for g in nav["years"]:
         urls += [f"{SITE}/work/{it['id']}/" for it in g["items"]]
     return list(dict.fromkeys(urls))
