@@ -407,6 +407,7 @@ DESTINATION_RULES = [
     ('aicpawards.awardcore.com',  None,          'See the AICP Awards'),
     ('live.mirren.com',           'agenda',      'See the agenda on Mirren Live'),
     ('thelatinoaisummit.org',     None,          'See the Latino AI Summit'),
+    ('docs.google.com',           'presentation', 'See the slides'),
     ('elojodeiberoamerica.com',   None,          'See the session on El Ojo'),
     ('business.google.com',       None,          'Read the case study on Google'),
     ('thinkwithgoogle.com',       None,          'Read the case study on Google'),
