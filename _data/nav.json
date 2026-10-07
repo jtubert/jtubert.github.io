@@ -2,8 +2,13 @@
  "years": [
   {
    "year": "2026",
-   "count": 9,
+   "count": 10,
    "items": [
+    {
+     "id": "latinoaisummit",
+     "title": "Responsible AI panel at the Latino AI Summit",
+     "month": "Nov"
+    },
     {
      "id": "lanacion",
      "title": "Quoted in La Nación on AI reinventing ad production",
@@ -315,5 +320,5 @@
    ]
   }
  ],
- "total": 52
+ "total": 53
 }

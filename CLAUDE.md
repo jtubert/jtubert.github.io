@@ -72,11 +72,17 @@ npm run generate_thumbs       # tools/generate-thumbs.py  (must run AFTER genera
 npm run indexnow              # tools/indexnow.py --wait: tell Bing what changed, once Pages is live
 python3 tools/ga-report.py    # GA4 digest; --days N, or --now for the last 30 minutes
 python3 tools/sheet.py show|get|set <id> [column] [value] [--dry-run]   # edit the sheet itself
+python3 tools/sheet.py add <new id> --before <id> column=value ...   # a new row, orders shift down
 ```
 
 `sheet.py set` writes in the column's own type and then re-downloads the CSV
 to confirm the cell survived; it exits non-zero if the download disagrees, and
-refuses an em dash. Run `npm run download_and_deploy` afterwards as usual.
+refuses an em dash. Run `npm run download_and_deploy` afterwards as usual. `add` inserts
+above the given row, takes its `order` and moves every row below down one,
+as new rows have always been added by hand, then checks every value in the
+download. An upcoming event is fine: an entry's published date is capped at
+today (`published_date()`), so a November row added in October carries no
+future date until November arrives.
 
 `download_and_deploy` ends with `indexnow`, which waits for the GitHub Actions
 run deploying that exact commit to succeed (through `gh`) and only then submits,

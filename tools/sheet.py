@@ -6,6 +6,7 @@ id and column name, so a fix does not have to wait for someone to paste it.
     python3 tools/sheet.py get  <id> <column>
     python3 tools/sheet.py set  <id> <column> <value>   # writes, then verifies
     python3 tools/sheet.py set  <id> <column> <value> --dry-run
+    python3 tools/sheet.py add  <new id> --before <id> column=value ...   # new row, orders shift
 
 Credentials come from .env at the repo root (GOOGLE_CLIENT,
 GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN) and are never printed. .env is
@@ -179,21 +180,111 @@ def csv_value(eid, column, tries=8):
         time.sleep(2)
 
 
+def add(tok, gid, rows, new_id, before, pairs, dry_run):
+    """Insert a row for `new_id` directly above the row `before`, taking its
+    `order` and moving every row from there down by one, the way new rows have
+    been added by hand. Each value goes in as its column's type."""
+    header = [text(c) for c in rows[0]]
+    idc = header.index('id')
+    if any(len(r) > idc and text(r[idc]) == new_id for r in rows[1:]):
+        sys.exit(f'a row with id {new_id!r} already exists; use set to change it')
+    n, _, _ = locate(rows, before)
+    vals = {}
+    for p in pairs:
+        if '=' not in p:
+            sys.exit(f'expected column=value, got {p!r}')
+        k, v = p.split('=', 1)
+        vals[k.strip()] = v
+    vals['id'] = new_id
+    unknown = [k for k in vals if k not in header]
+    if unknown:
+        sys.exit(f'no column {", ".join(map(repr, unknown))}; columns are: {", ".join(h for h in header if h)}')
+    if any('—' in v for v in vals.values()):
+        sys.exit('refusing to write an em dash: the site copy has none (see CLAUDE.md); restructure the sentence')
+
+    oc = header.index('order')
+    order_of = lambda r: (r[oc].get('effectiveValue', {}) if len(r) > oc else {}).get('numberValue')
+    vals.setdefault('order', text(rows[n][oc]))
+    new_order = float(vals['order'])
+    # rows at and below the insertion point that sit at or after the new order
+    bumps = [(i, order_of(r)) for i, r in enumerate(rows) if i >= n and order_of(r) is not None
+             and order_of(r) >= new_order]
+
+    cells = []
+    for c, h in enumerate(header):
+        if h in vals and vals[h] != '':
+            kind, fmt = column_kind(rows, c, None)
+            cell, _ = typed(vals[h], kind, fmt)
+            cells.append(cell)
+            print(f'  {h}: {vals[h]!r} ({kind})')
+        else:
+            cells.append({})
+    print(f'insert above {before!r} (row {n + 1}) at order {vals["order"]}; '
+          f'{len(bumps)} rows below move down one in order')
+    if dry_run:
+        print('nothing written')
+        return
+
+    requests = [
+        # inheritFromBefore false: the new row takes the formatting of the row
+        # below it, a real entry, not of whatever sits above
+        {'insertDimension': {'range': {'sheetId': gid, 'dimension': 'ROWS', 'startIndex': n, 'endIndex': n + 1},
+                             'inheritFromBefore': False}},
+        {'updateCells': {'range': {'sheetId': gid, 'startRowIndex': n, 'endRowIndex': n + 1,
+                                   'startColumnIndex': 0, 'endColumnIndex': len(header)},
+                         'rows': [{'values': cells}],
+                         'fields': 'userEnteredValue,userEnteredFormat.numberFormat'}},
+    ]
+    for i, o in bumps:
+        new = o + 1
+        requests.append({'updateCells': {
+            'range': {'sheetId': gid, 'startRowIndex': i + 1, 'endRowIndex': i + 2,
+                      'startColumnIndex': oc, 'endColumnIndex': oc + 1},
+            'rows': [{'values': [{'userEnteredValue': {'numberValue': int(new) if float(new).is_integer() else new}}]}],
+            'fields': 'userEnteredValue'}})
+    api(tok, f'{API}:batchUpdate', {'requests': requests}, 'POST')
+
+    _, rows = grid(tok)
+    m, _, _ = locate(rows, new_id)
+    wrote = {h: text(rows[m][c]) for c, h in enumerate(header) if h in vals and c < len(rows[m])}
+    orders = [order_of(r) for r in rows[1:] if order_of(r) is not None]
+    dupes = sorted({o for o in orders if orders.count(o) > 1})
+    print(f'sheet: row {m + 1} added; duplicate orders: {dupes or "none"}')
+    # the download must carry every value, or a type mismatch has blanked one
+    for _ in range(8):
+        raw = urllib.request.urlopen(f'{CSV_URL}&cachebust={time.time()}').read().decode('utf-8')
+        got = next((r for r in csv.DictReader(io.StringIO(raw)) if r.get('id') == new_id), None)
+        bad = {h: (wrote[h], (got or {}).get(h)) for h in wrote if got is None or got.get(h) != wrote[h]}
+        if not bad:
+            print('download: every value matches')
+            return
+        time.sleep(2)
+    sys.exit(f'download disagrees with the sheet on {bad}; check the row before deploying')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
-    ap.add_argument('cmd', choices=['show', 'get', 'set'])
+    ap.add_argument('cmd', choices=['show', 'get', 'set', 'add'])
     ap.add_argument('id')
-    ap.add_argument('column', nargs='?')
-    ap.add_argument('value', nargs='?')
+    ap.add_argument('args', nargs='*', help='get/set: column [value]; add: column=value ...')
+    ap.add_argument('--before', help='add: the id of the row the new one goes above')
     ap.add_argument('--dry-run', action='store_true', help='say what would be written, write nothing')
     a = ap.parse_args()
+    a.column = a.args[0] if a.cmd in ('get', 'set') and a.args else None
+    a.value = a.args[1] if a.cmd == 'set' and len(a.args) > 1 else None
     if a.cmd in ('get', 'set') and not a.column:
         ap.error(f'{a.cmd} needs a column')
     if a.cmd == 'set' and a.value is None:
         ap.error('set needs a value')
+    if a.cmd == 'add' and not a.before:
+        ap.error('add needs --before <id>')
 
     tok = token()
     gid, rows = grid(tok)
+
+    if a.cmd == 'add':
+        add(tok, gid, rows, a.id, a.before, a.args, a.dry_run)
+        return
 
     if a.cmd == 'show':
         n, _, header = locate(rows, a.id)
