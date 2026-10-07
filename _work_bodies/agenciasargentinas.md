@@ -1,14 +1,14 @@
 Agencias Argentinas and Interact Argentina invited me to close their Lab IA
-series, and I am splitting the hour in two. The first half is the question in the
+series, and I split the hour in two. The first half was the question in the
 title. If a client can buy the same AI subscription I can, what are they still
 paying an agency for? My answer is that the subscription is not the work. What
 matters is what you ground the models in and which few you actually put into
-production, so I show what is running at Tombras rather than what demos well:
+production, so I showed what is running at Tombras rather than what demos well:
 synthetic audiences built on our own data, campaign briefs that take minutes
 instead of days, review replies with explicit rules against AI slop, and
 [work where the AI is the idea and not just the production line](/work/pods/).
 
-The second half asks how the role of the engineer has changed. After twenty-five
+The second half asked how the role of the engineer has changed. After twenty-five
 years of writing code I mostly direct it now: plan before building, let the
 expensive model reason and a cheaper one execute, and give it a way to check its
 own work. Some nights a loop keeps committing while I sleep. It has also let me
