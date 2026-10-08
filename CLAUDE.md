@@ -180,6 +180,12 @@ size down to `clamp(1.5rem, 3.6vw, 2.15rem)`.
 | `/work/` backdrop | **16:9 or wider** | 1920x1080 wanted | Five clips in `assets/bg/`, one picked per visit. All silent, 13 to 20s, under 410 KB each. The widest source is 960x540, so every one upscales on a laptop. |
 | Homepage cover video | **9:16** | portrait | Full bleed. |
 
+**The sheet's `preview` column is a story-only image** for an image row whose
+`asset` the 3:2 well would crop badly, such as the portrait 4:5 speaker card on
+`latinoaisummit`: the entry page and og:image keep `asset`, the story shows
+`preview`. Blank means the story uses `asset`, as every other row does. Cut the
+preview to 3:2 between the card's text, measured, not guessed.
+
 Hand-made card art goes in `assets/thumbs-src/<id>.jpg` and beats the derived
 frame. `tools/generate-thumbs.py` tracks source path, mtime and size in
 `assets/thumbs/sources.json`, so swapping art in or deleting it invalidates

@@ -9,7 +9,13 @@
 
       <div class="media">
         {% if include.type == "image" %}
-        <amp-img layout="fill" src="{{ include.asset }}" alt="{{ include.title | escape }}"></amp-img>
+        {%- comment -%}
+          preview: a story-only image from the sheet, for an asset whose shape the
+          3:2 well would crop badly (a portrait card). The entry page keeps asset.
+        {%- endcomment -%}
+        {%- assign story_img = include.asset -%}
+        {%- if include.preview and include.preview != "" and include.preview != "N/A" -%}{%- assign story_img = include.preview -%}{%- endif -%}
+        <amp-img layout="fill" src="{{ story_img }}" alt="{{ include.title | escape }}"></amp-img>
         {% else %}
         <amp-video layout="fill" poster="{{ include.poster }}" autoplay id="hgajlbldbp">
           <source src="{{ include.asset }}" type="video/mp4">

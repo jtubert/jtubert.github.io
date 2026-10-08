@@ -31,5 +31,6 @@ date:   2025-06-08 11:16:09 -0400
     autoAdvance=aa
     template=story.template
     poster=story.poster
+    preview=story.preview
   %}
 {% endfor %}
