@@ -53,6 +53,7 @@
   {%- if host contains "telemundo47.com" -%}{%- assign cta = "Watch the interview on Telemundo" -%}{%- endif -%}
   {%- if host contains "thelatinoaisummit.org" -%}{%- assign cta = "See the Latino AI Summit" -%}{%- endif -%}
   {%- if host contains "docs.google.com" and include.link contains "/presentation/" -%}{%- assign cta = "See the slides" -%}{%- endif -%}
+  {%- if host contains "elojodeiberoamerica.com" and include.link contains "/jurados/" -%}{%- assign cta = "See the jury on El Ojo" -%}{%- endif -%}
   <amp-story-page-outlink layout="nodisplay" theme="custom" cta-accent-color="#e0141d" cta-accent-element="background">
   {%- comment -%}
     No target here. The AMP runtime overwrites it with target="_top" on every
