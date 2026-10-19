@@ -26,7 +26,7 @@ cta_label: "See the slides"
 is_quote: ""
 summary: "On October 7 I closed the Lab IA series with ten AI systems running at Tombras, how the engineer's role changed in 2026, and the risks for an agency using AI."
 sitemap_lastmod: "2026-10-01"
-last_modified_at: "2026-10-07T00:00:00-04:00"
+last_modified_at: "2026-10-19T00:00:00-04:00"
 prev_id: "lanacion"
 prev_title: "Quoted in La Nación on AI reinventing ad production"
 next_id: "telemundo"
@@ -34,36 +34,91 @@ next_title: "Interview with Telemundo, channel 47 about AI and its dangers."
 position: "4"
 total: "54"
 has_body: "yes"
-word_count: "339"
+word_count: "831"
 ---
 
 Agencias Argentinas and Interact Argentina invited me to close their Lab IA
-series, and I split the hour into three parts.
+series, and I split the hour into three parts, with questions at the end.
 
-The first was the question in the title. If a client can buy the same AI
-subscription I can, what are they still paying an agency for? My answer is that
-everybody has the same models. What nobody can buy is the context, the systems
-and the judgment around them. So I showed ten things running at Tombras rather
-than what demos well: synthetic audiences that leave a step-by-step trail of
-what they saw and where they gave up, campaign briefs in minutes, review replies
-where a person approves every negative one before it posts, UX audits in
-minutes, internal tools one technologist built in days, and agents grounded in
-our own client data. Two cases make the point from opposite sides. For
-[PODS](/work/pods/), the AI was the idea: about 6,000 hyperlocal headlines
-across 299 New York neighborhoods. For [Quili.ai](/work/ny1/), taking the AI
-away was the idea: people without safe water answered every prompt by hand.
+The talk was in Spanish. This is my summary of it, with the figures as I gave
+them.
+{: .body-note}
 
-The second part asked how the role of the engineer changed in 2026. After
-twenty-five years of writing code, I mostly direct it now. I plan before
-building, let the expensive model reason and a cheaper one execute, and have two
-other models review every change. Some nights a loop keeps committing while I
-sleep. It has let me build well past websites, from a Photoshop plugin to a
-native desktop app to an MCP server. The deck itself was built that way: one
-source that renders to video, Google Slides, Keynote and a design canvas, in
-English and Spanish.
+## Everyone has the same models
 
-The third part was the risks for an agency using AI: bias, sameness,
-hallucination, copyright, the energy and water behind every prompt, client data
-privacy, and the jobs people are afraid of losing. The judgment did not
-disappear. It moved, which is why I still say to test every model that comes out
-and [be selective about what you put into production](/work/ojoquote/).
+If a client can buy the same AI subscription I can, what are they still paying
+an agency for? My answer is that everybody has the same models. What nobody can
+buy is the context, the systems and the judgment around them. So I showed ten
+things running at Tombras rather than what demos well:
+
+- **Synthetic audiences** that review a site, video or banner before we spend
+  money on real people. Each one gets a role, leaves a step-by-step trail of
+  screenshots showing what it saw and where it gave up, and answers follow-up
+  questions about why.
+- **A brief generator** for Sally Beauty that asks the client the questions they
+  did not think of while they fill in the form.
+- **Review replies** for a car dealership group: around 7,000 Google reviews a
+  month that the social team used to answer by hand, now written in each
+  dealership's voice. Every negative one goes to a manager to approve first, and
+  the team gets a daily summary in Slack.
+- **AI storyboards and rough cuts** of commercials before a production is
+  booked, with tools like Runway, Luma, Google Flow and Flora.
+- **A site migration**: agents moved 19 brand sites from WordPress to
+  Contentful and then checked thousands of pages for metadata, redirects and
+  links, with people reviewing the content in between. It saved about two
+  months.
+- **UX audits** of usability, accessibility and SEO in minutes instead of days.
+- **Internal tools** one developer built in days, like a single view of
+  NetSuite, monday.com, Jira and Rippling for a 600-person agency.
+- **[PODS](/work/pods/)**, where the AI was the idea: more than 6,000 headlines
+  across all 299 New York neighborhoods in 29 hours, 60% more site visits and
+  33% more quote requests in a week, and a Clio.
+- **[Quili.ai](/work/ny1/)**, where taking the AI away was the idea: 40 people
+  in Quilicura, Chile, answered more than 25,000 prompts by hand, to show the
+  water behind every one.
+- **[Tombras AI](/work/tombrasai/)**, our internal platform of 13 agents, from
+  T-Score brand health to brand sentiment and share of search and social.
+
+## How the engineer's role changed in 2026
+
+After twenty-five years of writing code by hand, I mostly direct it now. I
+walked through the stages: searching for answers, then autocomplete, then AI
+scaffolding whole projects, and this year an automatic mode where no code is
+typed by hand at all. There is a further one, loop engineering, where the system
+writes, reviews and fixes its own work overnight. I do not think it is ready to
+be left alone in most cases, and I like reviewing each step.
+
+What works for me is one task per session, planning before building and letting
+the AI ask its questions first, an expensive model to reason and a cheaper one
+to execute, a way for it to check its own work, and the right context. Claude
+Code writes; GPT or Gemini reviews; where they agree the fix goes in, and where
+they disagree I look. Skills, packaged instructions the AI loads for a task, let
+me build a Figma plugin that checks designs against a style guide, and this
+deck: one source rendered to video, Keynote and Google Slides, in English and
+Spanish.
+
+For a team, give everyone the tools, not only engineers. Share the skills,
+document the standards so people and AI both read them, and keep people
+reviewing the code and accountable for it. For my team of about 30, AI
+subscriptions come to around $36,000 a year, and with image and video tools a
+large agency can start for about $50,000. The productivity gains I am starting
+to see are between 30 and 60%.
+
+## The risks
+
+Bias, which every model inherits from its training data. Sameness, when
+everyone uses the same model with similar prompts, which is where context makes
+the difference. Hallucinations, because sounding right is not being right.
+Copyright. Client data, which belongs on enterprise plans. Privacy, since
+personal accounts can be used for training. The energy and water behind every
+prompt. And jobs.
+
+Jobs are changing, not disappearing: mine has. Asked whether I had let anyone go
+because of AI, I said no; the same eight hours now produce much more. What
+concerns me more is people starting out, because using AI well takes the
+experience to know how to architect a project.
+
+I closed with this: the agencies that win will not be the ones that use the most
+AI, but the ones that use it with the most human judgment. It is why I still say
+to test every model that comes out and
+[be selective about what you put into production](/work/ojoquote/).

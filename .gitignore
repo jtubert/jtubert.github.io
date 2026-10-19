@@ -29,3 +29,6 @@ tools/.indexnow-sent.json
 # private transcripts and subtitles: npm run deploy is git add ., so ignore rather than leave untracked
 *.srt
 *.vtt
+
+# extracted talk transcripts: source material, not site content
+lab-ia-*/
