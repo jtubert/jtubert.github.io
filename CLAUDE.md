@@ -80,9 +80,9 @@ to confirm the cell survived; it exits non-zero if the download disagrees, and
 refuses an em dash. Run `npm run download_and_deploy` afterwards as usual. `add` inserts
 above the given row, takes its `order` and moves every row below down one,
 as new rows have always been added by hand, then checks every value in the
-download. An upcoming event is fine: an entry's published date is capped at
-today (`published_date()`), so a November row added in October carries no
-future date until November arrives.
+download. An upcoming event is fine: until its month arrives, an entry is dated by its
+write-up's last git change (`published_date()`), never by its future month
+and never by today, which changed every build and made its lastmod say "now".
 
 `download_and_deploy` ends with `indexnow`, which waits for the GitHub Actions
 run deploying that exact commit to succeed (through `gh`) and only then submits,

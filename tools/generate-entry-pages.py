@@ -39,16 +39,23 @@ def iso_date(label):
     mon = MONTHS.get(m.group(1).lower())
     return f"{m.group(2)}-{mon:02d}-01" if mon else ''
 
-def published_date(label):
-    """datePublished for an entry: the first of the sheet's month, but never
-    later than today. An upcoming event (the Latino AI Summit, added in October
-    for November) would otherwise carry a published date, and through
+def published_date(label, body_path):
+    """datePublished for an entry: the first of the sheet's month, unless that
+    month has not arrived. An upcoming event (the Latino AI Summit, added in
+    October for November) would otherwise carry a published date, and through
     not_before() a modified date and sitemap lastmod, that have not happened
-    yet, which search engines read as an error. Until its month arrives it is
-    dated today, and the first build after that moves it to the month."""
+    yet, which search engines read as an error.
+
+    Until its month arrives it is dated by its write-up's last change, from git.
+    Not by today: that changed every day, so the page's dates, its sitemap
+    lastmod and its IndexNow fingerprint changed on every build, the "lastmod
+    that always says now" Google learns to ignore. The first build in the
+    event's month moves it to the month, once."""
     iso = iso_date(label)
     today = datetime.date.today().isoformat()
-    return min(iso, today) if iso else ''
+    if not iso or iso <= today:
+        return iso
+    return (git_date(body_path) or today)[:10]
 
 
 def not_before(modified, published):
@@ -540,7 +547,7 @@ def main():
             'seo_title': seo_title(eid, strip_tags(title)),
             'category': cat,
             'date_label': date_label,
-            'iso_date': published_date(date_label),
+            'iso_date': published_date(date_label, os.path.join(ROOT, '_work_bodies', f'{eid}.md')),
             'link': '' if blank(link) else link,
             'asset': asset if has_asset else '',
             'poster': '' if blank(poster) else poster,
@@ -563,11 +570,11 @@ def main():
             # QUOTE means something else - quoted in someone else's article.
             'is_quote': 'yes' if (r.get('template') or '').strip().upper() == 'QUOTE' else '',
             'summary': pick_summary(eid, r, title, cat, date_label),
-            'sitemap_lastmod': published_date(date_label),
+            'sitemap_lastmod': published_date(date_label, os.path.join(ROOT, '_work_bodies', f'{eid}.md')),
             # when the written piece was last revised, not when the sheet row
             # was: a download rewrites the whole CSV, which would stamp all 49
             'last_modified_at': not_before(git_date(os.path.join(ROOT, '_work_bodies', f'{eid}.md')),
-                                           published_date(date_label)),
+                                           published_date(date_label, os.path.join(ROOT, '_work_bodies', f'{eid}.md'))),
             'prev_id': prev_r['id'].strip() if prev_r else '',
             'prev_title': prev_r['title'].strip() if prev_r else '',
             'next_id': next_r['id'].strip() if next_r else '',
