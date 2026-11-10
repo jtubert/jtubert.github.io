@@ -7,7 +7,7 @@ title_plain: "Responsible AI panel at the Latino AI Summit"
 seo_title: "Responsible AI panel at the Latino AI Summit — Juan (John) Tubert"
 category: "PANELIST"
 date_label: "November 2026"
-iso_date: "2026-10-07"
+iso_date: "2026-11-01"
 link: "https://www.thelatinoaisummit.org/new-york-live"
 asset: "assets/latinoaisummit.jpg"
 poster: ""
@@ -17,16 +17,16 @@ media_link: ""
 media_link_label: ""
 audio_file: ""
 audio_label: ""
-extra_image: ""
-extra_image_alt: ""
+extra_image: "/assets/latinoaisummit2.jpg"
+extra_image_alt: "Juan Tubert standing with two women in front of the Latino AI Summit screens, with the panel chairs behind them"
 embed: ""
 embed_title: ""
 has_audio: ""
 cta_label: "See the Latino AI Summit"
 is_quote: ""
 summary: "On November 9 I am joining a conversation on responsible AI at the first in-person Latino AI Summit, at Borough of Manhattan Community College in New York, moderated by Angie Hernández."
-sitemap_lastmod: "2026-10-07"
-last_modified_at: "2026-10-07T00:00:00-04:00"
+sitemap_lastmod: "2026-11-01"
+last_modified_at: "2026-11-10T00:00:00+00:00"
 prev_id: ""
 prev_title: ""
 next_id: "ojojury2026"
@@ -39,7 +39,7 @@ word_count: "115"
 
 Dr. Michal Tapia and Ruby Garcia invited me to speak at the first in-person
 Latino AI Summit, two days at Borough of Manhattan Community College in New York
-on November 9 and 10. I am on the first day, in a conversation on responsible AI
+on November 9 and 10. I was on the first day, in a conversation on responsible AI
 usage moderated by [Angie Hernández](/work/angie/), who interviewed me about AI
 last December.
 
