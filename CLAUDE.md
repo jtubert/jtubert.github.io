@@ -49,7 +49,7 @@ survive a download lives in the repo instead:
 | `assets/thumbs-src/<id>.jpg` | Hand-made card art that overrides the derived thumbnail. |
 | `_data/media_links.yml` | Entries whose hero opens a PDF. `id: <url> | <optional caption>`. |
 | `_data/audio.yml` | Entries with an episode to play. Same `id: <url> | <caption>` format. |
-| `_data/extra_images.yml` | Entries with a second picture under the hero, after its captions. `id: <url> | <alt text>`. Currently only `sxsw`. |
+| `_data/extra_images.yml` | Entries with a second picture under the hero, after its captions. `id: <url> | <alt text>`. Currently `sxsw` and `latinoaisummit`. |
 | `_data/embeds.yml` | Entries whose entry-page hero is a broadcaster's player iframe instead of the sheet's asset. `id: <iframe src> | <iframe title>`. The story keeps the sheet's asset, since AMP cannot frame the player. Jekyll parses it as YAML, so no `: ` in a title. Currently only `telemundo`. |
 | `_data/person.yml` | **The facts about him, stated once.** Every Person node in the structured data, `/about/` and `llms.txt` read it. Change a fact here and nowhere else. |
 | `_data/bio.yml` | The `/bio/` text, his own words. Edit the wording here, not in the page. |
